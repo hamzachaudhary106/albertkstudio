@@ -52,6 +52,41 @@ export const navLinks = [
   { label: "Book", href: "#booking" },
 ];
 
+export const servicesSection = {
+  description:
+    "A selection of our most requested treatments. Every service starts with a consultation — times and pricing vary by hair length and condition.",
+  allServicesHeading: "Full Service Menu",
+  allServicesDescription:
+    "Beyond our signature treatments, Albert K Studio offers a complete range of color, cut, and styling services in Aventura.",
+};
+
+export const additionalServices = [
+  {
+    title: "Balayage & Highlights",
+    note: "Lived-in dimension, seamless blondes, and hand-painted color.",
+  },
+  {
+    title: "Blowouts & Styling",
+    note: "Volume blowouts, sleek finishes, and event-ready looks.",
+  },
+  {
+    title: "Color Correction",
+    note: "Toning, fixes, and complex transformations done with care.",
+  },
+  {
+    title: "Brazilian Blowout",
+    note: "Long-lasting smoothness and frizz control for every texture.",
+  },
+  {
+    title: "Men's Cuts & Styling",
+    note: "Precision cuts and grooming tailored to your look.",
+  },
+  {
+    title: "Consultations",
+    note: "One-on-one planning for color, cut, and transformation goals.",
+  },
+];
+
 export const services = [
   {
     id: "keratin",
