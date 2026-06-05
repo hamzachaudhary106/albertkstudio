@@ -9,17 +9,17 @@ const VIEWPORT = { once: true, amount: 0.18, margin: "0px 0px -48px 0px" } as co
 
 function buildVariants(reduced: boolean): Record<RevealVariant, Variants> {
   if (reduced) {
-    const fade = { hidden: { opacity: 0 }, visible: { opacity: 1 } };
+    const fade = { off: { opacity: 0 }, on: { opacity: 1 } };
     return { left: fade, right: fade, up: fade, down: fade, fade, scale: fade };
   }
 
   return {
-    left: { hidden: { opacity: 0, x: -56 }, visible: { opacity: 1, x: 0 } },
-    right: { hidden: { opacity: 0, x: 56 }, visible: { opacity: 1, x: 0 } },
-    up: { hidden: { opacity: 0, y: 48 }, visible: { opacity: 1, y: 0 } },
-    down: { hidden: { opacity: 0, y: -36 }, visible: { opacity: 1, y: 0 } },
-    fade: { hidden: { opacity: 0 }, visible: { opacity: 1 } },
-    scale: { hidden: { opacity: 0, scale: 0.92 }, visible: { opacity: 1, scale: 1 } },
+    left: { off: { opacity: 0, x: -56 }, on: { opacity: 1, x: 0 } },
+    right: { off: { opacity: 0, x: 56 }, on: { opacity: 1, x: 0 } },
+    up: { off: { opacity: 0, y: 48 }, on: { opacity: 1, y: 0 } },
+    down: { off: { opacity: 0, y: -36 }, on: { opacity: 1, y: 0 } },
+    fade: { off: { opacity: 0 }, on: { opacity: 1 } },
+    scale: { off: { opacity: 0, scale: 0.92 }, on: { opacity: 1, scale: 1 } },
   };
 }
 
@@ -43,8 +43,8 @@ export default function ScrollReveal({
 
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
+      initial="off"
+      whileInView="on"
       viewport={VIEWPORT}
       variants={variants[variant]}
       transition={{ duration: reduced ? 0.2 : duration, delay, ease: EASE }}
@@ -70,12 +70,12 @@ export function StaggerReveal({
 
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
+      initial="off"
+      whileInView="on"
       viewport={{ once: true, amount: 0.12, margin: "0px 0px -40px 0px" }}
       variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: reduced ? 0 : stagger } },
+        off: {},
+        on: { transition: { staggerChildren: reduced ? 0 : stagger } },
       }}
       className={className}
     >

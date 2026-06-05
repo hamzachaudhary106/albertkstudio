@@ -23,16 +23,16 @@ const CARD_VARIANTS: RevealVariant[] = [
 
 function cardMotion(variant: RevealVariant, reduced: boolean) {
   if (reduced) {
-    return { hidden: { opacity: 0 }, visible: { opacity: 1 } };
+    return { off: { opacity: 0 }, on: { opacity: 1 } };
   }
 
   const map = {
-    left: { hidden: { opacity: 0, x: -48 }, visible: { opacity: 1, x: 0 } },
-    right: { hidden: { opacity: 0, x: 48 }, visible: { opacity: 1, x: 0 } },
-    up: { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } },
-    down: { hidden: { opacity: 0, y: -32 }, visible: { opacity: 1, y: 0 } },
-    fade: { hidden: { opacity: 0 }, visible: { opacity: 1 } },
-    scale: { hidden: { opacity: 0, scale: 0.94 }, visible: { opacity: 1, scale: 1 } },
+    left: { off: { opacity: 0, x: -48 }, on: { opacity: 1, x: 0 } },
+    right: { off: { opacity: 0, x: 48 }, on: { opacity: 1, x: 0 } },
+    up: { off: { opacity: 0, y: 40 }, on: { opacity: 1, y: 0 } },
+    down: { off: { opacity: 0, y: -32 }, on: { opacity: 1, y: 0 } },
+    fade: { off: { opacity: 0 }, on: { opacity: 1 } },
+    scale: { off: { opacity: 0, scale: 0.94 }, on: { opacity: 1, scale: 1 } },
   };
 
   return map[variant];
@@ -44,64 +44,34 @@ function GalleryCard({
   onOpen,
   variant,
   delay = 0,
-  snapSize = "",
 }: {
   item: (typeof gallery.items)[0];
   className?: string;
   onOpen: () => void;
-  variant?: RevealVariant;
+  variant: RevealVariant;
   delay?: number;
-  snapSize?: string;
 }) {
   const reduced = useReducedMotion();
   const isFeatured = item.featured;
 
-  const card = (
-    <button
-      type="button"
-      onClick={onOpen}
-      className={`group relative overflow-hidden text-left w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-curly-accent rounded-2xl ${className}`}
-    >
-      <SafeImage
-        src={item.image}
-        alt={`${item.title}, Albert K Studio, Aventura`}
-        className={`w-full object-cover transition-transform duration-500 group-active:scale-[1.02] ${
-          isFeatured ? "aspect-[4/5]" : "aspect-[3/4]"
-        }`}
-      />
-      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent pt-14 pb-4 px-4 pointer-events-none">
-        <span className="block text-[10px] tracking-[0.22em] uppercase text-curly-accent-light mb-1">
-          {item.category}
-        </span>
-        <span className={`block font-serif text-white leading-tight ${isFeatured ? "text-xl" : "text-base"}`}>
-          {item.title}
-        </span>
-      </span>
-    </button>
-  );
-
-  if (variant === undefined) {
-    return <div className={`mobile-snap-card ${snapSize}`}>{card}</div>;
-  }
-
   return (
     <motion.button
       type="button"
-      initial="hidden"
-      whileInView="visible"
+      initial="off"
+      whileInView="on"
       viewport={{ once: true, amount: 0.15, margin: "0px 0px -40px 0px" }}
       variants={cardMotion(variant, !!reduced)}
       transition={{ duration: reduced ? 0.2 : 0.65, delay, ease: EASE }}
       onClick={onOpen}
-      className={`group relative overflow-hidden text-left w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-curly-accent ${className}`}
+      className={`group relative overflow-hidden text-left w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-curly-accent rounded-2xl md:rounded-none ${className}`}
     >
       <SafeImage
         src={item.image}
         alt={`${item.title}, Albert K Studio, Aventura`}
-        className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] ${
+        className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] group-active:scale-[1.02] ${
           isFeatured
-            ? "aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto lg:h-full lg:min-h-[28rem]"
-            : "aspect-[3/4] lg:aspect-[4/5]"
+            ? "aspect-[4/5] md:aspect-auto md:h-full md:min-h-[28rem]"
+            : "aspect-[4/5] md:aspect-[4/5]"
         }`}
       />
       <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent pt-14 pb-4 px-4 pointer-events-none">
@@ -129,18 +99,7 @@ export default function Gallery() {
           light
         />
 
-        <div className="md:hidden mobile-snap-row mb-2">
-          {gallery.items.map((item) => (
-            <GalleryCard
-              key={item.title}
-              item={item}
-              onOpen={() => setActive(item)}
-              snapSize={item.featured ? "mobile-snap-card-lg" : "mobile-snap-card-md"}
-            />
-          ))}
-        </div>
-
-        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {gallery.items.map((item, i) => (
             <GalleryCard
               key={item.title}
@@ -154,8 +113,8 @@ export default function Gallery() {
         </div>
 
         <ScrollReveal variant="fade" delay={0.2}>
-          <p className="text-center text-white/50 text-[11px] tracking-[0.18em] uppercase mt-4 md:hidden">
-            Swipe to browse · Tap to enlarge
+          <p className="text-center text-white/50 text-[11px] tracking-[0.18em] uppercase mt-4 lg:hidden">
+            Tap any image to enlarge
           </p>
         </ScrollReveal>
 

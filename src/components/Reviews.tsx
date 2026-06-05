@@ -4,11 +4,11 @@ import SectionHeading from "./SectionHeading";
 
 function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
   return (
-    <blockquote className="card-equal border border-white/12 p-5 sm:p-6 md:p-8 bg-white/[0.03] rounded-2xl h-full">
+    <blockquote className="flex h-full flex-col rounded-2xl border border-white/12 bg-white/[0.03] p-5 sm:p-6 md:rounded-none md:p-8">
       <p className="text-curly-accent-light text-[10px] tracking-[0.28em] mb-4 shrink-0">
         {"★".repeat(5)}
       </p>
-      <p className="text-white/90 text-[15px] leading-[1.7] italic card-equal-text-lg mb-4 sm:mb-6">
+      <p className="text-white/90 text-[15px] leading-[1.7] italic mb-4 sm:mb-6 flex-1">
         &ldquo;{review.text}&rdquo;
       </p>
       <footer className="pt-4 border-t border-white/10 mt-auto shrink-0">
@@ -47,15 +47,10 @@ export default function Reviews() {
           </blockquote>
         </ScrollReveal>
 
-        <div className="md:hidden mobile-snap-row">
-          {reviews.map((review) => (
-            <div key={review.name} className="mobile-snap-card mobile-snap-card-md h-full">
-              <ReviewCard review={review} />
-            </div>
-          ))}
-        </div>
-
-        <StaggerReveal stagger={0.12} className="card-grid-equal hidden md:grid md:grid-cols-3 gap-4">
+        <StaggerReveal
+          stagger={0.12}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch"
+        >
           {reviews.map((review, i) => (
             <StaggerItem
               key={review.name}
