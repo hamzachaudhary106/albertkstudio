@@ -15,7 +15,7 @@ import {
   submitBookingRequest,
   type BookingSelection,
 } from "../lib/booking";
-import { getPreferredStylist } from "./Team";
+import { getPreferredStylist } from "../lib/stylist";
 
 type Step = "date" | "time" | "details" | "confirmed";
 
