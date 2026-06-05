@@ -38,6 +38,55 @@ function cardMotion(variant: RevealVariant, reduced: boolean) {
   return map[variant];
 }
 
+function GalleryCardOverlay({
+  item,
+  large = false,
+}: {
+  item: (typeof gallery.items)[0];
+  large?: boolean;
+}) {
+  return (
+    <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent pt-14 pb-4 px-4 pointer-events-none">
+      <span className="block text-[10px] tracking-[0.22em] uppercase text-curly-accent-light mb-1">
+        {item.category}
+      </span>
+      <span className={`block font-serif text-white leading-tight ${large ? "text-xl" : "text-base"}`}>
+        {item.title}
+      </span>
+    </span>
+  );
+}
+
+function MobileGallerySlider({
+  onOpen,
+}: {
+  onOpen: (index: number) => void;
+}) {
+  return (
+    <div className="md:hidden mobile-snap-row">
+      {gallery.items.map((item, i) => (
+        <div
+          key={item.title}
+          className={`mobile-snap-card ${item.featured ? "mobile-snap-card-lg" : "mobile-snap-card-md"}`}
+        >
+          <button
+            type="button"
+            onClick={() => onOpen(i)}
+            className="group relative block w-full overflow-hidden rounded-2xl text-left focus-visible:outline-2 focus-visible:outline-curly-accent"
+          >
+            <SafeImage
+              src={item.image}
+              alt={`${item.title}, Albert K Studio, Aventura`}
+              className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-active:scale-[1.02]"
+            />
+            <GalleryCardOverlay item={item} large={item.featured} />
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function GalleryCard({
   item,
   className = "",
@@ -63,25 +112,18 @@ function GalleryCard({
       variants={cardMotion(variant, !!reduced)}
       transition={{ duration: reduced ? 0.2 : 0.65, delay, ease: EASE }}
       onClick={onOpen}
-      className={`group relative overflow-hidden text-left w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-curly-accent rounded-2xl md:rounded-none ${className}`}
+      className={`group relative overflow-hidden text-left w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-curly-accent ${className}`}
     >
       <SafeImage
         src={item.image}
         alt={`${item.title}, Albert K Studio, Aventura`}
-        className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] group-active:scale-[1.02] ${
+        className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] ${
           isFeatured
-            ? "aspect-[4/5] md:aspect-auto md:h-full md:min-h-[28rem]"
-            : "aspect-[4/5] md:aspect-[4/5]"
+            ? "aspect-auto h-full min-h-[28rem]"
+            : "aspect-[4/5]"
         }`}
       />
-      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent pt-14 pb-4 px-4 pointer-events-none">
-        <span className="block text-[10px] tracking-[0.22em] uppercase text-curly-accent-light mb-1">
-          {item.category}
-        </span>
-        <span className={`block font-serif text-white leading-tight ${isFeatured ? "text-xl" : "text-base"}`}>
-          {item.title}
-        </span>
-      </span>
+      <GalleryCardOverlay item={item} large={isFeatured} />
     </motion.button>
   );
 }
@@ -99,7 +141,9 @@ export default function Gallery() {
           light
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <MobileGallerySlider onOpen={setActiveIndex} />
+
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-3">
           {gallery.items.map((item, i) => (
             <GalleryCard
               key={item.title}
@@ -107,14 +151,14 @@ export default function Gallery() {
               onOpen={() => setActiveIndex(i)}
               variant={CARD_VARIANTS[i % CARD_VARIANTS.length]}
               delay={i * 0.06}
-              className={item.featured ? "sm:col-span-2 sm:row-span-2" : ""}
+              className={item.featured ? "col-span-2 row-span-2" : ""}
             />
           ))}
         </div>
 
         <ScrollReveal variant="fade" delay={0.2}>
-          <p className="text-center text-white/50 text-[11px] tracking-[0.18em] uppercase mt-4 lg:hidden">
-            Tap any image to enlarge
+          <p className="text-center text-white/50 text-[11px] tracking-[0.18em] uppercase mt-4 md:hidden">
+            Swipe to browse · Tap to view full gallery
           </p>
         </ScrollReveal>
 
