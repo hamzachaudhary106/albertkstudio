@@ -87,7 +87,7 @@ function GalleryCard({
 }
 
 export default function Gallery() {
-  const [active, setActive] = useState<(typeof gallery.items)[0] | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <section id="gallery" className="premium-section section-divide bg-premium-dark">
@@ -104,7 +104,7 @@ export default function Gallery() {
             <GalleryCard
               key={item.title}
               item={item}
-              onOpen={() => setActive(item)}
+              onOpen={() => setActiveIndex(i)}
               variant={CARD_VARIANTS[i % CARD_VARIANTS.length]}
               delay={i * 0.06}
               className={item.featured ? "sm:col-span-2 sm:row-span-2" : ""}
@@ -127,7 +127,12 @@ export default function Gallery() {
         </ScrollReveal>
       </div>
 
-      <GalleryLightbox item={active} onClose={() => setActive(null)} />
+      <GalleryLightbox
+        items={gallery.items}
+        activeIndex={activeIndex}
+        onClose={() => setActiveIndex(null)}
+        onChangeIndex={setActiveIndex}
+      />
     </section>
   );
 }
