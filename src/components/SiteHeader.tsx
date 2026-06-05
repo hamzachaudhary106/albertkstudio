@@ -70,8 +70,8 @@ export default function SiteHeader() {
             </a>
 
             <div className="flex items-center gap-2 shrink-0">
-              <a href="#booking" className="mobile-header-cta">
-                Request
+              <a href={business.phoneHref} className="mobile-header-cta">
+                Call Now
               </a>
               <button
                 type="button"
