@@ -177,7 +177,7 @@ export default function SiteHeader() {
               onClick={() => setMenuOpen(false)}
               className="curly-btn-gold w-full"
             >
-              Book Appointment
+              Request Appointment
             </a>
           </div>
         </div>

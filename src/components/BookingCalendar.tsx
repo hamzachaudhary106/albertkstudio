@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { bookingStylists, business, services } from "../data/content";
 import {
   buildBookingMailto,
   canNavigateMonth,
-  downloadCalendarEvent,
   formatDisplayDate,
   formatMonthYear,
   getCalendarCells,
@@ -37,8 +36,7 @@ export default function BookingCalendar() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedServiceId, setSelectedServiceId] = useState(services[0]?.id ?? "");
-  const [selectedStylistId, setSelectedStylistId] = useState("any");
-  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [selectedStylistId, setSelectedStylistId] = useState(bookingStylists[0]?.id ?? "albert");
   const [submitting, setSubmitting] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -78,10 +76,7 @@ export default function BookingCalendar() {
 
     setSelectedDate(date);
     setSelectedTime("");
-    setLoadingSlots(true);
     setStep("time");
-
-    window.setTimeout(() => setLoadingSlots(false), 450);
   };
 
   const handleConfirm = async (e: React.FormEvent) => {
@@ -126,7 +121,7 @@ export default function BookingCalendar() {
     setStep("date");
     setSelectedDate(null);
     setSelectedTime("");
-    setSelectedStylistId("any");
+    setSelectedStylistId(bookingStylists[0]?.id ?? "albert");
     setName("");
     setPhone("");
     setEmail("");
@@ -143,9 +138,9 @@ export default function BookingCalendar() {
         <div className="w-14 h-14 border border-curly-accent/40 flex items-center justify-center mb-8 mx-auto">
           <Check size={24} className="text-curly-accent-dark" strokeWidth={1.5} />
         </div>
-        <h3 className="font-serif text-3xl text-center mb-3">Request Received</h3>
+        <h3 className="font-serif text-3xl text-center mb-3">Request Submitted</h3>
         <p className="prose-body-sm text-center mb-4 max-w-sm mx-auto">
-          Your appointment request has been submitted to our team.
+          Your preferred date and time have been sent. This is not a confirmed appointment yet.
         </p>
         <p className="text-sm text-curly-accent-dark text-center font-medium mb-10 max-w-sm mx-auto">
           {business.bookingConfirmNote}
@@ -175,18 +170,11 @@ export default function BookingCalendar() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <button
-            type="button"
-            onClick={() => downloadCalendarEvent(selection)}
-            className="curly-btn-gold w-full text-center"
-          >
-            Add to Calendar
-          </button>
           <a
             href={buildBookingMailto(selection, business.email)}
-            className="curly-btn-fill w-full text-center"
+            className="curly-btn-gold w-full text-center"
           >
-            Email Confirmation
+            Email Request Copy
           </a>
           <a href={business.phoneHref} className="curly-link justify-center w-full mt-2">
             Or Call {business.phone}
@@ -196,7 +184,7 @@ export default function BookingCalendar() {
             onClick={resetBooking}
             className="text-[11px] tracking-[0.22em] uppercase text-curly-muted hover:text-curly-accent-dark transition-colors mt-4"
           >
-            Book Another Appointment
+            Submit Another Request
           </button>
         </div>
       </motion.div>
@@ -207,10 +195,10 @@ export default function BookingCalendar() {
     <div className="premium-card mobile-card lg:rounded-none lg:shadow-none card-pad">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <p className="curly-label-gold mb-2">Book Online</p>
+          <p className="curly-label-gold mb-2">Request Appointment</p>
           <h3 className="font-serif text-2xl">
-            {step === "date" && "Select a Date"}
-            {step === "time" && "Choose a Time"}
+            {step === "date" && "Preferred Date"}
+            {step === "time" && "Preferred Time"}
             {step === "details" && "Your Details"}
           </h3>
         </div>
@@ -313,7 +301,7 @@ export default function BookingCalendar() {
             </div>
 
             <p className="text-[11px] text-curly-muted mt-6 leading-relaxed">
-              Open daily, 10AM to 6PM. Unavailable dates are greyed out.{" "}
+              Open daily, 10AM to 6PM. Past dates are unavailable.{" "}
               {business.bookingConfirmNote}
             </p>
           </motion.div>
@@ -355,37 +343,33 @@ export default function BookingCalendar() {
               ))}
             </div>
 
-            <p className="curly-label mb-4">Available Times</p>
+            <p className="curly-label mb-2">Preferred Time</p>
+            <p className="text-[11px] text-curly-muted mb-4 leading-relaxed">
+              Subject to confirmation — we'll reach out to finalize your appointment.
+            </p>
 
-            {loadingSlots ? (
-              <div className="flex items-center justify-center gap-3 py-8 sm:py-16 text-curly-muted">
-                <Loader2 size={20} className="animate-spin" strokeWidth={1.5} />
-                <span className="text-sm">Checking availability…</span>
-              </div>
-            ) : (
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-6">
-                {timeSlots.map((slot) => (
-                  <button
-                    key={slot.value}
-                    type="button"
-                    disabled={!slot.available}
-                    onClick={() => {
-                      setSelectedTime(slot.value);
-                      setStep("details");
-                    }}
-                    className={`h-12 sm:h-11 text-sm border transition-colors rounded-xl sm:rounded-none active:scale-[0.98] ${
-                      selectedTime === slot.value
-                        ? "bg-premium-dark text-curly-accent-light border-premium-dark"
-                        : slot.available
-                          ? "border-curly-border text-curly-body hover:border-curly-accent hover:bg-premium-champagne"
-                          : "border-curly-border/50 text-curly-border line-through cursor-not-allowed"
-                    }`}
-                  >
-                    {slot.label}
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-6">
+              {timeSlots.map((slot) => (
+                <button
+                  key={slot.value}
+                  type="button"
+                  disabled={!slot.available}
+                  onClick={() => {
+                    setSelectedTime(slot.value);
+                    setStep("details");
+                  }}
+                  className={`h-12 sm:h-11 text-sm border transition-colors rounded-xl sm:rounded-none active:scale-[0.98] ${
+                    selectedTime === slot.value
+                      ? "bg-premium-dark text-curly-accent-light border-premium-dark"
+                      : slot.available
+                        ? "border-curly-border text-curly-body hover:border-curly-accent hover:bg-premium-champagne"
+                        : "border-curly-border/50 text-curly-border line-through cursor-not-allowed"
+                  }`}
+                >
+                  {slot.label}
+                </button>
+              ))}
+            </div>
           </motion.div>
         )}
 
@@ -412,26 +396,6 @@ export default function BookingCalendar() {
               <div className="flex justify-between gap-4 text-sm">
                 <span className="text-curly-muted">Service</span>
                 <span className="text-curly-body text-right">{selectedService?.title}</span>
-              </div>
-            </div>
-
-            <div className="mb-8">
-              <p className="curly-label mb-3">Preferred Stylist</p>
-              <div className="flex flex-wrap gap-2">
-                {bookingStylists.map((stylist) => (
-                  <button
-                    key={stylist.id}
-                    type="button"
-                    onClick={() => setSelectedStylistId(stylist.id)}
-                    className={`h-11 min-w-[calc(50%-0.25rem)] flex-1 sm:min-w-0 sm:flex-none sm:h-11 text-xs sm:text-sm border transition-colors rounded-xl sm:rounded-none active:scale-[0.98] px-2 ${
-                      selectedStylistId === stylist.id
-                        ? "bg-premium-dark text-curly-accent-light border-premium-dark"
-                        : "border-curly-border text-curly-body hover:border-curly-accent hover:bg-premium-champagne"
-                    }`}
-                  >
-                    {stylist.name}
-                  </button>
-                ))}
               </div>
             </div>
 

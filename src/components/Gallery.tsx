@@ -121,7 +121,7 @@ export default function Gallery() {
         <ScrollReveal variant="up" delay={0.1}>
           <div className="text-center mt-5 sm:mt-8 md:mt-10">
             <a href="#booking" className="curly-link-light">
-              Book Your Appointment
+              Request Appointment
             </a>
           </div>
         </ScrollReveal>

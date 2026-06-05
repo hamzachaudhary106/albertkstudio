@@ -14,7 +14,10 @@ export const business = {
   googleRating: 5.0,
   reviewCount: 142,
   bookingUrl: "#booking",
-  bookingConfirmNote: "Our team will confirm your appointment within 24 hours.",
+  bookingConfirmNote:
+    "This is a request only — not a confirmed appointment. We'll call or text within 24 hours to confirm.",
+  mapsEmbedUrl:
+    "https://maps.google.com/maps?q=19020+NE+29th+Ave,+Aventura,+FL+33180&hl=en&z=15&output=embed",
   instagramUrl: "https://www.instagram.com/albertkstudio/",
   instagramHandle: "@albertkstudio",
   mapsUrl:
@@ -36,18 +39,8 @@ export const about = {
     "We don't rush appointments. We listen, consult, and create hair you're proud to wear every day.",
   paragraphs: [
     "Albert K Studio sits in Town Center Aventura, a calm, luxury space where clients from Aventura, Sunny Isles, and across Miami Dade come for color work they can't get anywhere else.",
-    "Whether it's your first balayage or a complete transformation, Albert, Christine, and Elena treat every chair like a collaboration. You leave with hair that fits your life and your standards.",
+    "Whether it's your first balayage or a complete transformation, every chair is a collaboration with Albert and his team. You leave with hair that fits your life and your standards.",
   ],
-};
-
-export const signatureWork = {
-  label: "Signature Work",
-  title: "Color Crafted in the Chair",
-  description:
-    "Dimensional blondes, seamless balayage, and polished finishes from our Aventura studio. Explore the portfolio for more.",
-  image: images.gallery.platinumBlonde,
-  imageAlt: "Platinum blonde color work at Albert K Studio, Aventura",
-  caption: "Custom platinum blonde",
 };
 
 export const navLinks = [
@@ -174,30 +167,16 @@ export const stylists = [
     bio: "15+ years mastering color correction, platinum blondes, and full transformations. Albert's clients return because the results last and the experience feels personal.",
     image: teamHeadshot,
   },
-  {
-    id: "christine",
-    name: "Christine",
-    role: "Senior Color Specialist",
-    specialty: "Balayage · Dimensional Blonde",
-    bio: "Known for the most natural, luminous blondes in Aventura. Christine's balayage work is seamless, sun kissed, and always customized to your skin tone.",
-    image: null,
-    initials: "C",
-  },
-  {
-    id: "elena",
-    name: "Elena",
-    role: "Styling Specialist",
-    specialty: "Blowouts · Event Styling",
-    bio: "The finishing touch expert. Elena's blowouts and event styling give every look that polished, camera ready finish clients love.",
-    image: null,
-    initials: "E",
-  },
 ];
 
-export const bookingStylists = [
-  { id: "any", name: "No Preference" },
-  ...stylists.map((s) => ({ id: s.id, name: s.name })),
-];
+export const bookingStylists = stylists.map((s) => ({ id: s.id, name: s.name }));
+
+export const teamSection = {
+  label: "The Artist",
+  title: "Meet Albert K",
+  description:
+    "Founder and master stylist. Albert leads every transformation with the precision and personal attention that built this studio's reputation in Aventura.",
+};
 
 export const reviewsSection = {
   heading: "What Our Clients Say",
@@ -235,12 +214,12 @@ export const faqs = [
   {
     question: "How does online booking work?",
     answer:
-      "Select your date, time, and service to submit a request. Our team will call or text within 24 hours to confirm your appointment. For immediate booking, call (917) 657-8170.",
+      "Choose your preferred date, time, and service to submit a request — not a confirmed booking. We'll call or text within 24 hours to confirm. To book immediately, call (917) 657-8170.",
   },
   {
     question: "Do I need an appointment?",
     answer:
-      "We recommend booking ahead to secure your preferred stylist. Walk ins are welcome when availability permits.",
+      "We recommend requesting an appointment ahead of time. Walk ins are welcome when availability permits.",
   },
   {
     question: "Where is Albert K Studio located?",

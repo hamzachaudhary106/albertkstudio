@@ -47,11 +47,6 @@ function isSameDay(a: Date, b: Date) {
   );
 }
 
-function hashSlot(date: Date, minutes: number) {
-  const seed = date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate();
-  return ((seed * 31 + minutes) % 97) / 97;
-}
-
 export function isOpenDay(date: Date) {
   return (BOOKING_CONFIG.openDays as readonly number[]).includes(date.getDay());
 }
@@ -134,10 +129,6 @@ export function getTimeSlots(date: Date, now = new Date()) {
       if (isSameDay(date, now)) {
         const lead = new Date(now.getTime() + minLeadHours * 60 * 60 * 1000);
         if (slotDate <= lead) available = false;
-      }
-
-      if (available && hashSlot(date, hour * 60 + minute) < 0.28) {
-        available = false;
       }
 
       slots.push({ value, label, available });
@@ -235,7 +226,7 @@ export function buildCalendarEvent(selection: BookingSelection) {
     `DTEND:${formatICS(end)}`,
     `SUMMARY:${selection.serviceTitle} with ${selection.stylistName}, Albert K Studio`,
     "LOCATION:19020 NE 29th Ave, Aventura, FL 33180",
-    `DESCRIPTION:Appointment request with ${selection.stylistName}. Call (917) 657-8170 to confirm.`,
+    `DESCRIPTION:Unconfirmed appointment request with ${selection.stylistName}. Call (917) 657-8170 to confirm.`,
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");

@@ -46,13 +46,8 @@ export default function Footer() {
               >
                 <InstagramIcon size={18} />
               </a>
-              <a
-                href={business.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="curly-link-light"
-              >
-                Directions
+              <a href="#booking" className="curly-link-light">
+                Request Appointment
               </a>
             </div>
           </div>
@@ -97,10 +92,20 @@ export default function Footer() {
                 className="text-curly-accent-light shrink-0"
               />
               <span className="border-b border-white/25 pb-0.5 text-[10px] font-medium tracking-[0.22em] uppercase group-hover:border-curly-accent-light">
-                Google Maps
+                Open in Google Maps
               </span>
             </a>
           </FooterColumn>
+        </div>
+
+        <div className="mt-10 overflow-hidden border border-white/10">
+          <iframe
+            title="Albert K Studio location on Google Maps"
+            src={business.mapsEmbedUrl}
+            className="w-full h-52 sm:h-60"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
       </div>
 

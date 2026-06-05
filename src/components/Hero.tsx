@@ -62,7 +62,7 @@ export default function Hero() {
             className="mobile-btn-stack mb-8"
           >
             <a href="#booking" className="curly-btn-gold">
-              Book Appointment
+              Request Appointment
             </a>
             <a href="#gallery" className="curly-btn-outline-light">
               View Our Work

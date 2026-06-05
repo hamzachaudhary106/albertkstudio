@@ -42,7 +42,7 @@ export default function Services() {
                   </div>
                   <p className="prose-body-sm mb-5 sm:mb-8">{service.description}</p>
                   <a href="#booking" className="curly-link w-full sm:w-fit justify-center sm:justify-start">
-                    Book This Service
+                    Request This Service
                   </a>
                 </div>
               </article>

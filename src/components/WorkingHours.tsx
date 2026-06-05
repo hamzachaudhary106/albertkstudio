@@ -12,8 +12,8 @@ export default function WorkingHours() {
             <div>
               <SectionHeading
                 label="Appointments"
-                title="Book Your Visit"
-                description={`Open daily, 10AM to 6PM. Select a date and time to submit a request. ${business.bookingConfirmNote}`}
+                title="Request Your Visit"
+                description={`Open daily, 10AM to 6PM. Share your preferred date and time. ${business.bookingConfirmNote}`}
                 align="left"
                 className="mb-4 sm:mb-6"
                 animate={false}
