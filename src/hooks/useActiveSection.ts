@@ -16,7 +16,8 @@ export function useActiveSection(sectionIds: string[]) {
         return;
       }
 
-      const midpoint = window.innerHeight * 0.35;
+      const navOffset = window.innerWidth < 1024 ? 72 : 0;
+      const midpoint = window.innerHeight * 0.35 - navOffset * 0.15;
       let closest = sections[0];
       let closestDistance = Infinity;
 

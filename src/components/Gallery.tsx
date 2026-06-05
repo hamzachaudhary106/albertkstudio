@@ -44,15 +44,45 @@ function GalleryCard({
   onOpen,
   variant,
   delay = 0,
+  snapSize = "",
 }: {
   item: (typeof gallery.items)[0];
   className?: string;
   onOpen: () => void;
-  variant: RevealVariant;
+  variant?: RevealVariant;
   delay?: number;
+  snapSize?: string;
 }) {
   const reduced = useReducedMotion();
   const isFeatured = item.featured;
+
+  const card = (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={`group relative overflow-hidden text-left w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-curly-accent rounded-2xl ${className}`}
+    >
+      <SafeImage
+        src={item.image}
+        alt={`${item.title}, Albert K Studio, Aventura`}
+        className={`w-full object-cover transition-transform duration-500 group-active:scale-[1.02] ${
+          isFeatured ? "aspect-[4/5]" : "aspect-[3/4]"
+        }`}
+      />
+      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent pt-14 pb-4 px-4 pointer-events-none">
+        <span className="block text-[10px] tracking-[0.22em] uppercase text-curly-accent-light mb-1">
+          {item.category}
+        </span>
+        <span className={`block font-serif text-white leading-tight ${isFeatured ? "text-xl" : "text-base"}`}>
+          {item.title}
+        </span>
+      </span>
+    </button>
+  );
+
+  if (variant === undefined) {
+    return <div className={`mobile-snap-card ${snapSize}`}>{card}</div>;
+  }
 
   return (
     <motion.button
@@ -99,7 +129,18 @@ export default function Gallery() {
           light
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="md:hidden mobile-snap-row mb-2">
+          {gallery.items.map((item) => (
+            <GalleryCard
+              key={item.title}
+              item={item}
+              onOpen={() => setActive(item)}
+              snapSize={item.featured ? "mobile-snap-card-lg" : "mobile-snap-card-md"}
+            />
+          ))}
+        </div>
+
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-3">
           {gallery.items.map((item, i) => (
             <GalleryCard
               key={item.title}
@@ -113,13 +154,13 @@ export default function Gallery() {
         </div>
 
         <ScrollReveal variant="fade" delay={0.2}>
-          <p className="text-center text-white/50 text-[11px] tracking-[0.18em] uppercase mt-6 md:hidden">
-            Tap any image to enlarge
+          <p className="text-center text-white/50 text-[11px] tracking-[0.18em] uppercase mt-4 md:hidden">
+            Swipe to browse · Tap to enlarge
           </p>
         </ScrollReveal>
 
         <ScrollReveal variant="up" delay={0.1}>
-          <div className="text-center mt-10">
+          <div className="text-center mt-8 md:mt-10">
             <a href="#booking" className="curly-link-light">
               Book Your Appointment
             </a>

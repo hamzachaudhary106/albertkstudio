@@ -22,15 +22,33 @@
 @layer base {
   :root {
     --site-max: 72rem;
-    --site-gutter: 1.5rem;
-    --header-height: 64px;
+    --site-gutter: 1rem;
+    --header-height: 56px;
+    --bottom-nav-height: 0px;
     --section-gap: 4rem;
     --block-gap: 1rem;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+  }
+
+  @media (max-width: 1023px) {
+    :root {
+      --bottom-nav-height: calc(4.25rem + var(--safe-bottom));
+    }
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --site-gutter: 1.5rem;
+    }
   }
 
   @media (min-width: 768px) {
     :root {
       --site-gutter: 2.5rem;
+      --header-height: 64px;
     }
   }
 
@@ -49,18 +67,28 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: var(--header-height);
+    scroll-padding-top: calc(var(--header-height) + var(--safe-top));
+    scroll-padding-bottom: var(--bottom-nav-height);
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply font-sans font-normal text-curly-black bg-premium-pearl antialiased;
     margin: 0;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
   }
 
   #root {
     width: 100%;
     min-height: 100svh;
+  }
+
+  main.mobile-app-main {
+    padding-bottom: var(--bottom-nav-height);
   }
 
   ::selection {
@@ -120,7 +148,7 @@
   }
 
   .curly-btn-gold {
-    @apply inline-flex items-center justify-center min-h-11 px-8 text-[11px] font-semibold tracking-[0.24em] uppercase bg-curly-accent text-white transition-colors duration-300 hover:bg-curly-accent-dark;
+    @apply inline-flex items-center justify-center min-h-12 px-8 text-[11px] font-semibold tracking-[0.24em] uppercase bg-curly-accent text-white transition-colors duration-300 hover:bg-curly-accent-dark active:scale-[0.98];
   }
 
   .curly-btn-outline-light {
@@ -148,7 +176,7 @@
   }
 
   .premium-section {
-    @apply py-20 md:py-28;
+    @apply py-14 sm:py-20 md:py-28;
   }
 
   .section-divide {
@@ -160,7 +188,7 @@
   }
 
   .card-pad {
-    @apply p-8 lg:p-10;
+    @apply p-5 sm:p-8 lg:p-10;
   }
 
   .grid-2 {
@@ -209,6 +237,71 @@
 
   .card-equal-label {
     @apply min-h-[2.75rem];
+  }
+
+  .mobile-card {
+    @apply rounded-2xl border border-curly-border bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] overflow-hidden;
+  }
+
+  .mobile-snap-row {
+    @apply flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-1;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-inline: calc(var(--site-gutter) * -1);
+    padding-inline: var(--site-gutter);
+    scroll-padding-inline: var(--site-gutter);
+  }
+
+  .mobile-snap-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-snap-card {
+    @apply snap-start shrink-0;
+  }
+
+  .mobile-snap-card-sm {
+    width: min(78vw, 18rem);
+  }
+
+  .mobile-snap-card-md {
+    width: min(84vw, 20rem);
+  }
+
+  .mobile-snap-card-lg {
+    width: min(88vw, 22rem);
+  }
+
+  .mobile-btn-stack {
+    @apply flex flex-col gap-3 w-full sm:flex-row sm:w-auto;
+  }
+
+  .mobile-btn-stack > a,
+  .mobile-btn-stack > button {
+    @apply w-full sm:w-auto justify-center;
+  }
+
+  .mobile-bottom-nav {
+    padding-bottom: var(--safe-bottom);
+    background: rgba(255, 252, 248, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(232, 228, 223, 0.9);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-bottom-nav-inner {
+    @apply grid grid-cols-5 h-[4.25rem] items-stretch;
+  }
+
+  .mobile-nav-tab {
+    @apply flex flex-col items-center justify-center gap-1 text-[10px] font-medium tracking-[0.08em] text-curly-muted transition-colors duration-200 active:scale-95;
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .mobile-nav-tab-active {
+    @apply text-curly-accent-dark;
   }
 }
 

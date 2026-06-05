@@ -1,4 +1,5 @@
 import SiteHeader from "./components/SiteHeader";
+import MobileBottomNav from "./components/MobileBottomNav";
 import LocalSeo from "./components/LocalSeo";
 import Hero from "./components/Hero";
 import OurStory from "./components/OurStory";
@@ -11,13 +12,14 @@ import Reviews from "./components/Reviews";
 import FAQ from "./components/FAQ";
 import VoucherCTA from "./components/VoucherCTA";
 import Footer from "./components/Footer";
+import { MobileNavProvider } from "./context/MobileNavContext";
 
 export default function App() {
   return (
-    <>
+    <MobileNavProvider>
       <LocalSeo />
       <SiteHeader />
-      <main>
+      <main className="mobile-app-main">
         <Hero />
         <OurStory />
         <Transformations />
@@ -30,6 +32,7 @@ export default function App() {
         <VoucherCTA />
       </main>
       <Footer />
-    </>
+      <MobileBottomNav />
+    </MobileNavProvider>
   );
 }

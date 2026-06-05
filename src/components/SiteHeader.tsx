@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
 import { business, navLinks } from "../data/content";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useScrollHeader } from "../hooks/useScrollHeader";
+import { useMobileNav } from "../context/MobileNavContext";
 import BrandLogo from "./BrandLogo";
 
 const sectionIds = ["#home", ...navLinks.map((l) => l.href)];
@@ -11,7 +12,7 @@ const sectionIds = ["#home", ...navLinks.map((l) => l.href)];
 export default function SiteHeader() {
   const scrolled = useScrollHeader();
   const activeSection = useActiveSection(sectionIds);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { menuOpen, setMenuOpen } = useMobileNav();
   const shellRef = useRef<HTMLDivElement>(null);
   const overHero = !scrolled && !menuOpen;
 
@@ -53,15 +54,15 @@ export default function SiteHeader() {
     <>
       <header
         ref={shellRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-[var(--safe-top)] ${
           scrolled
             ? "bg-premium-pearl/98 backdrop-blur-xl border-b border-curly-border/80 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
             : "bg-transparent border-b border-transparent"
         }`}
       >
         <div
-          className={`page-wrap flex items-center justify-between gap-6 transition-[padding] duration-300 ${
-            scrolled ? "py-1.5 md:py-2" : "py-4 md:py-6"
+          className={`page-wrap flex items-center justify-between gap-4 transition-[padding] duration-300 ${
+            scrolled ? "py-2 md:py-2" : "py-3 md:py-6"
           }`}
         >
           <a href="#home" className="shrink-0 leading-none">
@@ -80,7 +81,7 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <a
               href={business.instagramUrl}
               target="_blank"
@@ -94,7 +95,10 @@ export default function SiteHeader() {
             >
               <InstagramIcon />
             </a>
-            <a href="#booking" className="curly-btn-gold hidden sm:inline-flex">
+            <a
+              href="#booking"
+              className="curly-btn-gold hidden sm:inline-flex !min-h-10 !px-5 text-[10px]"
+            >
               Book
             </a>
             <button
@@ -123,7 +127,7 @@ export default function SiteHeader() {
           onClick={() => setMenuOpen(false)}
         />
         <div
-          className={`absolute top-0 right-0 h-full w-full max-w-[20rem] bg-premium-pearl border-l border-curly-border transition-transform duration-300 ${
+          className={`absolute top-0 right-0 h-full w-full max-w-[20rem] bg-premium-pearl border-l border-curly-border transition-transform duration-300 pt-[var(--safe-top)] ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
@@ -138,13 +142,13 @@ export default function SiteHeader() {
               <X size={22} strokeWidth={1.5} />
             </button>
           </div>
-          <nav className="drawer-pad py-8 flex flex-col gap-4" aria-label="Mobile">
+          <nav className="drawer-pad py-6 flex flex-col gap-1" aria-label="Mobile">
             {navLinks.map((link) => (
               <a
                 key={link.href + link.label}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`font-serif text-[1.75rem] leading-tight transition-colors ${
+                className={`min-h-12 flex items-center font-serif text-2xl leading-tight transition-colors ${
                   activeSection === link.href ? "text-curly-accent-dark" : "hover:text-curly-accent"
                 }`}
               >
@@ -152,10 +156,10 @@ export default function SiteHeader() {
               </a>
             ))}
           </nav>
-          <div className="drawer-pad border-t border-curly-border pt-8 pb-10 space-y-4">
+          <div className="drawer-pad border-t border-curly-border pt-6 pb-[calc(1.5rem+var(--bottom-nav-height))] space-y-4">
             <a
               href={business.phoneHref}
-              className="block prose-body-sm hover:text-curly-accent transition-colors"
+              className="block min-h-11 flex items-center prose-body-sm hover:text-curly-accent transition-colors"
             >
               {business.phone}
             </a>
@@ -163,12 +167,16 @@ export default function SiteHeader() {
               href={business.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 prose-body-sm hover:text-curly-accent transition-colors"
+              className="inline-flex min-h-11 items-center gap-2 prose-body-sm hover:text-curly-accent transition-colors"
             >
               <InstagramIcon size={16} />
               Instagram
             </a>
-            <a href="#booking" onClick={() => setMenuOpen(false)} className="curly-btn-gold w-full">
+            <a
+              href="#booking"
+              onClick={() => setMenuOpen(false)}
+              className="curly-btn-gold w-full"
+            >
               Book Appointment
             </a>
           </div>

@@ -138,7 +138,7 @@ export default function BookingCalendar() {
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="premium-card card-pad"
+        className="premium-card mobile-card lg:rounded-none lg:shadow-none card-pad"
       >
         <div className="w-14 h-14 border border-curly-accent/40 flex items-center justify-center mb-8 mx-auto">
           <Check size={24} className="text-curly-accent-dark" strokeWidth={1.5} />
@@ -204,7 +204,7 @@ export default function BookingCalendar() {
   }
 
   return (
-    <div className="premium-card card-pad">
+    <div className="premium-card mobile-card lg:rounded-none lg:shadow-none card-pad">
       <div className="flex items-center justify-between mb-6">
         <div>
           <p className="curly-label-gold mb-2">Book Online</p>
@@ -298,7 +298,7 @@ export default function BookingCalendar() {
                     type="button"
                     disabled={!hasSlots}
                     onClick={() => handleDateSelect(date)}
-                    className={`h-10 flex items-center justify-center text-sm transition-colors ${
+                    className={`h-11 sm:h-10 flex items-center justify-center text-sm transition-colors rounded-lg sm:rounded-none ${
                       isSelected
                         ? "bg-premium-dark text-curly-accent-light font-medium"
                         : hasSlots
@@ -373,7 +373,7 @@ export default function BookingCalendar() {
                       setSelectedTime(slot.value);
                       setStep("details");
                     }}
-                    className={`h-11 text-sm border transition-colors ${
+                    className={`h-12 sm:h-11 text-sm border transition-colors rounded-xl sm:rounded-none active:scale-[0.98] ${
                       selectedTime === slot.value
                         ? "bg-premium-dark text-curly-accent-light border-premium-dark"
                         : slot.available
@@ -423,7 +423,7 @@ export default function BookingCalendar() {
                     key={stylist.id}
                     type="button"
                     onClick={() => setSelectedStylistId(stylist.id)}
-                    className={`h-11 text-sm border transition-colors ${
+                    className={`h-12 sm:h-11 text-sm border transition-colors rounded-xl sm:rounded-none active:scale-[0.98] ${
                       selectedStylistId === stylist.id
                         ? "bg-premium-dark text-curly-accent-light border-premium-dark"
                         : "border-curly-border text-curly-body hover:border-curly-accent hover:bg-premium-champagne"

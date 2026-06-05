@@ -21,7 +21,7 @@ function FooterColumn({
 
 export default function Footer() {
   return (
-    <footer id="contact" className="bg-premium-dark text-white section-divide">
+    <footer id="contact" className="bg-premium-dark text-white section-divide pb-[var(--bottom-nav-height)] lg:pb-0">
       <div className="page-wrap py-16 md:py-20">
         <div className="card-grid-equal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10 xl:gap-14">
           <div className="flex h-full flex-col sm:col-span-2 lg:col-span-1">

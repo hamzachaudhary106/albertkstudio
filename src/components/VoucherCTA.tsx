@@ -7,7 +7,7 @@ export default function VoucherCTA() {
   return (
     <section className="premium-section section-divide bg-premium-ivory">
       <div className="page-wrap">
-        <div className="grid lg:grid-cols-2 border border-curly-border bg-white overflow-hidden">
+        <div className="grid lg:grid-cols-2 mobile-card lg:rounded-none lg:shadow-none overflow-hidden">
           <ScrollReveal variant="left" duration={0.75} className="flex flex-col justify-center card-pad lg:py-20">
             <p className="curly-label-gold mb-4">Reserve Your Chair</p>
             <h2 className="curly-heading-lg mb-5">
@@ -27,7 +27,7 @@ export default function VoucherCTA() {
               <span>Daily · 10AM to 6PM</span>
             </div>
 
-            <a href="#booking" className="curly-btn-gold w-fit">
+            <a href="#booking" className="curly-btn-gold w-full sm:w-fit">
               Book Appointment
             </a>
 

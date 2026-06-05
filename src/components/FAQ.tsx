@@ -18,14 +18,14 @@ export default function FAQ() {
             description="Appointments, location, services, and what to expect at our Aventura salon."
           />
 
-          <StaggerReveal stagger={0.08} className="border border-curly-border bg-white">
+          <StaggerReveal stagger={0.08} className="mobile-card lg:rounded-none lg:shadow-none">
             {faqs.map((faq, i) => (
               <StaggerItem key={faq.question} variant={i % 2 === 0 ? "left" : "right"}>
                 <div className="border-b border-curly-border last:border-b-0">
                     <button
                       type="button"
                       onClick={() => setOpen(open === i ? null : i)}
-                      className="w-full flex items-center justify-between gap-4 p-6 text-left min-h-[4.5rem]"
+                      className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left min-h-[3.75rem] sm:min-h-[4.5rem] active:bg-premium-champagne/40"
                       aria-expanded={open === i}
                     >
                       <h3 className="font-serif text-lg pr-4">{faq.question}</h3>

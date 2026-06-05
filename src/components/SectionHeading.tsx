@@ -21,7 +21,7 @@ export default function SectionHeading({
 }: SectionHeadingProps) {
   const content = (
     <div
-      className={`mb-12 ${align === "center" ? "text-center max-w-2xl mx-auto" : "text-left max-w-xl"} ${className}`}
+      className={`mb-8 sm:mb-12 ${align === "center" ? "text-center max-w-2xl mx-auto" : "text-left max-w-xl"} ${className}`}
     >
       <p className={`curly-label-gold mb-3 ${light ? "!text-curly-accent-light" : ""}`}>{label}</p>
       <h2 className={`curly-heading-lg mb-4 ${light ? "text-white" : ""}`}>{title}</h2>

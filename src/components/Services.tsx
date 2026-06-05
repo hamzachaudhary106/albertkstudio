@@ -22,7 +22,7 @@ export default function Services() {
               duration={0.75}
             >
               <article
-                className={`grid lg:grid-cols-2 border border-curly-border overflow-hidden bg-white ${
+                className={`grid lg:grid-cols-2 mobile-card lg:rounded-none lg:shadow-none ${
                   i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                 }`}
               >
@@ -41,7 +41,7 @@ export default function Services() {
                     <span className="text-curly-accent-dark font-semibold">{service.priceNote}</span>
                   </div>
                   <p className="prose-body-sm mb-8">{service.description}</p>
-                  <a href="#booking" className="curly-link w-fit">
+                  <a href="#booking" className="curly-link w-full sm:w-fit justify-center sm:justify-start">
                     Book This Service
                   </a>
                 </div>

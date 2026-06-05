@@ -16,8 +16,8 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/25 md:from-black/40" />
 
       <div
-        className="relative z-10 page-wrap w-full pb-20 md:pb-28"
-        style={{ paddingTop: "calc(var(--header-height) + 3rem)" }}
+        className="relative z-10 page-wrap w-full pb-24 md:pb-28"
+        style={{ paddingTop: "calc(var(--header-height) + var(--safe-top) + 2rem)" }}
       >
         <div className="max-w-xl">
           <motion.p
@@ -54,7 +54,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-3 mb-8"
+            className="mobile-btn-stack mb-8"
           >
             <a href="#booking" className="curly-btn-gold">
               Book Appointment

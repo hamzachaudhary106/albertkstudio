@@ -21,7 +21,7 @@ export default function Transformations() {
 
           <ScrollReveal variant="right" delay={0.12}>
             <figure>
-              <div className="relative overflow-hidden aspect-[4/5] border border-curly-border">
+              <div className="relative overflow-hidden aspect-[4/5] mobile-card lg:rounded-none lg:shadow-none">
                 <SafeImage
                   src={signatureWork.image}
                   alt={signatureWork.imageAlt}

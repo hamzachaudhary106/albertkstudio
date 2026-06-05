@@ -13,7 +13,7 @@ export default function OurStory() {
               <SafeImage
                 src={images.gallery.dimensionalBlonde}
                 alt="Dimensional blonde color work at Albert K Studio, Aventura"
-                className="w-full aspect-[4/5] object-cover"
+                className="w-full aspect-[4/5] object-cover rounded-2xl md:rounded-none"
               />
               <div className="absolute bottom-0 right-0 bg-premium-dark text-white px-8 py-6 hidden md:block translate-x-4 translate-y-4">
                 <p className="font-serif text-4xl text-curly-accent-light leading-none mb-1">15+</p>
