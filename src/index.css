@@ -255,7 +255,7 @@
   }
 
   .mobile-snap-row {
-    @apply flex gap-2.5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-1;
+    @apply gap-2.5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-1;
     -ms-overflow-style: none;
     scrollbar-width: none;
     margin-inline: calc(var(--site-gutter) * -1);

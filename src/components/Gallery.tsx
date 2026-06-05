@@ -63,7 +63,7 @@ function MobileGallerySlider({
   onOpen: (index: number) => void;
 }) {
   return (
-    <div className="md:hidden mobile-snap-row">
+    <div className="flex md:hidden mobile-snap-row">
       {gallery.items.map((item, i) => (
         <div
           key={item.title}
