@@ -109,7 +109,18 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-4 shrink-0">
+            <a
+              href={business.phoneHref}
+              className={`inline-flex min-h-11 items-center gap-2.5 text-sm transition-colors ${
+                overHero
+                  ? "text-white/90 hover:text-white"
+                  : "text-curly-body hover:text-curly-accent-dark"
+              }`}
+            >
+              <Phone size={16} strokeWidth={1.5} className="shrink-0" />
+              {business.phone}
+            </a>
             <a
               href={business.instagramUrl}
               target="_blank"
