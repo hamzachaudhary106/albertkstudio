@@ -54,7 +54,7 @@ export default function SiteHeader() {
     <>
       <header
         ref={shellRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-[var(--safe-top)] ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-[var(--safe-top)] pl-[var(--safe-left)] pr-[var(--safe-right)] ${
           scrolled
             ? "bg-premium-pearl/98 backdrop-blur-xl border-b border-curly-border/80 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
             : "bg-transparent border-b border-transparent"
@@ -62,7 +62,7 @@ export default function SiteHeader() {
       >
         <div
           className={`page-wrap flex items-center justify-between gap-4 transition-[padding] duration-300 ${
-            scrolled ? "py-2 md:py-2" : "py-3 md:py-6"
+            scrolled ? "py-2" : "py-2 sm:py-3 md:py-6"
           }`}
         >
           <a href="#home" className="shrink-0 leading-none">

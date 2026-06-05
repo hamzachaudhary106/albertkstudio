@@ -358,7 +358,7 @@ export default function BookingCalendar() {
             <p className="curly-label mb-4">Available Times</p>
 
             {loadingSlots ? (
-              <div className="flex items-center justify-center gap-3 py-16 text-curly-muted">
+              <div className="flex items-center justify-center gap-3 py-8 sm:py-16 text-curly-muted">
                 <Loader2 size={20} className="animate-spin" strokeWidth={1.5} />
                 <span className="text-sm">Checking availability…</span>
               </div>
@@ -417,13 +417,13 @@ export default function BookingCalendar() {
 
             <div className="mb-8">
               <p className="curly-label mb-3">Preferred Stylist</p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="flex flex-wrap gap-2">
                 {bookingStylists.map((stylist) => (
                   <button
                     key={stylist.id}
                     type="button"
                     onClick={() => setSelectedStylistId(stylist.id)}
-                    className={`h-12 sm:h-11 text-sm border transition-colors rounded-xl sm:rounded-none active:scale-[0.98] ${
+                    className={`h-11 min-w-[calc(50%-0.25rem)] flex-1 sm:min-w-0 sm:flex-none sm:h-11 text-xs sm:text-sm border transition-colors rounded-xl sm:rounded-none active:scale-[0.98] px-2 ${
                       selectedStylistId === stylist.id
                         ? "bg-premium-dark text-curly-accent-light border-premium-dark"
                         : "border-curly-border text-curly-body hover:border-curly-accent hover:bg-premium-champagne"
@@ -435,7 +435,7 @@ export default function BookingCalendar() {
               </div>
             </div>
 
-            <div className="space-y-5 mb-8">
+            <div className="space-y-4 mb-6 sm:mb-8">
               <div>
                 <label htmlFor="booking-name" className="curly-label block mb-2">
                   Full Name *

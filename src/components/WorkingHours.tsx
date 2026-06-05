@@ -15,21 +15,21 @@ export default function WorkingHours() {
                 title="Book Your Visit"
                 description={`Open daily, 10AM to 6PM. Select a date and time to submit a request. ${business.bookingConfirmNote}`}
                 align="left"
-                className="mb-10"
+                className="mb-4 sm:mb-6"
                 animate={false}
               />
               <ul>
                 {workingHours.map((item) => (
                   <li
                     key={item.day}
-                    className="flex items-center justify-between border-b border-curly-border py-4 text-sm"
+                    className="flex items-center justify-between border-b border-curly-border py-3 sm:py-4 text-sm gap-3"
                   >
-                    <span className="font-serif text-lg">{item.day}</span>
+                    <span className="font-serif text-base sm:text-lg">{item.day}</span>
                     <span className="text-curly-body">{item.hours}</span>
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 pt-8 border-t border-curly-border">
+              <div className="mt-5 sm:mt-8 pt-5 sm:pt-8 border-t border-curly-border">
                 <p className="curly-label mb-2">Prefer to call?</p>
                 <a href={business.phoneHref} className="curly-link">
                   {business.phone}

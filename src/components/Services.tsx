@@ -13,7 +13,7 @@ export default function Services() {
           description="Every service starts with a consultation. Times and pricing vary by hair length and condition."
         />
 
-        <div className="space-y-10 md:space-y-14 lg:space-y-16">
+        <div className="space-y-6 sm:space-y-10 md:space-y-14 lg:space-y-16">
           {services.map((service, i) => (
             <ScrollReveal
               key={service.id}
@@ -26,7 +26,7 @@ export default function Services() {
                   i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                 }`}
               >
-                <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:min-h-[26rem] overflow-hidden bg-premium-ivory">
+                <div className="relative aspect-[5/4] sm:aspect-[4/5] lg:aspect-auto lg:min-h-[26rem] overflow-hidden bg-premium-ivory">
                   <SafeImage
                     src={service.image}
                     alt={`${service.title} at Albert K Studio, Aventura FL`}
@@ -40,7 +40,7 @@ export default function Services() {
                     <span>{service.duration}</span>
                     <span className="text-curly-accent-dark font-semibold">{service.priceNote}</span>
                   </div>
-                  <p className="prose-body-sm mb-8">{service.description}</p>
+                  <p className="prose-body-sm mb-5 sm:mb-8">{service.description}</p>
                   <a href="#booking" className="curly-link w-full sm:w-fit justify-center sm:justify-start">
                     Book This Service
                   </a>

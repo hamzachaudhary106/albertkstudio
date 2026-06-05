@@ -13,8 +13,8 @@ function FooterColumn({
 }) {
   return (
     <div className="flex h-full flex-col">
-      <h2 className="curly-label text-curly-accent-light mb-6 shrink-0">{label}</h2>
-      <div className="flex min-h-[7.5rem] flex-col gap-3 text-sm">{children}</div>
+      <h2 className="curly-label text-curly-accent-light mb-4 sm:mb-6 shrink-0">{label}</h2>
+      <div className="flex md:min-h-[7.5rem] flex-col gap-3 text-sm">{children}</div>
     </div>
   );
 }
@@ -22,8 +22,8 @@ function FooterColumn({
 export default function Footer() {
   return (
     <footer id="contact" className="bg-premium-dark text-white section-divide pb-[var(--bottom-nav-height)] lg:pb-0">
-      <div className="page-wrap py-16 md:py-20">
-        <div className="card-grid-equal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10 xl:gap-14">
+      <div className="page-wrap py-10 sm:py-14 md:py-20">
+        <div className="card-grid-equal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-10 xl:gap-14">
           <div className="flex h-full flex-col sm:col-span-2 lg:col-span-1">
             <div className="mb-6 min-h-[3.5rem] flex items-center">
               <a href="#home" className="inline-block">
@@ -33,7 +33,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <p className="text-on-dark text-sm leading-[1.75] mb-8 max-w-[16rem]">
+            <p className="text-on-dark text-sm leading-[1.75] mb-5 sm:mb-8 max-w-[16rem]">
               {business.subTagline}. Luxury cuts, color, and styling in Town Center Aventura.
             </p>
             <div className="flex items-center gap-5 mt-auto">

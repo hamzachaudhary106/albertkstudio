@@ -45,7 +45,7 @@ function StylistCard({ stylist }: { stylist: (typeof stylists)[0] }) {
       </div>
       <div className="card-pad bg-premium-pearl card-equal-body">
         <p className="curly-label card-equal-label mb-3">{stylist.specialty}</p>
-        <p className="prose-body-sm text-sm card-equal-text mb-6">{stylist.bio}</p>
+        <p className="prose-body-sm text-sm card-equal-text mb-4 sm:mb-6">{stylist.bio}</p>
         <a
           href="#booking"
           onClick={() => setPreferredStylist(stylist.id)}
@@ -91,7 +91,7 @@ export default function Team() {
           ))}
         </StaggerReveal>
 
-        <p className="text-center text-curly-muted text-[11px] tracking-[0.18em] uppercase mt-4 md:hidden">
+        <p className="text-center text-curly-muted text-[11px] tracking-[0.18em] uppercase mt-3 md:hidden">
           Swipe to meet the team
         </p>
       </div>

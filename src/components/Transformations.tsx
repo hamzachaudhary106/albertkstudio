@@ -5,14 +5,14 @@ import SafeImage from "./SafeImage";
 export default function Transformations() {
   return (
     <section className="section-divide bg-premium-ivory">
-      <div className="page-wrap py-20 md:py-28">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="page-wrap py-8 sm:py-14 md:py-20 lg:py-28">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-10 lg:gap-16 items-center">
           <ScrollReveal variant="left">
             <div>
               <p className="curly-label-gold mb-3">{signatureWork.label}</p>
               <h2 className="curly-heading-lg mb-4">{signatureWork.title}</h2>
               <div className="gold-rule mb-5" />
-              <p className="prose-body-sm max-w-md mb-8">{signatureWork.description}</p>
+              <p className="prose-body-sm max-w-md mb-5 sm:mb-8">{signatureWork.description}</p>
               <a href="#gallery" className="curly-link">
                 View Full Portfolio
               </a>

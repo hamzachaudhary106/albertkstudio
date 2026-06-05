@@ -19,7 +19,7 @@ export default function App() {
     <MobileNavProvider>
       <LocalSeo />
       <SiteHeader />
-      <main className="mobile-app-main">
+      <main>
         <Hero />
         <OurStory />
         <Transformations />

@@ -75,20 +75,15 @@
   body {
     @apply font-sans font-normal text-curly-black bg-premium-pearl antialiased;
     margin: 0;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    padding-left: var(--safe-left);
-    padding-right: var(--safe-right);
   }
 
   #root {
     width: 100%;
     min-height: 100svh;
-  }
-
-  main.mobile-app-main {
-    padding-bottom: var(--bottom-nav-height);
+    overflow-x: clip;
   }
 
   ::selection {
@@ -132,7 +127,7 @@
   }
 
   .curly-heading-lg {
-    @apply font-serif text-[clamp(2rem,4vw,3rem)] leading-[1.1];
+    @apply font-serif text-[clamp(1.75rem,5vw,3rem)] leading-[1.12];
   }
 
   .curly-heading-md {
@@ -163,11 +158,13 @@
     width: 100%;
     max-width: var(--site-max);
     margin-inline: auto;
-    padding-inline: var(--site-gutter);
+    padding-left: max(var(--site-gutter), var(--safe-left));
+    padding-right: max(var(--site-gutter), var(--safe-right));
   }
 
   .drawer-pad {
-    padding-inline: var(--site-gutter);
+    padding-left: max(var(--site-gutter), var(--safe-left));
+    padding-right: max(var(--site-gutter), var(--safe-right));
   }
 
   .content-narrow {
@@ -176,7 +173,7 @@
   }
 
   .premium-section {
-    @apply py-14 sm:py-20 md:py-28;
+    @apply py-8 sm:py-14 md:py-20 lg:py-28;
   }
 
   .section-divide {
@@ -188,11 +185,11 @@
   }
 
   .card-pad {
-    @apply p-5 sm:p-8 lg:p-10;
+    @apply p-4 sm:p-6 md:p-8 lg:p-10;
   }
 
   .grid-2 {
-    @apply grid lg:grid-cols-2 gap-12 lg:gap-16 items-start;
+    @apply grid lg:grid-cols-2 gap-6 md:gap-10 lg:gap-16 items-start;
   }
 
   .gold-rule {
@@ -228,15 +225,29 @@
   }
 
   .card-equal-text {
-    @apply min-h-[6.75rem] flex-1;
+    @apply flex-1;
   }
 
   .card-equal-text-lg {
-    @apply min-h-[10.5rem] flex-1;
+    @apply flex-1;
   }
 
   .card-equal-label {
-    @apply min-h-[2.75rem];
+    @apply shrink-0;
+  }
+
+  @media (min-width: 768px) {
+    .card-equal-text {
+      min-height: 5.5rem;
+    }
+
+    .card-equal-text-lg {
+      min-height: 8.5rem;
+    }
+
+    .card-equal-label {
+      min-height: 2.5rem;
+    }
   }
 
   .mobile-card {
@@ -244,12 +255,13 @@
   }
 
   .mobile-snap-row {
-    @apply flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-1;
+    @apply flex gap-2.5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-1;
     -ms-overflow-style: none;
     scrollbar-width: none;
     margin-inline: calc(var(--site-gutter) * -1);
     padding-inline: var(--site-gutter);
     scroll-padding-inline: var(--site-gutter);
+    max-width: 100vw;
   }
 
   .mobile-snap-row::-webkit-scrollbar {
@@ -261,15 +273,15 @@
   }
 
   .mobile-snap-card-sm {
-    width: min(78vw, 18rem);
+    width: min(72vw, 16.5rem);
   }
 
   .mobile-snap-card-md {
-    width: min(84vw, 20rem);
+    width: min(76vw, 18rem);
   }
 
   .mobile-snap-card-lg {
-    width: min(88vw, 22rem);
+    width: min(80vw, 19.5rem);
   }
 
   .mobile-btn-stack {
@@ -283,6 +295,8 @@
 
   .mobile-bottom-nav {
     padding-bottom: var(--safe-bottom);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
     background: rgba(255, 252, 248, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);

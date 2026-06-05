@@ -8,7 +8,7 @@ function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
       <p className="text-curly-accent-light text-[10px] tracking-[0.28em] mb-4 shrink-0">
         {"★".repeat(5)}
       </p>
-      <p className="text-white/90 text-[15px] leading-[1.75] italic card-equal-text-lg mb-6">
+      <p className="text-white/90 text-[15px] leading-[1.7] italic card-equal-text-lg mb-4 sm:mb-6">
         &ldquo;{review.text}&rdquo;
       </p>
       <footer className="pt-4 border-t border-white/10 mt-auto shrink-0">
@@ -33,9 +33,9 @@ export default function Reviews() {
         />
 
         <ScrollReveal variant="fade" duration={0.8}>
-          <blockquote className="max-w-3xl mx-auto text-center mb-10 pb-10 border-b border-white/10 px-1">
-            <p className="text-curly-accent-light text-sm tracking-[0.3em] mb-6">{"★".repeat(5)}</p>
-            <p className="font-serif text-xl sm:text-2xl md:text-[1.75rem] leading-[1.35] italic text-white mb-6">
+          <blockquote className="max-w-3xl mx-auto text-center mb-6 pb-6 sm:mb-10 sm:pb-10 border-b border-white/10 px-1">
+            <p className="text-curly-accent-light text-sm tracking-[0.3em] mb-4 sm:mb-6">{"★".repeat(5)}</p>
+            <p className="font-serif text-lg sm:text-2xl md:text-[1.75rem] leading-[1.35] italic text-white mb-4 sm:mb-6">
               &ldquo;{featuredReview.text}&rdquo;
             </p>
             <footer>
@@ -68,7 +68,7 @@ export default function Reviews() {
         </StaggerReveal>
 
         <ScrollReveal variant="up" delay={0.1}>
-          <div className="text-center mt-10">
+          <div className="text-center mt-6 sm:mt-10">
             <a
               href={business.mapsUrl}
               target="_blank"

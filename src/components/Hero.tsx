@@ -5,7 +5,10 @@ import SafeImage from "./SafeImage";
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-[100svh] flex items-end md:items-center overflow-hidden bg-premium-dark">
+    <section
+      id="home"
+      className="relative min-h-[100svh] flex flex-col overflow-hidden bg-premium-dark"
+    >
       <SafeImage
         src={images.hero}
         alt="Albert K Studio luxury hair salon interior, Aventura Florida"
@@ -16,9 +19,11 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/25 md:from-black/40" />
 
       <div
-        className="relative z-10 page-wrap w-full pb-24 md:pb-28"
-        style={{ paddingTop: "calc(var(--header-height) + var(--safe-top) + 2rem)" }}
-      >
+        className="shrink-0 h-[calc(var(--header-height)+var(--safe-top)+1.25rem)] md:h-[calc(var(--header-height)+var(--safe-top)+2rem)]"
+        aria-hidden
+      />
+
+      <div className="relative z-10 flex flex-1 flex-col justify-center page-wrap w-full pb-[calc(1.5rem+var(--bottom-nav-height))] sm:pb-20 md:pb-28">
         <div className="max-w-xl">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -33,7 +38,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
-            className="font-serif text-[clamp(2.5rem,6vw,4rem)] leading-[1.08] text-white mb-5"
+            className="font-serif text-[clamp(2rem,7.5vw,4rem)] leading-[1.08] text-white mb-4 sm:mb-5"
           >
             {hero.titleLine1}
             <br />
@@ -45,7 +50,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.12 }}
-            className="text-white/90 text-base md:text-[1.0625rem] leading-[1.75] mb-8"
+            className="text-white/90 text-[15px] sm:text-base md:text-[1.0625rem] leading-[1.7] mb-6 sm:mb-8"
           >
             {hero.subtitle}
           </motion.p>
