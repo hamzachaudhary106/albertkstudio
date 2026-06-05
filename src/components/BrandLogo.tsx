@@ -23,7 +23,7 @@ export default function BrandLogo({
     <img
       src={images.logo.light}
       alt="Albert K Studio"
-      className={`h-11 sm:h-14 md:h-20 lg:h-[5.25rem] w-auto max-w-[min(440px,68vw)] object-contain object-left transition-[filter] duration-300 ${
+      className={`h-[3.25rem] sm:h-14 md:h-20 lg:h-[5.25rem] w-auto max-w-[min(440px,74vw)] object-contain object-left transition-[filter] duration-300 ${
         isBlack ? "brightness-0" : ""
       } ${className}`}
       width={440}
