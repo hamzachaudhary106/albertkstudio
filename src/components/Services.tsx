@@ -59,7 +59,7 @@ export default function Services({ showAllCta = true }: ServicesProps) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
                     <span className="absolute left-5 top-5 pill-luxe-dark">
                       {String(i + 1).padStart(2, "0")}
-                      <span className="text-white/50">/ {String(services.length).padStart(2, "0")}</span>
+                      <span className="text-white/65">/ {String(services.length).padStart(2, "0")}</span>
                     </span>
                     <span className="absolute bottom-5 right-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white backdrop-blur-md opacity-0 translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
                       <ArrowUpRight size={18} strokeWidth={1.5} />

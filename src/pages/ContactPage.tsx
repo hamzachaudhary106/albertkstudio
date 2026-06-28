@@ -123,18 +123,6 @@ export default function ContactPage() {
               <ContactForm />
             </ScrollReveal>
           </div>
-
-          <ScrollReveal variant="fade" delay={0.1}>
-            <div className="mt-10 sm:mt-14 overflow-hidden border border-curly-border">
-              <iframe
-                title="Albert K Studio location on Google Maps"
-                src={business.mapsEmbedUrl}
-                className="w-full h-64 sm:h-80"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
