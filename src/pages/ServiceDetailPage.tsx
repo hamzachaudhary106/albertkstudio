@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { Check, Clock, Phone, Tag } from "lucide-react";
+import { Calendar, Check, Clock, Phone, Tag } from "lucide-react";
 import Seo from "../components/Seo";
 import PageHero from "../components/PageHero";
 import CTABand from "../components/CTABand";
@@ -150,19 +150,20 @@ export default function ServiceDetailPage() {
                     <p className="prose-body-sm">{service.idealFor}</p>
                   </div>
 
-                  <div className="mt-7 space-y-3">
+                  <div className="mt-7">
                     <Link
                       to={routes.book}
                       onClick={() => setPreferredService(service.id)}
-                      className="curly-btn-gold w-full"
+                      className="curly-btn-gold w-full !px-4 !tracking-[0.16em] gap-2.5 text-center leading-tight whitespace-nowrap"
                     >
-                      Request This Service
+                      <Calendar size={15} strokeWidth={1.5} className="shrink-0" />
+                      Request to Book
                     </Link>
                     <a
                       href={business.phoneHref}
-                      className="inline-flex items-center justify-center gap-2 w-full min-h-11 text-[11px] font-medium tracking-[0.24em] uppercase text-curly-body hover:text-curly-accent-dark transition-colors"
+                      className="mt-3 inline-flex items-center justify-center gap-2 w-full min-h-11 text-[11px] font-medium tracking-[0.18em] uppercase text-curly-body hover:text-curly-accent-dark transition-colors"
                     >
-                      <Phone size={14} strokeWidth={1.5} />
+                      <Phone size={14} strokeWidth={1.5} className="shrink-0" />
                       {business.phone}
                     </a>
                   </div>
