@@ -182,6 +182,22 @@ nginx -t && systemctl reload nginx
   changes, re-copy to the volume and `restart functions` (A) or
   `systemctl restart albertk-booking` (B).
 
+## Auto-deploy (GitHub Actions)
+Pushing to `main` automatically deploys to the VPS via
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml): it SSHes in and
+runs [`deploy/server-deploy.sh`](deploy/server-deploy.sh), which `git pull`s,
+rebuilds the frontend, and refreshes the edge functions.
+
+Required repo secrets (Settings → Secrets → Actions):
+- `SERVER_HOST` — VPS IP
+- `SERVER_USER` — SSH user (e.g. `root`)
+- `SERVER_SSH_KEY` — private key whose public half is in the server's `~/.ssh/authorized_keys`
+
+Trigger manually anytime with **Actions → Deploy to VPS → Run workflow**.
+The server checkout lives at `/var/www/albertkstudio` (its `.env` is untracked
+and preserved across deploys). **Database migrations are not auto-applied** —
+run new ones manually (step 3) to avoid data loss.
+
 ## Security checklist
 - Postgres (5432) and Kong (8000) bound to localhost only — never open in `ufw`.
 - Regenerated `JWT_SECRET`, `ANON_KEY`, `SERVICE_ROLE_KEY`, DB + dashboard passwords.
