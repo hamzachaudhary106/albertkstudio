@@ -338,6 +338,13 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   }
 
+  /* When the header bar itself is solid (scrolled / inner pages), the inner
+     shell carries no chrome of its own — avoids a "pill on a bar" look. */
+  .mobile-header-shell-plain {
+    border-color: transparent;
+    background: transparent;
+  }
+
   .mobile-header-cta {
     @apply inline-flex items-center justify-center min-h-9 px-4 text-[9px] font-semibold tracking-[0.22em] uppercase rounded-full transition-transform duration-200 active:scale-95;
     background: linear-gradient(135deg, #c4a07a 0%, #b8956e 50%, #a6845d 100%);

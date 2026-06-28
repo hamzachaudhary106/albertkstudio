@@ -61,7 +61,7 @@ export default function SiteHeader() {
     return active ? "text-curly-accent-dark" : "text-curly-body hover:text-curly-black";
   };
 
-  const mobileShellClass = overHero ? "mobile-header-shell-hero" : "mobile-header-shell-scrolled";
+  const mobileShellClass = overHero ? "mobile-header-shell-hero" : "mobile-header-shell-plain";
 
   return (
     <>
@@ -69,8 +69,8 @@ export default function SiteHeader() {
         ref={shellRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-[calc(0.5rem+var(--safe-top))] pb-1 lg:pt-[var(--safe-top)] lg:pb-0 pl-[var(--safe-left)] pr-[var(--safe-right)] ${
           scrolled || !isHome
-            ? "lg:bg-premium-pearl/98 lg:backdrop-blur-xl lg:border-b lg:border-curly-border/80 lg:shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-            : "lg:bg-transparent lg:border-b lg:border-transparent"
+            ? "bg-premium-pearl/98 backdrop-blur-xl border-b border-curly-border/80 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+            : "bg-transparent border-b border-transparent"
         }`}
       >
         {/* Mobile header */}
