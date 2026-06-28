@@ -1,96 +1,325 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  CalendarDays,
+  CalendarPlus,
+  Check,
+  Clock,
+  FolderOpen,
+  Image as ImageIcon,
+  Inbox,
+  Mail,
+  MessageSquareQuote,
+  Plus,
+  Scissors,
+  SlidersHorizontal,
+  Sparkles,
+  Star,
+} from "lucide-react";
 import { supabase } from "./adminClient";
-import { PageTitle, cls } from "./ui";
+import { Badge, Button, Card, EmptyState, SectionTitle, StatCard } from "./ui";
+import { useAdmin } from "./store";
+import { fmtDateTime, timeAgo } from "./lib";
 
-type Stat = { label: string; value: number | string; to: string };
+type Widget = "quickActions" | "upcoming" | "messages" | "content" | "activity";
+const ALL_WIDGETS: { key: Widget; label: string }[] = [
+  { key: "quickActions", label: "Quick actions" },
+  { key: "upcoming", label: "Upcoming appointments" },
+  { key: "messages", label: "Recent messages" },
+  { key: "activity", label: "Recent activity" },
+  { key: "content", label: "Content overview" },
+];
+const DEFAULT_WIDGETS: Widget[] = ["quickActions", "upcoming", "messages", "activity", "content"];
 
-function fmt(iso: string) {
-  return new Date(iso).toLocaleString("en-US", {
-    timeZone: "America/New_York",
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
+function useWidgets() {
+  const [widgets, setWidgets] = useState<Widget[]>(() => {
+    try {
+      const raw = localStorage.getItem("ak.dash.widgets");
+      if (raw) return JSON.parse(raw) as Widget[];
+    } catch {
+      /* ignore */
+    }
+    return DEFAULT_WIDGETS;
   });
+  useEffect(() => {
+    localStorage.setItem("ak.dash.widgets", JSON.stringify(widgets));
+  }, [widgets]);
+  const toggle = (w: Widget) =>
+    setWidgets((cur) => (cur.includes(w) ? cur.filter((x) => x !== w) : [...DEFAULT_WIDGETS.filter((d) => cur.includes(d) || d === w)]));
+  return { widgets, toggle, has: (w: Widget) => widgets.includes(w) };
 }
 
+type Row = Record<string, unknown>;
+
 export default function Dashboard() {
-  const [stats, setStats] = useState<Stat[]>([]);
-  const [upcoming, setUpcoming] = useState<Record<string, unknown>[]>([]);
-  const [messages, setMessages] = useState<Record<string, unknown>[]>([]);
+  const { profile, can } = useAdmin();
+  const { toggle, has } = useWidgets();
+  const [customizing, setCustomizing] = useState(false);
+  const [stats, setStats] = useState({ confirmed: 0, pending: 0, messages: 0, services: 0 });
+  const [upcoming, setUpcoming] = useState<Row[]>([]);
+  const [messages, setMessages] = useState<Row[]>([]);
+  const [activity, setActivity] = useState<Row[]>([]);
+  const [counts, setCounts] = useState({ services: 0, gallery: 0, team: 0, reviews: 0, faqs: 0 });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0);
+      const head = { count: "exact" as const, head: true };
 
-      const [confirmed, pending, newMsgs, up, msgs] = await Promise.all([
-        supabase.from("appointments").select("*", { count: "exact", head: true }).eq("status", "confirmed").gte("starts_at", todayStart.toISOString()),
-        supabase.from("appointments").select("*", { count: "exact", head: true }).eq("status", "pending"),
-        supabase.from("contact_submissions").select("*", { count: "exact", head: true }).eq("status", "new"),
-        supabase.from("appointments").select("id,starts_at,customer_name,status,services(title)").eq("status", "confirmed").gte("starts_at", todayStart.toISOString()).order("starts_at").limit(6),
-        supabase.from("contact_submissions").select("id,name,topic,created_at,status").order("created_at", { ascending: false }).limit(6),
+      const [confirmed, pending, newMsgs, svc, gal, team, rev, faq, up, msgs] = await Promise.all([
+        supabase.from("appointments").select("*", head).eq("status", "confirmed").gte("starts_at", todayStart.toISOString()),
+        supabase.from("appointments").select("*", head).eq("status", "pending"),
+        supabase.from("contact_submissions").select("*", head).eq("status", "new"),
+        supabase.from("services").select("*", head).eq("active", true),
+        supabase.from("gallery_items").select("*", head).eq("active", true),
+        supabase.from("team_members").select("*", head).eq("active", true),
+        supabase.from("reviews").select("*", head).eq("active", true),
+        supabase.from("faqs").select("*", head).eq("active", true),
+        supabase
+          .from("appointments")
+          .select("id,starts_at,customer_name,status,services(title)")
+          .in("status", ["pending", "confirmed"])
+          .gte("starts_at", todayStart.toISOString())
+          .order("starts_at")
+          .limit(6),
+        supabase
+          .from("contact_submissions")
+          .select("id,name,topic,created_at,status")
+          .order("created_at", { ascending: false })
+          .limit(6),
       ]);
 
-      setStats([
-        { label: "Upcoming confirmed", value: confirmed.count ?? 0, to: "/admin/bookings" },
-        { label: "Pending (awaiting payment)", value: pending.count ?? 0, to: "/admin/bookings" },
-        { label: "New messages", value: newMsgs.count ?? 0, to: "/admin/contact" },
-      ]);
+      setStats({ confirmed: confirmed.count ?? 0, pending: pending.count ?? 0, messages: newMsgs.count ?? 0, services: svc.count ?? 0 });
+      setCounts({
+        services: svc.count ?? 0,
+        gallery: gal.count ?? 0,
+        team: team.count ?? 0,
+        reviews: rev.count ?? 0,
+        faqs: faq.count ?? 0,
+      });
       setUpcoming(up.data ?? []);
       setMessages(msgs.data ?? []);
+
+      try {
+        const { data } = await supabase
+          .from("activity_logs")
+          .select("id,actor_email,action,entity,label,created_at")
+          .order("created_at", { ascending: false })
+          .limit(6);
+        setActivity(data ?? []);
+      } catch {
+        setActivity([]);
+      }
+      setLoading(false);
     })();
   }, []);
 
+  const greeting = useMemo(() => {
+    const h = new Date().getHours();
+    return h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+  }, []);
+  const firstName = profile.fullName.split(/[\s@]/)[0];
+
+  const contentCounts = [
+    { label: "Services", value: counts.services, icon: Scissors, to: "/admin/services" },
+    { label: "Gallery", value: counts.gallery, icon: ImageIcon, to: "/admin/gallery" },
+    { label: "Reviews", value: counts.reviews, icon: Star, to: "/admin/reviews" },
+    { label: "FAQs", value: counts.faqs, icon: MessageSquareQuote, to: "/admin/faqs" },
+  ];
+
+  const quickActions = [
+    { label: "Add service", icon: Scissors, to: "/admin/services" },
+    { label: "Upload media", icon: FolderOpen, to: "/admin/media" },
+    { label: "Add gallery image", icon: ImageIcon, to: "/admin/gallery" },
+    { label: "Add review", icon: Star, to: "/admin/reviews" },
+  ];
+
   return (
     <div>
-      <PageTitle title="Dashboard" subtitle="Overview of bookings and messages" />
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {stats.map((s) => (
-          <Link key={s.label} to={s.to} className={`${cls.card} p-5 transition hover:border-[#b8956e]/50`}>
-            <p className="text-3xl font-semibold text-neutral-900">{s.value}</p>
-            <p className="mt-1 text-sm text-neutral-500">{s.label}</p>
-          </Link>
-        ))}
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="font-serif text-[1.75rem] leading-tight text-neutral-900">
+            {greeting}, {firstName}
+          </h1>
+          <p className="mt-1 text-sm text-neutral-500">
+            {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })} · Here's what's
+            happening at the studio.
+          </p>
+        </div>
+        <div className="relative">
+          <Button variant="secondary" size="sm" onClick={() => setCustomizing((c) => !c)}>
+            <SlidersHorizontal size={15} /> Customize
+          </Button>
+          {customizing && (
+            <div className="absolute right-0 z-30 mt-2 w-60 rounded-xl border border-neutral-200 bg-white p-1.5 shadow-xl">
+              <p className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
+                Show widgets
+              </p>
+              {ALL_WIDGETS.map((w) => (
+                <button
+                  key={w.key}
+                  onClick={() => toggle(w.key)}
+                  className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
+                >
+                  {w.label}
+                  <span
+                    className={`flex h-4 w-4 items-center justify-center rounded border ${
+                      has(w.key) ? "border-[#b8956e] bg-[#b8956e] text-white" : "border-neutral-300"
+                    }`}
+                  >
+                    {has(w.key) && <Check size={12} />}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className={`${cls.card} p-5`}>
-          <h2 className="mb-4 font-serif text-lg">Upcoming appointments</h2>
-          {upcoming.length === 0 && <p className="text-sm text-neutral-400">No upcoming confirmed bookings.</p>}
-          <ul className="space-y-3">
-            {upcoming.map((a) => (
-              <li key={String(a.id)} className="flex items-center justify-between gap-3 text-sm">
-                <span>
-                  <span className="font-medium">{String(a.customer_name)}</span>
-                  <span className="text-neutral-400"> · {(a.services as { title?: string } | null)?.title ?? "—"}</span>
-                </span>
-                <span className="shrink-0 text-neutral-500">{fmt(String(a.starts_at))}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatCard label="Confirmed (upcoming)" value={stats.confirmed} icon={<CalendarDays size={18} />} tone="green" to={can("bookings") ? "/admin/bookings" : undefined} />
+        <StatCard label="Pending bookings" value={stats.pending} icon={<Clock size={18} />} tone="amber" to={can("bookings") ? "/admin/bookings" : undefined} />
+        <StatCard label="New messages" value={stats.messages} icon={<Mail size={18} />} tone="gold" to={can("messages") ? "/admin/contact" : undefined} />
+        <StatCard label="Active services" value={stats.services} icon={<Scissors size={18} />} tone="blue" to="/admin/services" />
+      </div>
 
-        <div className={`${cls.card} p-5`}>
-          <h2 className="mb-4 font-serif text-lg">Recent messages</h2>
-          {messages.length === 0 && <p className="text-sm text-neutral-400">No messages yet.</p>}
-          <ul className="space-y-3">
-            {messages.map((m) => (
-              <li key={String(m.id)} className="flex items-center justify-between gap-3 text-sm">
-                <span>
-                  <span className="font-medium">{String(m.name)}</span>
-                  <span className="text-neutral-400"> · {String(m.topic ?? "")}</span>
+      {/* Quick actions */}
+      {has("quickActions") && (
+        <div className="mt-6">
+          <SectionTitle>Quick actions</SectionTitle>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {quickActions.map((a) => (
+              <Link
+                key={a.label}
+                to={a.to}
+                className="group flex items-center gap-3 rounded-xl border border-neutral-200/80 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#b8956e]/50 hover:shadow-md"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#b8956e]/10 text-[#a6845d]">
+                  <a.icon size={18} />
                 </span>
-                <span className="shrink-0 text-neutral-500">
-                  {String(m.status) === "new" ? <span className="rounded-full bg-[#b8956e]/15 px-2 py-0.5 text-xs text-[#a6845d]">new</span> : ""}
-                </span>
-              </li>
+                <span className="text-sm font-medium text-neutral-800">{a.label}</span>
+                <Plus size={15} className="ml-auto text-neutral-300 transition group-hover:text-[#b8956e]" />
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
+      )}
+
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* Upcoming */}
+        {has("upcoming") && (
+          <Card className="p-5">
+            <SectionTitle action={<Link to="/admin/bookings" className="text-xs font-medium text-[#a6845d] hover:underline">View all</Link>}>
+              Upcoming appointments
+            </SectionTitle>
+            {loading ? (
+              <p className="py-6 text-sm text-neutral-400">Loading…</p>
+            ) : upcoming.length === 0 ? (
+              <EmptyState icon={<CalendarPlus size={20} />} title="No upcoming bookings" description="Confirmed and pending appointments will appear here." />
+            ) : (
+              <ul className="divide-y divide-neutral-100">
+                {upcoming.map((a) => (
+                  <li key={String(a.id)} className="flex items-center justify-between gap-3 py-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-neutral-900">{String(a.customer_name)}</p>
+                      <p className="truncate text-xs text-neutral-400">
+                        {(a.services as { title?: string } | null)?.title ?? "—"}
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 flex-col items-end gap-1">
+                      <span className="text-xs text-neutral-500">{fmtDateTime(String(a.starts_at))}</span>
+                      <Badge tone={a.status === "confirmed" ? "green" : "amber"}>{String(a.status)}</Badge>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Card>
+        )}
+
+        {/* Messages */}
+        {has("messages") && (
+          <Card className="p-5">
+            <SectionTitle action={<Link to="/admin/contact" className="text-xs font-medium text-[#a6845d] hover:underline">View all</Link>}>
+              Recent messages
+            </SectionTitle>
+            {loading ? (
+              <p className="py-6 text-sm text-neutral-400">Loading…</p>
+            ) : messages.length === 0 ? (
+              <EmptyState icon={<Inbox size={20} />} title="No messages yet" description="Contact form submissions will land here." />
+            ) : (
+              <ul className="divide-y divide-neutral-100">
+                {messages.map((m) => (
+                  <li key={String(m.id)} className="flex items-center justify-between gap-3 py-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-neutral-900">{String(m.name)}</p>
+                      <p className="truncate text-xs text-neutral-400">{String(m.topic ?? "General")}</p>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-2">
+                      {String(m.status) === "new" && <Badge tone="gold">new</Badge>}
+                      <span className="text-xs text-neutral-400">{timeAgo(String(m.created_at))}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Card>
+        )}
+
+        {/* Activity */}
+        {has("activity") && (
+          <Card className="p-5">
+            <SectionTitle action={can("activity") ? <Link to="/admin/activity" className="text-xs font-medium text-[#a6845d] hover:underline">View all</Link> : undefined}>
+              Recent activity
+            </SectionTitle>
+            {activity.length === 0 ? (
+              <EmptyState icon={<Sparkles size={20} />} title="No activity yet" description="Edits you make across the CMS will be logged here." />
+            ) : (
+              <ul className="space-y-3">
+                {activity.map((a) => (
+                  <li key={String(a.id)} className="flex items-start gap-3">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#b8956e]" />
+                    <p className="text-sm text-neutral-600">
+                      <span className="font-medium text-neutral-800">{String(a.actor_email ?? "Someone")}</span>{" "}
+                      {String(a.action)} {String(a.entity)}
+                      {a.label ? <span className="text-neutral-500"> · {String(a.label)}</span> : ""}
+                      <span className="block text-xs text-neutral-400">{timeAgo(String(a.created_at))}</span>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Card>
+        )}
+
+        {/* Content overview */}
+        {has("content") && (
+          <Card className="p-5">
+            <SectionTitle>Content overview</SectionTitle>
+            <div className="grid grid-cols-2 gap-3">
+              {contentCounts.map((c) => (
+                <Link
+                  key={c.label}
+                  to={c.to}
+                  className="group flex items-center gap-3 rounded-lg border border-neutral-200/70 p-3 transition hover:border-[#b8956e]/50 hover:bg-neutral-50"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-100 text-neutral-500 group-hover:bg-[#b8956e]/10 group-hover:text-[#a6845d]">
+                    <c.icon size={16} />
+                  </span>
+                  <div>
+                    <p className="text-lg font-semibold leading-none text-neutral-900">{c.value}</p>
+                    <p className="text-xs text-neutral-400">{c.label}</p>
+                  </div>
+                  <ArrowRight size={15} className="ml-auto text-neutral-300 transition group-hover:text-[#b8956e]" />
+                </Link>
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
     </div>
   );

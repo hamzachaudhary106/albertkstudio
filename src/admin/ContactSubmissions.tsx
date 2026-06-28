@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
-import { Trash2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Inbox, Mail, Phone, Trash2 } from "lucide-react";
 import { supabase } from "./adminClient";
-import { PageTitle, cls } from "./ui";
+import { Badge, Button, Card, EmptyState, PageHeader, SearchInput, Select, Spinner } from "./ui";
+import { useToast } from "./store";
+import { fmtDateTime, initials, logActivity, timeAgo } from "./lib";
 
 type Submission = {
   id: string;
@@ -14,9 +16,14 @@ type Submission = {
   created_at: string;
 };
 
+const FILTERS = ["all", "new", "read", "archived"] as const;
+
 export default function ContactSubmissions() {
+  const { notify } = useToast();
   const [rows, setRows] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
+  const [q, setQ] = useState("");
 
   const load = async () => {
     setLoading(true);
@@ -38,54 +45,118 @@ export default function ContactSubmissions() {
     setRows((r) => r.map((x) => (x.id === id ? { ...x, status } : x)));
   };
 
-  const remove = async (id: string) => {
-    if (!confirm("Delete this submission?")) return;
-    await supabase.from("contact_submissions").delete().eq("id", id);
-    setRows((r) => r.filter((x) => x.id !== id));
+  const remove = async (row: Submission) => {
+    if (!confirm("Delete this message?")) return;
+    await supabase.from("contact_submissions").delete().eq("id", row.id);
+    setRows((r) => r.filter((x) => x.id !== row.id));
+    notify("Message deleted");
+    logActivity({ action: "deleted", entity: "message", label: row.name });
   };
+
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { all: rows.length, new: 0, read: 0, archived: 0 };
+    rows.forEach((r) => (c[r.status] = (c[r.status] ?? 0) + 1));
+    return c;
+  }, [rows]);
+
+  const filtered = useMemo(() => {
+    let list = filter === "all" ? rows : rows.filter((r) => r.status === filter);
+    if (q.trim()) {
+      const term = q.toLowerCase();
+      list = list.filter(
+        (r) =>
+          r.name.toLowerCase().includes(term) ||
+          (r.email ?? "").toLowerCase().includes(term) ||
+          (r.message ?? "").toLowerCase().includes(term),
+      );
+    }
+    return list;
+  }, [rows, filter, q]);
 
   return (
     <div>
-      <PageTitle title="Contact Submissions" subtitle="Messages sent through the website contact form" />
+      <PageHeader title="Messages" subtitle="Enquiries sent through the website contact form" />
+
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="inline-flex rounded-lg border border-neutral-200 bg-white p-1">
+          {FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`rounded-md px-3 py-1.5 text-[13px] font-medium capitalize transition ${
+                filter === f ? "bg-[#b8956e] text-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
+              }`}
+            >
+              {f}
+              <span className={`ml-1.5 ${filter === f ? "text-white/70" : "text-neutral-400"}`}>{counts[f] ?? 0}</span>
+            </button>
+          ))}
+        </div>
+        <SearchInput value={q} onChange={setQ} placeholder="Search messages…" className="sm:max-w-xs" />
+      </div>
 
       {loading ? (
-        <p className="text-sm text-neutral-400">Loading…</p>
-      ) : rows.length === 0 ? (
-        <p className="text-sm text-neutral-400">No submissions yet.</p>
+        <Spinner />
+      ) : filtered.length === 0 ? (
+        <EmptyState icon={<Inbox size={22} />} title="No messages" description="Contact form submissions will appear here." />
       ) : (
-        <div className="space-y-4">
-          {rows.map((m) => (
-            <div key={m.id} className={`${cls.card} p-5 ${m.status === "new" ? "border-l-4 border-l-[#b8956e]" : ""}`}>
+        <div className="space-y-3">
+          {filtered.map((m) => (
+            <Card key={m.id} className={`overflow-hidden p-5 ${m.status === "new" ? "border-l-[3px] border-l-[#b8956e]" : ""}`}>
               <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                  <p className="font-medium text-neutral-900">
-                    {m.name}
-                    {m.topic ? <span className="ml-2 rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-500">{m.topic}</span> : null}
-                  </p>
-                  <p className="mt-0.5 text-xs text-neutral-400">
-                    {m.email ? <a href={`mailto:${m.email}`} className="hover:text-[#a6845d]">{m.email}</a> : null}
-                    {m.email && m.phone ? " · " : ""}
-                    {m.phone ? <a href={`tel:${m.phone}`} className="hover:text-[#a6845d]">{m.phone}</a> : null}
-                  </p>
+                <div className="flex items-start gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#b8956e]/12 text-sm font-semibold text-[#a6845d]">
+                    {initials(m.name)}
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-neutral-900">{m.name}</p>
+                      {m.topic && <Badge tone="neutral">{m.topic}</Badge>}
+                      {m.status === "new" && <Badge tone="gold">new</Badge>}
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-neutral-400">
+                      {m.email && (
+                        <a href={`mailto:${m.email}`} className="inline-flex items-center gap-1 hover:text-[#a6845d]">
+                          <Mail size={11} /> {m.email}
+                        </a>
+                      )}
+                      {m.phone && (
+                        <a href={`tel:${m.phone}`} className="inline-flex items-center gap-1 hover:text-[#a6845d]">
+                          <Phone size={11} /> {m.phone}
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <span className="text-xs text-neutral-400">{new Date(m.created_at).toLocaleString()}</span>
+                <span className="text-xs text-neutral-400" title={fmtDateTime(m.created_at)}>
+                  {timeAgo(m.created_at)}
+                </span>
               </div>
-              {m.message && <p className="mt-3 whitespace-pre-wrap text-sm text-neutral-700">{m.message}</p>}
+
+              {m.message && (
+                <p className="mt-3 whitespace-pre-wrap rounded-lg bg-neutral-50 p-3 text-sm text-neutral-700">{m.message}</p>
+              )}
+
               <div className="mt-4 flex items-center gap-2">
-                <select
-                  value={m.status}
-                  onChange={(e) => setStatus(m.id, e.target.value)}
-                  className="rounded border border-neutral-200 bg-white px-2 py-1 text-xs capitalize"
-                >
+                <Select value={m.status} onChange={(e) => setStatus(m.id, e.target.value)} className="h-8 w-auto py-0 text-xs">
                   {["new", "read", "archived"].map((s) => (
-                    <option key={s} value={s}>{s}</option>
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
                   ))}
-                </select>
-                <button onClick={() => remove(m.id)} className={cls.danger}>
+                </Select>
+                {m.email && (
+                  <a href={`mailto:${m.email}`}>
+                    <Button variant="secondary" size="sm">
+                      <Mail size={14} /> Reply
+                    </Button>
+                  </a>
+                )}
+                <Button variant="danger" size="sm" onClick={() => remove(m)}>
                   <Trash2 size={14} /> Delete
-                </button>
+                </Button>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}
