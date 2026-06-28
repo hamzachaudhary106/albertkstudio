@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { routes, services, servicesSection } from "../data/content";
+import { ArrowRight } from "lucide-react";
+import { routes, serviceDetailPath, services, servicesSection } from "../data/content";
+import { setPreferredService } from "../lib/service";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
 import SafeImage from "./SafeImage";
@@ -32,24 +34,48 @@ export default function Services({ showAllCta = true }: ServicesProps) {
                   i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                 }`}
               >
-                <div className="relative aspect-[5/4] sm:aspect-[4/5] lg:aspect-auto lg:min-h-[26rem] overflow-hidden bg-premium-ivory">
+                <Link
+                  to={serviceDetailPath(service.id)}
+                  className="group relative aspect-[5/4] sm:aspect-[4/5] lg:aspect-auto lg:min-h-[26rem] overflow-hidden bg-premium-ivory"
+                  aria-label={`View details for ${service.title}`}
+                >
                   <SafeImage
                     src={service.image}
                     alt={`${service.title} at Albert K Studio, Aventura FL`}
-                    className={`absolute inset-0 w-full h-full object-cover ${service.imagePosition}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${service.imagePosition}`}
                   />
-                </div>
+                </Link>
                 <div className="flex flex-col justify-center card-pad bg-premium-pearl">
                   <p className="curly-label-gold mb-3">{service.tagline}</p>
-                  <h3 className="font-serif text-2xl md:text-[1.75rem] mb-4 leading-tight">{service.title}</h3>
+                  <h3 className="font-serif text-2xl md:text-[1.75rem] mb-4 leading-tight">
+                    <Link
+                      to={serviceDetailPath(service.id)}
+                      className="hover:text-curly-accent-dark transition-colors"
+                    >
+                      {service.title}
+                    </Link>
+                  </h3>
                   <div className="flex flex-wrap gap-4 mb-5 text-[11px] tracking-[0.18em] uppercase text-curly-muted">
                     <span>{service.duration}</span>
                     <span className="text-curly-accent-dark font-semibold">{service.priceNote}</span>
                   </div>
                   <p className="prose-body-sm mb-5 sm:mb-8">{service.description}</p>
-                  <Link to={routes.book} className="curly-link w-full sm:w-fit justify-center sm:justify-start">
-                    Request This Service
-                  </Link>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 sm:items-center">
+                    <Link
+                      to={serviceDetailPath(service.id)}
+                      className="curly-link w-full sm:w-fit justify-center sm:justify-start"
+                    >
+                      View Details
+                    </Link>
+                    <Link
+                      to={routes.book}
+                      onClick={() => setPreferredService(service.id)}
+                      className="inline-flex items-center justify-center sm:justify-start gap-2 min-h-11 text-[11px] font-medium tracking-[0.24em] uppercase text-curly-accent-dark hover:text-curly-black transition-colors"
+                    >
+                      Book
+                      <ArrowRight size={14} strokeWidth={1.5} />
+                    </Link>
+                  </div>
                 </div>
               </article>
             </ScrollReveal>

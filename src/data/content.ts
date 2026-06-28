@@ -70,7 +70,28 @@ export const servicesSection = {
   allServicesUrl: "/services",
 };
 
-export const services = [
+export const serviceDetailPath = (id: string) => `${routes.services}/${id}`;
+
+export type Service = {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  image: string;
+  imagePosition: string;
+  duration: string;
+  priceNote: string;
+  /** Longer body copy shown on the dedicated service page. */
+  overview: string[];
+  /** What's included with the service. */
+  includes: string[];
+  /** Step-by-step of what to expect in the chair. */
+  process: { title: string; text: string }[];
+  /** Who the service is best suited for. */
+  idealFor: string;
+};
+
+export const services: Service[] = [
   {
     id: "keratin",
     title: "Keratin Treatment",
@@ -81,6 +102,24 @@ export const services = [
     imagePosition: "object-top",
     duration: "2.5 to 3 hrs",
     priceNote: "From $350",
+    overview: [
+      "Our keratin smoothing treatment infuses the hair with a protein that fills in damaged, porous areas and relaxes frizz from the inside out. The result is hair that's noticeably smoother, shinier, and far easier to style — without looking flat or losing its natural movement.",
+      "Depending on your hair type and home care, results typically last two to four months. We tailor the strength of the treatment to your goals, whether you want a subtle softening or a fully sleek finish.",
+    ],
+    includes: [
+      "Personalized consultation and strand assessment",
+      "Clarifying treatment shampoo to prep the hair",
+      "Keratin applied section by section and sealed with heat",
+      "Smooth blow-dry and flat-iron finish",
+      "Take-home aftercare guidance to extend your results",
+    ],
+    process: [
+      { title: "Consultation", text: "We assess your texture, history, and goals to choose the right formula and strength." },
+      { title: "Prep & Cleanse", text: "Hair is washed with a clarifying shampoo to open the cuticle and remove buildup." },
+      { title: "Application", text: "The keratin is worked through in fine sections and sealed in with controlled heat." },
+      { title: "Finish & Aftercare", text: "We blow-dry and flat-iron to lock in the smoothing, then walk you through home care." },
+    ],
+    idealFor: "Frizzy, coarse, or unruly hair — and anyone who wants faster, easier styling.",
   },
   {
     id: "hair-botox",
@@ -92,6 +131,24 @@ export const services = [
     imagePosition: "object-[center_15%]",
     duration: "2 to 2.5 hrs",
     priceNote: "From $280",
+    overview: [
+      "Hair botox is a deep-conditioning, restorative treatment — not an actual injectable. It coats each strand with a rich blend of proteins, vitamins, and bond-building ingredients that fill in breakage, smooth the surface, and bring back softness and shine.",
+      "Unlike keratin, hair botox is formaldehyde-free and focused on repair, making it a gentle choice for hair that feels dry, brittle, or over-processed. You'll leave with healthier-looking, more manageable hair and a beautiful, glassy finish.",
+    ],
+    includes: [
+      "Consultation and condition assessment",
+      "Gentle cleanse to prepare the hair",
+      "Bond-building botox treatment applied throughout",
+      "Processing time for deep penetration and repair",
+      "Smooth blow-dry finish and home care tips",
+    ],
+    process: [
+      { title: "Consultation", text: "We evaluate damage and porosity to confirm botox is the right repair for your hair." },
+      { title: "Cleanse", text: "Hair is gently washed to remove residue so the treatment can absorb fully." },
+      { title: "Treatment", text: "The repairing formula is applied and left to penetrate and rebuild the strand." },
+      { title: "Finish", text: "We rinse, blow-dry, and reveal a smoother, healthier, high-shine result." },
+    ],
+    idealFor: "Dry, damaged, or over-processed hair that needs repair and shine — chemical-free.",
   },
   {
     id: "haircuts-coloring",
@@ -103,6 +160,24 @@ export const services = [
     imagePosition: "object-[center_35%]",
     duration: "1.5 to 4 hrs",
     priceNote: "From $150",
+    overview: [
+      "Whether you're after a precision cut, a refreshed root, or a complete color transformation, every service is built around your face shape, hair texture, and lifestyle. Albert specializes in dimensional blondes, lived-in balayage, and seamless color corrections that grow out beautifully.",
+      "We never rush the chair. From consultation to the final blow-dry, we focus on getting the tone, placement, and shape exactly right — and on keeping your hair healthy through every step.",
+    ],
+    includes: [
+      "In-depth consultation and color mapping",
+      "Precision cut shaped to your features",
+      "Custom color, highlights, or hand-painted balayage",
+      "Gloss or toner to perfect your tone",
+      "Blow-dry finish and at-home styling guidance",
+    ],
+    process: [
+      { title: "Consultation", text: "We talk through inspiration, tone, and maintenance to design your look together." },
+      { title: "Color", text: "Color, highlights, or balayage are applied and processed for the perfect dimension." },
+      { title: "Cut & Shape", text: "Your cut is tailored to your features, texture, and the way you wear your hair." },
+      { title: "Gloss & Finish", text: "We tone, gloss, and style — then show you how to recreate it at home." },
+    ],
+    idealFor: "Anyone refreshing their look — from a clean cut to a full dimensional blonde.",
   },
   {
     id: "extensions",
@@ -114,6 +189,24 @@ export const services = [
     imagePosition: "object-top",
     duration: "2 to 3 hrs",
     priceNote: "From $450",
+    overview: [
+      "Add length, fullness, or volume with premium 100% human hair extensions, custom color-matched and applied by specialists. We offer tape-in and hand-tied methods, choosing the right approach for your hair type, lifestyle, and goals.",
+      "The secret is in the blend: extensions are cut and styled into your own hair so they move naturally and disappear seamlessly. We'll also set you up with a simple maintenance plan to keep them looking flawless.",
+    ],
+    includes: [
+      "Complimentary consultation and custom color match",
+      "Method selection — tape-in or hand-tied wefts",
+      "Professional application and secure placement",
+      "Cut and blend into your natural hair",
+      "Maintenance and home-care plan",
+    ],
+    process: [
+      { title: "Consultation", text: "We match color, assess your hair, and recommend the best method and amount of hair." },
+      { title: "Color Match", text: "Extensions are selected and, if needed, customized for a flawless blend." },
+      { title: "Application", text: "Wefts are applied securely and comfortably for natural movement." },
+      { title: "Cut & Blend", text: "We cut and style everything together so the extensions disappear into your hair." },
+    ],
+    idealFor: "Adding length, fullness, or volume with a seamless, natural finish.",
   },
 ];
 

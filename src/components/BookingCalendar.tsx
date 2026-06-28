@@ -15,6 +15,7 @@ import {
   type BookingSelection,
 } from "../lib/booking";
 import { getPreferredStylist } from "../lib/stylist";
+import { getPreferredService } from "../lib/service";
 
 type Step = "date" | "time" | "details" | "confirmed";
 
@@ -47,6 +48,10 @@ export default function BookingCalendar() {
     const preferred = getPreferredStylist();
     if (preferred && bookingStylists.some((s) => s.id === preferred)) {
       setSelectedStylistId(preferred);
+    }
+    const preferredService = getPreferredService();
+    if (preferredService && services.some((s) => s.id === preferredService)) {
+      setSelectedServiceId(preferredService);
     }
   }, []);
 

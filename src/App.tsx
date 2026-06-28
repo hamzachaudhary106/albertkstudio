@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
 import GalleryPage from "./pages/GalleryPage";
 import ReviewsPage from "./pages/ReviewsPage";
 import ContactPage from "./pages/ContactPage";
@@ -19,6 +20,7 @@ export default function App() {
         <Route path={routes.home} element={<HomePage />} />
         <Route path={routes.about} element={<AboutPage />} />
         <Route path={routes.services} element={<ServicesPage />} />
+        <Route path={`${routes.services}/:serviceId`} element={<ServiceDetailPage />} />
         <Route path={routes.gallery} element={<GalleryPage />} />
         <Route path={routes.reviews} element={<ReviewsPage />} />
         <Route path={routes.contact} element={<ContactPage />} />
