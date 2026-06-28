@@ -15,6 +15,7 @@ export default function NotFoundPage() {
           }}
           aria-hidden
         />
+        <div className="absolute inset-0 grain-overlay opacity-[0.15]" aria-hidden />
         <div className="page-wrap relative text-center pt-[calc(var(--header-height)+var(--safe-top)+3rem)] pb-[calc(3rem+var(--bottom-nav-height))]">
           <p className="font-serif text-[clamp(5rem,22vw,11rem)] leading-none text-curly-accent-light/80 mb-2">
             404

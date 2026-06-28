@@ -377,6 +377,55 @@
     height: 1.5rem;
     background: var(--color-curly-accent);
   }
+
+  /* ---- Inner-page UI primitives (not used on the home page) ---- */
+
+  /* Soft hover lift for interactive cards */
+  .lift-card {
+    @apply transition-all duration-300;
+  }
+
+  .lift-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 44px -20px rgba(20, 14, 6, 0.32);
+    border-color: rgba(184, 149, 110, 0.55);
+  }
+
+  /* Subtle film grain / texture overlay for dark banners */
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* Breadcrumb pill */
+  .crumb-pill {
+    @apply inline-flex items-center rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-[10px] tracking-[0.18em] uppercase text-white/70 backdrop-blur-sm transition-colors;
+  }
+
+  /* Eyebrow with leading rule */
+  .eyebrow-rule {
+    @apply inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.24em] uppercase text-curly-accent-dark;
+  }
+
+  .eyebrow-rule::before {
+    content: "";
+    @apply h-px w-8 bg-curly-accent;
+  }
+
+  /* Premium form field */
+  .field-premium {
+    @apply w-full rounded-lg border border-curly-border bg-white px-4 py-3 text-sm text-curly-body transition-all duration-200;
+    @apply focus:outline-none focus:border-curly-accent focus:ring-2 focus:ring-curly-accent/15;
+  }
+
+  .field-premium::placeholder {
+    @apply text-curly-muted/70;
+  }
+
+  /* Section eyebrow chip used on inner-page content blocks */
+  .stat-chip {
+    @apply inline-flex h-11 w-11 items-center justify-center rounded-full bg-premium-champagne text-curly-accent-dark;
+  }
 }
 
 a:focus-visible,

@@ -3,6 +3,7 @@ import PageHero from "../components/PageHero";
 import Gallery from "../components/Gallery";
 import CTABand from "../components/CTABand";
 import { pageMeta } from "../data/content";
+import { images } from "../data/images";
 
 export default function GalleryPage() {
   return (
@@ -12,6 +13,8 @@ export default function GalleryPage() {
         eyebrow={pageMeta.gallery.eyebrow}
         title={pageMeta.gallery.title}
         description={pageMeta.gallery.description}
+        image={images.gallery.glamourWaves}
+        imagePosition="object-[center_20%]"
       />
       <Gallery variant="full" />
       <CTABand

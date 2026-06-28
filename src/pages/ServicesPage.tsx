@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { Layers, Palette, Scissors, Sparkles } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Seo from "../components/Seo";
 import PageHero from "../components/PageHero";
 import Services from "../components/Services";
@@ -6,6 +8,14 @@ import CTABand from "../components/CTABand";
 import SectionHeading from "../components/SectionHeading";
 import ScrollReveal from "../components/ScrollReveal";
 import { pageMeta, routes, serviceMenu, serviceMenuNote } from "../data/content";
+import { images } from "../data/images";
+
+const categoryIcons: Record<string, LucideIcon> = {
+  Color: Palette,
+  "Cuts & Styling": Scissors,
+  "Smoothing & Treatments": Sparkles,
+  Extensions: Layers,
+};
 
 export default function ServicesPage() {
   return (
@@ -15,6 +25,8 @@ export default function ServicesPage() {
         eyebrow={pageMeta.services.eyebrow}
         title={pageMeta.services.title}
         description={pageMeta.services.description}
+        image={images.gallery.balayageCurls}
+        imagePosition="object-[center_25%]"
       />
 
       <Services showAllCta={false} />
@@ -28,33 +40,43 @@ export default function ServicesPage() {
           />
 
           <div className="grid lg:grid-cols-2 gap-5 md:gap-8">
-            {serviceMenu.map((group) => (
-              <ScrollReveal key={group.category} variant="up" className="h-full">
-                <div className="h-full border border-curly-border bg-white p-6 md:p-8">
-                  <div className="flex items-baseline justify-between gap-3 border-b border-curly-border pb-4 mb-5">
-                    <h3 className="font-serif text-2xl">{group.category}</h3>
-                  </div>
-                  <dl className="space-y-4">
-                    {group.items.map((item) => (
-                      <div key={item.name} className="flex items-baseline gap-3">
-                        <div className="flex-1">
-                          <dt className="font-serif text-lg leading-tight">{item.name}</dt>
-                          <dd className="text-[13px] text-curly-muted leading-snug mt-0.5">
-                            {item.detail}
-                          </dd>
+            {serviceMenu.map((group) => {
+              const Icon = categoryIcons[group.category] ?? Sparkles;
+              return (
+                <ScrollReveal key={group.category} variant="up" className="h-full">
+                  <div className="lift-card h-full border border-curly-border bg-white p-6 md:p-8">
+                    <div className="flex items-center gap-4 border-b border-curly-border pb-4 mb-5">
+                      <span className="stat-chip shrink-0">
+                        <Icon size={20} strokeWidth={1.5} />
+                      </span>
+                      <h3 className="font-serif text-2xl">{group.category}</h3>
+                    </div>
+                    <dl className="space-y-4">
+                      {group.items.map((item) => (
+                        <div key={item.name} className="flex items-baseline gap-2">
+                          <div className="min-w-0">
+                            <dt className="font-serif text-lg leading-tight">{item.name}</dt>
+                            <dd className="text-[13px] text-curly-muted leading-snug mt-0.5">
+                              {item.detail}
+                            </dd>
+                          </div>
+                          <span
+                            className="flex-1 mb-1 border-b border-dotted border-curly-border/80"
+                            aria-hidden
+                          />
+                          <span className="shrink-0 text-[11px] tracking-[0.16em] uppercase text-curly-accent-dark font-semibold whitespace-nowrap">
+                            {item.price}
+                          </span>
                         </div>
-                        <span className="shrink-0 text-[11px] tracking-[0.16em] uppercase text-curly-accent-dark font-semibold whitespace-nowrap">
-                          {item.price}
-                        </span>
-                      </div>
-                    ))}
-                  </dl>
-                  <p className="mt-6 pt-5 border-t border-curly-border/70 text-[12px] text-curly-muted leading-relaxed">
-                    {group.note}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
+                      ))}
+                    </dl>
+                    <p className="mt-6 pt-5 border-t border-curly-border/70 text-[12px] text-curly-muted leading-relaxed">
+                      {group.note}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
           </div>
 
           <ScrollReveal variant="fade" delay={0.1}>

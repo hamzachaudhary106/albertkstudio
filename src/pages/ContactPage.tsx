@@ -26,9 +26,11 @@ export default function ContactPage() {
                 <p className="curly-label-gold mb-3">Studio Details</p>
                 <h2 className="curly-heading-md mb-6">Come See Us in Aventura</h2>
 
-                <ul className="space-y-6">
-                  <li className="flex gap-4">
-                    <MapPin size={20} strokeWidth={1.5} className="text-curly-accent shrink-0 mt-0.5" />
+                <ul className="border border-curly-border bg-white divide-y divide-curly-border">
+                  <li className="flex gap-4 p-5">
+                    <span className="stat-chip shrink-0">
+                      <MapPin size={18} strokeWidth={1.5} />
+                    </span>
                     <div>
                       <p className="curly-label mb-1">Address</p>
                       <p className="prose-body-sm">{business.address}</p>
@@ -42,8 +44,10 @@ export default function ContactPage() {
                       </a>
                     </div>
                   </li>
-                  <li className="flex gap-4">
-                    <Phone size={20} strokeWidth={1.5} className="text-curly-accent shrink-0 mt-0.5" />
+                  <li className="flex gap-4 p-5">
+                    <span className="stat-chip shrink-0">
+                      <Phone size={18} strokeWidth={1.5} />
+                    </span>
                     <div>
                       <p className="curly-label mb-1">Phone</p>
                       <a
@@ -54,8 +58,10 @@ export default function ContactPage() {
                       </a>
                     </div>
                   </li>
-                  <li className="flex gap-4">
-                    <Mail size={20} strokeWidth={1.5} className="text-curly-accent shrink-0 mt-0.5" />
+                  <li className="flex gap-4 p-5">
+                    <span className="stat-chip shrink-0">
+                      <Mail size={18} strokeWidth={1.5} />
+                    </span>
                     <div>
                       <p className="curly-label mb-1">Email</p>
                       <a
@@ -66,8 +72,10 @@ export default function ContactPage() {
                       </a>
                     </div>
                   </li>
-                  <li className="flex gap-4">
-                    <Clock size={20} strokeWidth={1.5} className="text-curly-accent shrink-0 mt-0.5" />
+                  <li className="flex gap-4 p-5">
+                    <span className="stat-chip shrink-0">
+                      <Clock size={18} strokeWidth={1.5} />
+                    </span>
                     <div>
                       <p className="curly-label mb-1">Hours</p>
                       {workingHours.map((item) => (
@@ -77,8 +85,10 @@ export default function ContactPage() {
                       ))}
                     </div>
                   </li>
-                  <li className="flex gap-4">
-                    <InstagramIcon size={20} className="text-curly-accent shrink-0 mt-0.5" />
+                  <li className="flex gap-4 p-5">
+                    <span className="stat-chip shrink-0">
+                      <InstagramIcon size={18} />
+                    </span>
                     <div>
                       <p className="curly-label mb-1">Instagram</p>
                       <a

@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { business, contactCopy } from "../data/content";
 
-const inputClass =
-  "w-full border border-curly-border bg-white px-4 py-3 text-curly-body text-sm focus:outline-none focus:border-curly-accent transition-colors";
+const inputClass = "field-premium";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -69,8 +68,12 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="premium-card mobile-card lg:rounded-none lg:shadow-none card-pad"
+      className="relative premium-card mobile-card lg:rounded-none lg:shadow-none card-pad overflow-hidden"
     >
+      <span
+        className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-curly-accent-light via-curly-accent to-curly-accent-dark"
+        aria-hidden
+      />
       <p className="curly-label-gold mb-2">Send a Message</p>
       <h3 className="font-serif text-2xl mb-6">How can we help?</h3>
 

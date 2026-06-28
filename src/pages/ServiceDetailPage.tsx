@@ -50,6 +50,8 @@ export default function ServiceDetailPage() {
         eyebrow="Service"
         title={service.title}
         description={service.tagline}
+        image={service.image}
+        imagePosition={service.imagePosition}
         crumbs={[
           { label: "Services", to: routes.services },
           { label: service.title },
@@ -81,16 +83,14 @@ export default function ServiceDetailPage() {
               </ScrollReveal>
 
               <ScrollReveal variant="up" delay={0.05}>
-                <div className="mt-10 sm:mt-14">
+                <div className="mt-10 sm:mt-14 border border-curly-border bg-premium-ivory p-6 sm:p-8">
                   <h3 className="font-serif text-2xl mb-5">What's Included</h3>
-                  <ul className="space-y-3">
+                  <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
                     {service.includes.map((item) => (
                       <li key={item} className="flex gap-3">
-                        <Check
-                          size={18}
-                          strokeWidth={1.5}
-                          className="text-curly-accent-dark shrink-0 mt-1"
-                        />
+                        <span className="shrink-0 mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-curly-accent/15 text-curly-accent-dark">
+                          <Check size={12} strokeWidth={2} />
+                        </span>
                         <span className="prose-body-sm">{item}</span>
                       </li>
                     ))}
@@ -101,13 +101,13 @@ export default function ServiceDetailPage() {
               <ScrollReveal variant="up" delay={0.05}>
                 <div className="mt-10 sm:mt-14">
                   <h3 className="font-serif text-2xl mb-6">What to Expect</h3>
-                  <ol className="space-y-6">
+                  <ol className="relative space-y-6 before:absolute before:left-[0.95rem] before:top-2 before:bottom-2 before:w-px before:bg-curly-border">
                     {service.process.map((step, i) => (
-                      <li key={step.title} className="flex gap-5">
-                        <span className="shrink-0 font-serif text-3xl text-curly-accent-light/80 leading-none w-10">
-                          {String(i + 1).padStart(2, "0")}
+                      <li key={step.title} className="relative flex gap-5">
+                        <span className="relative z-10 shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-full border border-curly-accent/40 bg-premium-pearl font-serif text-sm text-curly-accent-dark">
+                          {i + 1}
                         </span>
-                        <div className="border-b border-curly-border pb-6 last:border-b-0 flex-1">
+                        <div className="flex-1 pb-1">
                           <h4 className="font-serif text-lg mb-1">{step.title}</h4>
                           <p className="prose-body-sm">{step.text}</p>
                         </div>
@@ -121,7 +121,11 @@ export default function ServiceDetailPage() {
             {/* Sticky sidebar */}
             <div className="lg:sticky lg:top-[calc(var(--header-height)+1.5rem)]">
               <ScrollReveal variant="right" delay={0.1}>
-                <div className="premium-card mobile-card lg:rounded-none lg:shadow-none card-pad">
+                <div className="relative premium-card mobile-card lg:rounded-none lg:shadow-none card-pad overflow-hidden">
+                  <span
+                    className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-curly-accent-light via-curly-accent to-curly-accent-dark"
+                    aria-hidden
+                  />
                   <p className="curly-label-gold mb-4">At a Glance</p>
 
                   <div className="space-y-5">
@@ -191,7 +195,7 @@ export default function ServiceDetailPage() {
               <ScrollReveal key={item.id} variant="up" className="h-full">
                 <Link
                   to={serviceDetailPath(item.id)}
-                  className="group block h-full border border-curly-border bg-white overflow-hidden"
+                  className="lift-card group block h-full border border-curly-border bg-white overflow-hidden"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-premium-ivory">
                     <SafeImage
