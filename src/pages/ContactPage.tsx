@@ -31,7 +31,7 @@ export default function ContactPage() {
                     <span className="stat-chip shrink-0">
                       <MapPin size={18} strokeWidth={1.5} />
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="curly-label mb-1">Address</p>
                       <p className="prose-body-sm">{business.address}</p>
                       <a
@@ -48,7 +48,7 @@ export default function ContactPage() {
                     <span className="stat-chip shrink-0">
                       <Phone size={18} strokeWidth={1.5} />
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="curly-label mb-1">Phone</p>
                       <a
                         href={business.phoneHref}
@@ -62,11 +62,11 @@ export default function ContactPage() {
                     <span className="stat-chip shrink-0">
                       <Mail size={18} strokeWidth={1.5} />
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="curly-label mb-1">Email</p>
                       <a
                         href={`mailto:${business.email}`}
-                        className="prose-body-sm hover:text-curly-accent-dark transition-colors"
+                        className="prose-body-sm break-words hover:text-curly-accent-dark transition-colors"
                       >
                         {business.email}
                       </a>
@@ -76,7 +76,7 @@ export default function ContactPage() {
                     <span className="stat-chip shrink-0">
                       <Clock size={18} strokeWidth={1.5} />
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="curly-label mb-1">Hours</p>
                       {workingHours.map((item) => (
                         <p key={item.day} className="prose-body-sm">
@@ -89,7 +89,7 @@ export default function ContactPage() {
                     <span className="stat-chip shrink-0">
                       <InstagramIcon size={18} />
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="curly-label mb-1">Instagram</p>
                       <a
                         href={business.instagramUrl}

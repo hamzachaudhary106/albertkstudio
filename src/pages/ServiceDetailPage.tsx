@@ -62,7 +62,7 @@ export default function ServiceDetailPage() {
         <div className="page-wrap">
           <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             {/* Main content */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 min-w-0">
               <ScrollReveal variant="up">
                 <SafeImage
                   src={service.image}
@@ -107,7 +107,7 @@ export default function ServiceDetailPage() {
                         <span className="relative z-10 shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-full border border-curly-accent/40 bg-premium-pearl font-serif text-sm text-curly-accent-dark">
                           {i + 1}
                         </span>
-                        <div className="flex-1 pb-1">
+                        <div className="min-w-0 flex-1 pb-1">
                           <h4 className="font-serif text-lg mb-1">{step.title}</h4>
                           <p className="prose-body-sm">{step.text}</p>
                         </div>
@@ -119,7 +119,7 @@ export default function ServiceDetailPage() {
             </div>
 
             {/* Sticky sidebar */}
-            <div className="lg:sticky lg:top-[calc(var(--header-height)+1.5rem)]">
+            <div className="min-w-0 lg:sticky lg:top-[calc(var(--header-height)+1.5rem)]">
               <ScrollReveal variant="right" delay={0.1}>
                 <div className="relative premium-card mobile-card lg:rounded-none lg:shadow-none card-pad overflow-hidden">
                   <span
