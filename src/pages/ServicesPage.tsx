@@ -44,9 +44,10 @@ export default function ServicesPage() {
               const Icon = categoryIcons[group.category] ?? Sparkles;
               return (
                 <ScrollReveal key={group.category} variant="up" className="h-full">
-                  <div className="lift-card h-full border border-curly-border bg-white p-6 md:p-8">
+                  <div className="card-luxe group h-full bg-white p-6 md:p-8">
+                    <span className="absolute inset-x-0 top-0 h-px hairline-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
                     <div className="flex items-center gap-4 border-b border-curly-border pb-4 mb-5">
-                      <span className="stat-chip shrink-0">
+                      <span className="stat-chip shrink-0 transition-colors duration-300 group-hover:bg-curly-accent group-hover:text-white">
                         <Icon size={20} strokeWidth={1.5} />
                       </span>
                       <h3 className="font-serif text-2xl">{group.category}</h3>
@@ -84,7 +85,7 @@ export default function ServicesPage() {
               {serviceMenuNote}
             </p>
             <div className="text-center mt-7 sm:mt-9">
-              <Link to={routes.book} className="curly-btn-gold">
+              <Link to={routes.book} className="curly-btn-gold btn-luxe">
                 Request Appointment
               </Link>
             </div>

@@ -1,4 +1,4 @@
-import ScrollReveal from "./ScrollReveal";
+import { motion, useReducedMotion } from "framer-motion";
 
 type SectionHeadingProps = {
   label: string;
@@ -10,6 +10,8 @@ type SectionHeadingProps = {
   animate?: boolean;
 };
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 export default function SectionHeading({
   label,
   title,
@@ -19,15 +21,58 @@ export default function SectionHeading({
   className = "",
   animate = true,
 }: SectionHeadingProps) {
+  const reduced = useReducedMotion();
+  const centered = align === "center";
+
+  const Eyebrow = (
+    <span
+      className={`inline-flex items-center gap-2.5 ${centered ? "justify-center" : ""}`}
+    >
+      <span
+        className={`h-px w-6 ${light ? "bg-curly-accent-light/80" : "bg-curly-accent/70"}`}
+        aria-hidden
+      />
+      <span
+        className={`text-[11px] font-semibold tracking-[0.26em] uppercase ${
+          light ? "text-curly-accent-light" : "text-curly-accent-dark"
+        }`}
+      >
+        {label}
+      </span>
+      <span
+        className={`h-px w-6 ${light ? "bg-curly-accent-light/80" : "bg-curly-accent/70"}`}
+        aria-hidden
+      />
+    </span>
+  );
+
   const content = (
     <div
-      className={`mb-5 sm:mb-8 md:mb-10 ${align === "center" ? "text-center max-w-2xl mx-auto" : "text-left max-w-xl"} ${className}`}
+      className={`mb-7 sm:mb-10 md:mb-12 ${
+        centered ? "text-center max-w-2xl mx-auto" : "text-left max-w-xl"
+      } ${className}`}
     >
-      <p className={`curly-label-gold mb-3 ${light ? "!text-curly-accent-light" : ""}`}>{label}</p>
-      <h2 className={`curly-heading-lg mb-4 ${light ? "text-white" : ""}`}>{title}</h2>
-      <div className={align === "center" ? "gold-rule-center mb-5" : "gold-rule mb-5"} />
+      {centered ? (
+        <div className="mb-4 flex justify-center">{Eyebrow}</div>
+      ) : (
+        <div className="mb-4">{Eyebrow}</div>
+      )}
+      <h2
+        className={`curly-heading-lg ${centered ? "" : ""} ${light ? "text-white" : ""}`}
+      >
+        {title}
+      </h2>
+      <div
+        className={`divider-diamond mt-5 ${centered ? "" : "justify-start [&::before]:hidden"}`}
+      >
+        <span aria-hidden />
+      </div>
       {description && (
-        <p className={light ? "text-on-dark text-[15px] leading-[1.75]" : "prose-body-sm"}>
+        <p
+          className={`mt-5 ${
+            light ? "text-on-dark text-[15px] leading-[1.75]" : "prose-body-sm"
+          }`}
+        >
           {description}
         </p>
       )}
@@ -37,8 +82,13 @@ export default function SectionHeading({
   if (!animate) return content;
 
   return (
-    <ScrollReveal variant="up" duration={0.75}>
+    <motion.div
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: reduced ? 0.2 : 0.8, ease: EASE }}
+    >
       {content}
-    </ScrollReveal>
+    </motion.div>
   );
 }

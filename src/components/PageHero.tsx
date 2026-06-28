@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { routes } from "../data/content";
 import { images } from "../data/images";
 import SafeImage from "./SafeImage";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 type Crumb = { label: string; to?: string };
 
@@ -28,6 +31,12 @@ export default function PageHero({
   image = images.hero,
   imagePosition = "object-center",
 }: PageHeroProps) {
+  const reduced = useReducedMotion();
+  const rise = (delay: number) => ({
+    initial: reduced ? { opacity: 0 } : { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: reduced ? 0.2 : 0.7, delay, ease: EASE },
+  });
   return (
     <section className="relative isolate bg-premium-dark text-white overflow-hidden">
       {/* Backdrop image */}
@@ -80,21 +89,27 @@ export default function PageHero({
           </ol>
         </nav>
 
-        <div className="inline-flex items-center gap-3 mb-4">
+        <motion.div {...rise(0.05)} className="inline-flex items-center gap-3 mb-4">
           <span className="h-px w-8 bg-curly-accent-light/80" aria-hidden />
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-curly-accent-light">
             {eyebrow}
           </p>
-        </div>
+        </motion.div>
 
-        <h1 className="font-serif text-[clamp(2.25rem,6.5vw,4rem)] leading-[1.05] text-white max-w-3xl">
+        <motion.h1
+          {...rise(0.12)}
+          className="font-serif text-[clamp(2.25rem,6.5vw,4rem)] leading-[1.05] text-white max-w-3xl"
+        >
           {title}
-        </h1>
+        </motion.h1>
 
         {description && (
-          <p className="text-on-dark text-[15px] sm:text-[1.0625rem] leading-[1.75] max-w-2xl mt-5 sm:mt-6">
+          <motion.p
+            {...rise(0.2)}
+            className="text-on-dark text-[15px] sm:text-[1.0625rem] leading-[1.75] max-w-2xl mt-5 sm:mt-6"
+          >
             {description}
-          </p>
+          </motion.p>
         )}
       </div>
 

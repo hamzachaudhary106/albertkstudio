@@ -20,8 +20,13 @@ export default function ContactPage() {
         description={pageMeta.contact.description}
       />
 
-      <section className="premium-section section-divide bg-premium-pearl">
-        <div className="page-wrap">
+      <section className="premium-section section-divide bg-premium-pearl relative overflow-hidden">
+        <div
+          className="glow-blob -left-24 top-0 h-80 w-80 opacity-50"
+          style={{ background: "radial-gradient(circle, rgba(184,149,110,0.13), transparent 70%)" }}
+          aria-hidden
+        />
+        <div className="page-wrap relative">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <ScrollReveal variant="left">
               <div>
@@ -107,7 +112,7 @@ export default function ContactPage() {
 
                 <div className="mt-8 pt-8 border-t border-curly-border">
                   <p className="curly-label mb-3">Ready to book?</p>
-                  <Link to={routes.book} className="curly-btn-gold w-full sm:w-fit">
+                  <Link to={routes.book} className="curly-btn-gold btn-luxe w-full sm:w-fit">
                     Request Appointment
                   </Link>
                 </div>

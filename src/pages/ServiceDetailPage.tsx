@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { Calendar, Check, Clock, Phone, Tag } from "lucide-react";
+import { ArrowRight, Calendar, Check, Clock, Phone, Tag } from "lucide-react";
 import Seo from "../components/Seo";
 import PageHero from "../components/PageHero";
 import CTABand from "../components/CTABand";
@@ -156,7 +156,7 @@ export default function ServiceDetailPage() {
                     <Link
                       to={routes.book}
                       onClick={() => setPreferredService(service.id)}
-                      className="curly-btn-gold w-full !px-4 !tracking-[0.16em] gap-2.5 text-center leading-tight whitespace-nowrap"
+                      className="curly-btn-gold btn-luxe w-full !px-4 !tracking-[0.16em] gap-2.5 text-center leading-tight whitespace-nowrap"
                     >
                       <Calendar size={15} strokeWidth={1.5} className="shrink-0" />
                       Request to Book
@@ -198,22 +198,24 @@ export default function ServiceDetailPage() {
               <ScrollReveal key={item.id} variant="up" className="h-full">
                 <Link
                   to={serviceDetailPath(item.id)}
-                  className="lift-card group block h-full border border-curly-border bg-white overflow-hidden"
+                  className="card-luxe group block h-full"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-premium-ivory">
                     <SafeImage
                       src={item.image}
                       alt={`${item.title} at Albert K Studio, Aventura FL`}
-                      className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04] ${item.imagePosition}`}
+                      className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] ${item.imagePosition}`}
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   </div>
                   <div className="p-5 sm:p-6">
                     <h3 className="font-serif text-xl mb-2 group-hover:text-curly-accent-dark transition-colors">
                       {item.title}
                     </h3>
                     <p className="text-[13px] text-curly-muted leading-snug mb-3">{item.tagline}</p>
-                    <span className="text-[10px] tracking-[0.18em] uppercase text-curly-accent-dark font-semibold">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.18em] uppercase text-curly-accent-dark font-semibold">
                       {item.priceNote}
+                      <ArrowRight size={12} strokeWidth={1.5} className="transition-transform duration-300 group-hover:translate-x-1" />
                     </span>
                   </div>
                 </Link>

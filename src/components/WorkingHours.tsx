@@ -6,8 +6,13 @@ import SectionHeading from "./SectionHeading";
 export default function WorkingHours() {
   const { business, workingHours } = useContent();
   return (
-    <section id="booking" className="premium-section section-divide bg-premium-pearl">
-      <div className="page-wrap">
+    <section id="booking" className="premium-section section-divide bg-premium-pearl relative overflow-hidden">
+      <div
+        className="glow-blob right-[-8rem] top-10 h-80 w-80 opacity-50"
+        style={{ background: "radial-gradient(circle, rgba(184,149,110,0.12), transparent 70%)" }}
+        aria-hidden
+      />
+      <div className="page-wrap relative">
         <div className="grid-2">
           <ScrollReveal variant="left" duration={0.75}>
             <div>

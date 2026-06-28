@@ -181,7 +181,11 @@ export default function ContactForm() {
         </p>
       )}
 
-      <button type="submit" disabled={submitting} className="curly-btn-gold w-full mt-6">
+      <button
+        type="submit"
+        disabled={submitting}
+        className="curly-btn-gold btn-luxe w-full mt-6 disabled:opacity-70"
+      >
         {submitting ? "Sending…" : "Send Message"}
       </button>
       <p className="text-[11px] text-curly-muted text-center mt-4 leading-relaxed">

@@ -17,7 +17,7 @@ export default function NotFoundPage() {
         />
         <div className="absolute inset-0 grain-overlay opacity-[0.15]" aria-hidden />
         <div className="page-wrap relative text-center pt-[calc(var(--header-height)+var(--safe-top)+3rem)] pb-[calc(3rem+var(--bottom-nav-height))]">
-          <p className="font-serif text-[clamp(5rem,22vw,11rem)] leading-none text-curly-accent-light/80 mb-2">
+          <p className="font-serif text-[clamp(5rem,22vw,11rem)] leading-none text-gold-gradient-light mb-2 float-soft">
             404
           </p>
           <p className="curly-label-gold mb-4 !text-curly-accent-light">{pageMeta.notFound.eyebrow}</p>
@@ -28,7 +28,7 @@ export default function NotFoundPage() {
           </p>
 
           <div className="mobile-btn-stack justify-center sm:inline-flex mb-12">
-            <Link to={routes.home} className="curly-btn-gold">
+            <Link to={routes.home} className="curly-btn-gold btn-luxe">
               Back to Home
             </Link>
             <Link to={routes.book} className="curly-btn-outline-light">

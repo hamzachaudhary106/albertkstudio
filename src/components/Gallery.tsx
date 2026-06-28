@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, ZoomIn } from "lucide-react";
 import { gallery, routes } from "../data/content";
 import { useContent } from "../cms/ContentProvider";
 import GalleryLightbox from "./GalleryLightbox";
@@ -48,13 +49,27 @@ function GalleryCardOverlay({
   large?: boolean;
 }) {
   return (
-    <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent pt-14 pb-4 px-4 pointer-events-none">
-      <span className="block text-[10px] tracking-[0.22em] uppercase text-curly-accent-light mb-1">
+    <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent pt-16 pb-4 px-4 pointer-events-none">
+      <span className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.22em] uppercase text-curly-accent-light mb-1.5">
+        <span className="h-1 w-1 rotate-45 bg-curly-accent-light" aria-hidden />
         {item.category}
       </span>
-      <span className={`block font-serif text-white leading-tight ${large ? "text-xl" : "text-base"}`}>
+      <span
+        className={`block font-serif text-white leading-tight ${large ? "text-xl sm:text-2xl" : "text-base"}`}
+      >
         {item.title}
       </span>
+    </span>
+  );
+}
+
+function ZoomBadge() {
+  return (
+    <span
+      className="pointer-events-none absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/30 text-white backdrop-blur-md opacity-0 scale-90 transition-all duration-500 group-hover:opacity-100 group-hover:scale-100"
+      aria-hidden
+    >
+      <ZoomIn size={16} strokeWidth={1.5} />
     </span>
   );
 }
@@ -121,12 +136,15 @@ function GalleryCard({
       <SafeImage
         src={item.image}
         alt={`${item.title}, Albert K Studio, Aventura`}
-        className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] ${
-          isFeatured
-            ? "aspect-auto h-full min-h-[28rem]"
-            : "aspect-[4/5]"
+        className={`w-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05] ${
+          isFeatured ? "aspect-auto h-full min-h-[28rem]" : "aspect-[4/5]"
         }`}
       />
+      <span
+        className="pointer-events-none absolute inset-0 z-10 border border-curly-accent-light/0 transition-colors duration-500 group-hover:border-curly-accent-light/60"
+        aria-hidden
+      />
+      <ZoomBadge />
       <GalleryCardOverlay item={item} large={isFeatured} />
     </motion.button>
   );
@@ -143,8 +161,17 @@ export default function Gallery({ variant = "full" }: GalleryProps) {
   const isTeaser = variant === "teaser";
 
   return (
-    <section id="gallery" className="premium-section section-divide bg-premium-dark">
-      <div className="page-wrap">
+    <section
+      id="gallery"
+      className="premium-section section-divide bg-premium-dark relative overflow-hidden"
+    >
+      <div
+        className="glow-blob left-1/2 -translate-x-1/2 -top-24 h-72 w-[36rem] opacity-40"
+        style={{ background: "radial-gradient(circle, rgba(184,149,110,0.35), transparent 70%)" }}
+        aria-hidden
+      />
+      <div className="absolute inset-0 grain-overlay opacity-[0.12]" aria-hidden />
+      <div className="page-wrap relative">
         <SectionHeading
           label="Portfolio"
           title={gallery.heading}
@@ -174,14 +201,32 @@ export default function Gallery({ variant = "full" }: GalleryProps) {
         </ScrollReveal>
 
         <ScrollReveal variant="up" delay={0.1}>
-          <div className="text-center mt-5 sm:mt-8 md:mt-10">
+          <div className="text-center mt-7 sm:mt-10 md:mt-12">
             {isTeaser ? (
-              <Link to={routes.gallery} className="curly-link-light">
+              <Link
+                to={routes.gallery}
+                className="group inline-flex items-center gap-2.5 text-[11px] font-semibold tracking-[0.24em] uppercase text-white transition-colors hover:text-curly-accent-light"
+              >
+                <span className="h-px w-7 bg-curly-accent-light/70 transition-all duration-300 group-hover:w-10" />
                 View Full Gallery
+                <ArrowRight
+                  size={14}
+                  strokeWidth={1.5}
+                  className="text-curly-accent-light transition-transform duration-300 group-hover:translate-x-1"
+                />
               </Link>
             ) : (
-              <Link to={routes.book} className="curly-link-light">
+              <Link
+                to={routes.book}
+                className="group inline-flex items-center gap-2.5 text-[11px] font-semibold tracking-[0.24em] uppercase text-white transition-colors hover:text-curly-accent-light"
+              >
+                <span className="h-px w-7 bg-curly-accent-light/70 transition-all duration-300 group-hover:w-10" />
                 Request Appointment
+                <ArrowRight
+                  size={14}
+                  strokeWidth={1.5}
+                  className="text-curly-accent-light transition-transform duration-300 group-hover:translate-x-1"
+                />
               </Link>
             )}
           </div>
