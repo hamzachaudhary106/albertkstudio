@@ -13,7 +13,7 @@ export const business = {
   addressShort: "Town Center Aventura",
   googleRating: 5.0,
   reviewCount: 142,
-  bookingUrl: "#booking",
+  bookingUrl: "/book",
   bookingConfirmNote:
     "This is a request only — not a confirmed appointment. We'll call or text within 24 hours to confirm.",
   mapsEmbedUrl:
@@ -43,13 +43,25 @@ export const about = {
   ],
 };
 
+export const routes = {
+  home: "/",
+  about: "/about",
+  services: "/services",
+  gallery: "/gallery",
+  reviews: "/reviews",
+  contact: "/contact",
+  book: "/book",
+  privacy: "/privacy",
+  terms: "/terms",
+} as const;
+
+/** Primary navigation shown in the desktop header and mobile drawer. */
 export const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Team", href: "#team" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Book", href: "#booking" },
+  { label: "About", href: routes.about },
+  { label: "Services", href: routes.services },
+  { label: "Gallery", href: routes.gallery },
+  { label: "Reviews", href: routes.reviews },
+  { label: "Contact", href: routes.contact },
 ];
 
 export const servicesSection = {
@@ -213,6 +225,241 @@ export const reviews = [
     date: "4 months ago",
     text: "Albert is the best hair dresser & all the staff is incredible! You can't go wrong! My hair has never looked healthier or more vibrant.",
     verified: true,
+  },
+];
+
+export const serviceMenu = [
+  {
+    category: "Color",
+    note: "Pricing varies with hair length, density, and the look you're after. Final quote confirmed at consultation.",
+    items: [
+      { name: "Single Process Color", detail: "All-over root or refresh color", price: "From $120" },
+      { name: "Partial Highlights", detail: "Brightness around the face and crown", price: "From $180" },
+      { name: "Full Highlights", detail: "Dimension throughout", price: "From $240" },
+      { name: "Balayage / Ombré", detail: "Hand-painted, lived-in blonde", price: "From $250" },
+      { name: "Platinum / Color Correction", detail: "Consultation required", price: "From $350" },
+      { name: "Toner / Gloss", detail: "Shine and tone refresh", price: "From $65" },
+    ],
+  },
+  {
+    category: "Cuts & Styling",
+    note: "Every cut includes a consultation, shampoo, and finish.",
+    items: [
+      { name: "Women's Cut & Style", detail: "Precision cut tailored to you", price: "From $85" },
+      { name: "Men's Cut", detail: "Clipper or scissor cut", price: "From $55" },
+      { name: "Blowout", detail: "Smooth or voluminous finish", price: "From $65" },
+      { name: "Special Occasion Updo", detail: "Events, weddings, photoshoots", price: "From $120" },
+      { name: "Bang / Fringe Trim", detail: "Between-visit touch-up", price: "From $25" },
+    ],
+  },
+  {
+    category: "Smoothing & Treatments",
+    note: "Restorative services for healthier, more manageable hair.",
+    items: [
+      { name: "Keratin Treatment", detail: "Frizz-free, silky for weeks", price: "From $350" },
+      { name: "Hair Botox", detail: "Deep repair and smooth finish", price: "From $280" },
+      { name: "Olaplex Bond Repair", detail: "Add-on strengthening treatment", price: "From $45" },
+      { name: "Deep Conditioning Mask", detail: "Intensive moisture", price: "From $35" },
+    ],
+  },
+  {
+    category: "Extensions",
+    note: "100% human hair, applied and color-matched by specialists. Hair cost quoted separately.",
+    items: [
+      { name: "Extension Consultation", detail: "Custom plan and color match", price: "Complimentary" },
+      { name: "Tape-In Application", detail: "Seamless, lightweight volume", price: "From $450" },
+      { name: "Hand-Tied Wefts", detail: "Natural movement and fullness", price: "From $650" },
+      { name: "Maintenance / Move-Up", detail: "Every 6–8 weeks", price: "From $200" },
+    ],
+  },
+];
+
+export const serviceMenuNote =
+  "All prices are starting points. Because color and condition are unique to every guest, your exact quote is confirmed during a complimentary consultation. Prices do not include applicable tax or gratuity.";
+
+export const aboutValues = [
+  {
+    title: "Consultation First",
+    description:
+      "Every visit begins with a real conversation. We listen to your goals, assess your hair, and set honest expectations before we start.",
+  },
+  {
+    title: "Craft Over Trends",
+    description:
+      "We build looks around your face, lifestyle, and hair health — not whatever is trending this week — so the result still looks right months later.",
+  },
+  {
+    title: "Hair Health",
+    description:
+      "Bond builders, quality color, and careful technique keep your hair strong through every transformation, including blondes and color corrections.",
+  },
+  {
+    title: "An Unhurried Experience",
+    description:
+      "We don't double-book or rush the chair. Your appointment is your time, in a calm, luxury space in the heart of Aventura.",
+  },
+];
+
+export const contactCopy = {
+  eyebrow: "Get in Touch",
+  title: "Visit Albert K Studio",
+  description:
+    "Questions about a service, color consultation, or extensions? Send us a note or call the studio — we typically reply within 24 hours.",
+  formNote:
+    "This form sends an inquiry only. For the fastest response, or to confirm an appointment, please call the studio directly.",
+  inquiryTypes: [
+    "General Question",
+    "Color Consultation",
+    "Extensions",
+    "Keratin / Smoothing",
+    "Appointment Request",
+    "Other",
+  ],
+};
+
+export const pageMeta = {
+  about: {
+    eyebrow: "Our Story",
+    title: "A Salon Built on Craft",
+    description:
+      "Get to know Albert K Studio — a luxury hair salon in Town Center Aventura founded on consultation, craft, and lasting results.",
+  },
+  services: {
+    eyebrow: "Services & Pricing",
+    title: "What We Do Best",
+    description:
+      "Color, cuts, smoothing treatments, and premium extensions — expertly crafted in Aventura. Explore our full service menu and pricing.",
+  },
+  gallery: {
+    eyebrow: "Portfolio",
+    title: "Our Work",
+    description:
+      "Real color, cuts, and styling from the chair at Albert K Studio in Aventura, Florida. Browse the gallery and tap any image to view full size.",
+  },
+  reviews: {
+    eyebrow: "Reviews",
+    title: "What Our Clients Say",
+    description:
+      "Five-star rated by clients across Aventura and South Florida. Read what guests say about their experience at Albert K Studio.",
+  },
+  contact: {
+    eyebrow: "Contact",
+    title: "Get in Touch",
+    description:
+      "Visit Albert K Studio in Town Center Aventura. Find our address, hours, directions, phone, and send us a message.",
+  },
+  book: {
+    eyebrow: "Appointments",
+    title: "Request Your Visit",
+    description:
+      "Request an appointment at Albert K Studio in Aventura. Choose your preferred date, time, and service — we'll confirm within 24 hours.",
+  },
+  privacy: {
+    eyebrow: "Legal",
+    title: "Privacy Policy",
+    description: "How Albert K Studio collects, uses, and protects your personal information.",
+  },
+  terms: {
+    eyebrow: "Legal",
+    title: "Terms of Service",
+    description: "The terms that govern your use of the Albert K Studio website and services.",
+  },
+  notFound: {
+    eyebrow: "404",
+    title: "Page Not Found",
+    description: "The page you're looking for doesn't exist or has moved.",
+  },
+};
+
+export const legalUpdated = "June 1, 2026";
+
+export const privacyPolicy = [
+  {
+    heading: "Overview",
+    body: [
+      `This Privacy Policy explains how ${business.name} ("we," "us," or "our") collects, uses, and protects information when you visit our website or contact us to request an appointment. By using this site, you agree to the practices described here.`,
+    ],
+  },
+  {
+    heading: "Information We Collect",
+    body: [
+      "When you submit an appointment request or contact form, we collect the details you provide — such as your name, phone number, email address, and any message or service preferences. We may also collect basic, non-identifying analytics about how visitors use the site (such as pages viewed and device type).",
+    ],
+  },
+  {
+    heading: "How We Use Your Information",
+    body: [
+      "We use the information you provide solely to respond to your inquiry, confirm and manage appointments, and improve our services. We may contact you by phone, text, or email regarding your request. We do not sell or rent your personal information to third parties.",
+    ],
+  },
+  {
+    heading: "Cookies & Analytics",
+    body: [
+      "Our website may use cookies or similar technologies to remember your preferences and understand site usage. You can disable cookies in your browser settings, though some features may not function as intended.",
+    ],
+  },
+  {
+    heading: "Data Retention & Security",
+    body: [
+      "We retain inquiry and appointment information only as long as needed to serve you and meet legal or business requirements. We take reasonable measures to protect your information, but no method of transmission over the internet is fully secure.",
+    ],
+  },
+  {
+    heading: "Your Choices",
+    body: [
+      "You may request that we update or delete the personal information you've shared with us at any time by contacting the studio. You can also opt out of non-essential communications.",
+    ],
+  },
+  {
+    heading: "Contact Us",
+    body: [
+      `If you have questions about this Privacy Policy, contact us at ${business.email} or ${business.phone}. We may update this policy from time to time; the latest version will always be posted on this page.`,
+    ],
+  },
+];
+
+export const termsOfService = [
+  {
+    heading: "Acceptance of Terms",
+    body: [
+      `These Terms of Service govern your use of the ${business.name} website. By accessing or using this site, you agree to be bound by these terms. If you do not agree, please do not use the site.`,
+    ],
+  },
+  {
+    heading: "Appointments & Requests",
+    body: [
+      "Appointment requests submitted through this website are requests only and are not confirmed until we contact you to finalize the date, time, and service. Pricing shown is a starting point and is confirmed at consultation; final cost depends on hair length, condition, and the service performed.",
+    ],
+  },
+  {
+    heading: "Cancellations & Late Arrivals",
+    body: [
+      "We kindly ask that you give as much notice as possible if you need to cancel or reschedule. Late arrivals may result in a shortened service to respect other guests' appointments. Specific cancellation terms are confirmed when we book your visit.",
+    ],
+  },
+  {
+    heading: "Service Results",
+    body: [
+      "Hair results vary based on individual hair type, history, and home care. While we use professional products and techniques to achieve the best outcome, we cannot guarantee a specific result. We're always happy to discuss adjustments during your consultation.",
+    ],
+  },
+  {
+    heading: "Intellectual Property",
+    body: [
+      `All content on this website — including text, images, logos, and design — is the property of ${business.name} and may not be reproduced without permission.`,
+    ],
+  },
+  {
+    heading: "Limitation of Liability",
+    body: [
+      "This website is provided on an \"as is\" basis. We are not liable for any damages arising from your use of the site or reliance on its content. Links to third-party sites are provided for convenience and are not under our control.",
+    ],
+  },
+  {
+    heading: "Contact",
+    body: [
+      `Questions about these terms? Reach us at ${business.email} or ${business.phone}. We may revise these terms at any time, and continued use of the site constitutes acceptance of the updated terms.`,
+    ],
   },
 ];
 

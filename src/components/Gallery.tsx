@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { gallery } from "../data/content";
+import { gallery, routes } from "../data/content";
 import GalleryLightbox from "./GalleryLightbox";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
@@ -128,8 +129,14 @@ function GalleryCard({
   );
 }
 
-export default function Gallery() {
+type GalleryProps = {
+  /** "teaser" links to the full gallery page; "full" links to booking. */
+  variant?: "teaser" | "full";
+};
+
+export default function Gallery({ variant = "full" }: GalleryProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const isTeaser = variant === "teaser";
 
   return (
     <section id="gallery" className="premium-section section-divide bg-premium-dark">
@@ -164,9 +171,15 @@ export default function Gallery() {
 
         <ScrollReveal variant="up" delay={0.1}>
           <div className="text-center mt-5 sm:mt-8 md:mt-10">
-            <a href="#booking" className="curly-link-light">
-              Request Appointment
-            </a>
+            {isTeaser ? (
+              <Link to={routes.gallery} className="curly-link-light">
+                View Full Gallery
+              </Link>
+            ) : (
+              <Link to={routes.book} className="curly-link-light">
+                Request Appointment
+              </Link>
+            )}
           </div>
         </ScrollReveal>
       </div>

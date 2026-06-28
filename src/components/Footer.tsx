@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
-import { business, workingHours } from "../data/content";
+import { business, navLinks, routes, workingHours } from "../data/content";
 import BrandLogo from "./BrandLogo";
 
 function FooterColumn({
@@ -23,15 +24,15 @@ export default function Footer() {
   return (
     <footer id="contact" className="bg-premium-dark text-white section-divide pb-[var(--bottom-nav-height)] lg:pb-0">
       <div className="page-wrap py-10 sm:py-14 md:py-20">
-        <div className="card-grid-equal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-10 xl:gap-14">
+        <div className="card-grid-equal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-8 xl:gap-12">
           <div className="flex h-full flex-col sm:col-span-2 lg:col-span-1">
             <div className="mb-6 min-h-[3.5rem] flex items-center">
-              <a href="#home" className="inline-block">
+              <Link to={routes.home} className="inline-block">
                 <BrandLogo
                   variant="hero"
                   className="!h-12 sm:!h-14 md:!h-16 !max-w-[18rem] object-left"
                 />
-              </a>
+              </Link>
             </div>
             <p className="text-on-dark text-sm leading-[1.75] mb-5 sm:mb-8 max-w-[16rem]">
               {business.subTagline}. Luxury cuts, color, and styling in Town Center Aventura.
@@ -46,11 +47,29 @@ export default function Footer() {
               >
                 <InstagramIcon size={18} />
               </a>
-              <a href="#booking" className="curly-link-light">
+              <Link to={routes.book} className="curly-link-light">
                 Request Appointment
-              </a>
+              </Link>
             </div>
           </div>
+
+          <FooterColumn label="Explore">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-on-dark hover:text-curly-accent-light transition-colors w-fit"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              to={routes.book}
+              className="text-on-dark hover:text-curly-accent-light transition-colors w-fit"
+            >
+              Book
+            </Link>
+          </FooterColumn>
 
           <FooterColumn label="Contact">
             <p className="text-on-dark leading-[1.75]">{business.address}</p>
@@ -110,11 +129,19 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="page-wrap py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[11px] tracking-[0.18em] uppercase text-white/55">
+        <div className="page-wrap py-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-[11px] tracking-[0.18em] uppercase text-white/55">
           <p>&copy; {new Date().getFullYear()} {business.name}</p>
-          <p>
-            {business.googleRating}.0 ★ · {business.reviewCount} Reviews · Aventura, FL
-          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link to={routes.privacy} className="hover:text-curly-accent-light transition-colors">
+              Privacy
+            </Link>
+            <Link to={routes.terms} className="hover:text-curly-accent-light transition-colors">
+              Terms
+            </Link>
+            <span className="text-white/40">
+              {business.googleRating}.0 ★ · {business.reviewCount} Reviews · Aventura, FL
+            </span>
+          </div>
         </div>
       </div>
     </footer>

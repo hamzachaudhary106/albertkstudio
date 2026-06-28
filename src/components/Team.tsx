@@ -1,4 +1,5 @@
-import { stylists, teamSection } from "../data/content";
+import { Link } from "react-router-dom";
+import { routes, stylists, teamSection } from "../data/content";
 import { setPreferredStylist } from "../lib/stylist";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
@@ -38,13 +39,13 @@ export default function Team() {
             <div className="flex flex-col justify-center">
               <p className="curly-label-gold mb-4">{albert.specialty}</p>
               <p className="prose-body-sm mb-8">{albert.bio}</p>
-              <a
-                href="#booking"
+              <Link
+                to={routes.book}
                 onClick={() => setPreferredStylist(albert.id)}
                 className="curly-btn-gold w-full sm:w-fit"
               >
                 Request with Albert
-              </a>
+              </Link>
             </div>
           </ScrollReveal>
         </div>

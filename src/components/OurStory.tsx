@@ -1,4 +1,5 @@
-import { about, business } from "../data/content";
+import { Link } from "react-router-dom";
+import { about, business, routes } from "../data/content";
 import { images } from "../data/images";
 import ScrollReveal from "./ScrollReveal";
 import SafeImage from "./SafeImage";
@@ -37,9 +38,9 @@ export default function OurStory() {
                   {p}
                 </p>
               ))}
-              <a href="#services" className="curly-link mt-8">
+              <Link to={routes.services} className="curly-link mt-8">
                 View Services
-              </a>
+              </Link>
             </div>
           </ScrollReveal>
         </div>

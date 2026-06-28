@@ -1,28 +1,21 @@
+import { Link, useLocation } from "react-router-dom";
 import { Calendar, Home, Image, Menu, Scissors } from "lucide-react";
-import { navLinks } from "../data/content";
-import { useActiveSection } from "../hooks/useActiveSection";
+import { routes } from "../data/content";
 import { useMobileNav } from "../context/MobileNavContext";
 
 const tabs = [
-  { id: "#home", label: "Home", icon: Home },
-  { id: "#services", label: "Services", icon: Scissors },
-  { id: "#gallery", label: "Gallery", icon: Image },
-  { id: "#booking", label: "Book", icon: Calendar, primary: true },
+  { to: routes.home, label: "Home", icon: Home },
+  { to: routes.services, label: "Services", icon: Scissors },
+  { to: routes.gallery, label: "Gallery", icon: Image },
+  { to: routes.book, label: "Book", icon: Calendar, primary: true },
 ] as const;
 
-const sectionIds = ["#home", ...navLinks.map((l) => l.href)];
-
 export default function MobileBottomNav() {
-  const activeSection = useActiveSection(sectionIds);
+  const { pathname } = useLocation();
   const { menuOpen, setMenuOpen } = useMobileNav();
 
-  const handleNav = (href: string) => {
-    setMenuOpen(false);
-    const el = document.getElementById(href.replace("#", ""));
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const isActive = (to: string) =>
+    to === routes.home ? pathname === routes.home : pathname.startsWith(to);
 
   return (
     <nav
@@ -31,18 +24,18 @@ export default function MobileBottomNav() {
     >
       <div className="mobile-bottom-nav-inner">
         {tabs.map((tab) => {
-          const isActive = activeSection === tab.id;
+          const active = isActive(tab.to) && !menuOpen;
           const Icon = tab.icon;
           const isPrimary = "primary" in tab && tab.primary;
-          const showPrimaryBadge = isPrimary && isActive;
+          const showPrimaryBadge = isPrimary && active;
 
           return (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => handleNav(tab.id)}
-              className={`mobile-nav-tab ${isActive ? "mobile-nav-tab-active" : ""}`}
-              aria-current={isActive ? "page" : undefined}
+            <Link
+              key={tab.to}
+              to={tab.to}
+              onClick={() => setMenuOpen(false)}
+              className={`mobile-nav-tab ${active ? "mobile-nav-tab-active" : ""}`}
+              aria-current={active ? "page" : undefined}
             >
               <span
                 className={`flex items-center justify-center transition-all duration-200 ${
@@ -53,14 +46,14 @@ export default function MobileBottomNav() {
               >
                 <Icon
                   size={showPrimaryBadge ? 18 : 22}
-                  strokeWidth={isActive ? 2 : 1.5}
+                  strokeWidth={active ? 2 : 1.5}
                   className={showPrimaryBadge ? "text-white" : undefined}
                 />
               </span>
               <span className={showPrimaryBadge ? "text-curly-accent-dark font-semibold" : ""}>
                 {tab.label}
               </span>
-            </button>
+            </Link>
           );
         })}
 

@@ -1,9 +1,15 @@
-import { services, servicesSection } from "../data/content";
+import { Link } from "react-router-dom";
+import { routes, services, servicesSection } from "../data/content";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
 import SafeImage from "./SafeImage";
 
-export default function Services() {
+type ServicesProps = {
+  /** Show the "View All Services" button. Hidden on the dedicated Services page. */
+  showAllCta?: boolean;
+};
+
+export default function Services({ showAllCta = true }: ServicesProps) {
   return (
     <section id="services" className="premium-section section-divide bg-white">
       <div className="page-wrap">
@@ -41,22 +47,24 @@ export default function Services() {
                     <span className="text-curly-accent-dark font-semibold">{service.priceNote}</span>
                   </div>
                   <p className="prose-body-sm mb-5 sm:mb-8">{service.description}</p>
-                  <a href="#booking" className="curly-link w-full sm:w-fit justify-center sm:justify-start">
+                  <Link to={routes.book} className="curly-link w-full sm:w-fit justify-center sm:justify-start">
                     Request This Service
-                  </a>
+                  </Link>
                 </div>
               </article>
             </ScrollReveal>
           ))}
         </div>
 
-        <ScrollReveal variant="fade" delay={0.1}>
-          <div className="text-center mt-8 sm:mt-12 md:mt-14">
-            <a href={servicesSection.allServicesUrl} className="curly-btn-fill">
-              View All Services
-            </a>
-          </div>
-        </ScrollReveal>
+        {showAllCta && (
+          <ScrollReveal variant="fade" delay={0.1}>
+            <div className="text-center mt-8 sm:mt-12 md:mt-14">
+              <Link to={servicesSection.allServicesUrl} className="curly-btn-fill">
+                View All Services
+              </Link>
+            </div>
+          </ScrollReveal>
+        )}
       </div>
     </section>
   );

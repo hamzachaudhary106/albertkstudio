@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { business, hero } from "../data/content";
+import { Link } from "react-router-dom";
+import { business, hero, routes } from "../data/content";
 import { images } from "../data/images";
 import SafeImage from "./SafeImage";
 
@@ -61,12 +62,12 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mobile-btn-stack mb-8"
           >
-            <a href="#booking" className="curly-btn-gold">
+            <Link to={routes.book} className="curly-btn-gold">
               Request Appointment
-            </a>
-            <a href="#gallery" className="curly-btn-outline-light">
+            </Link>
+            <Link to={routes.gallery} className="curly-btn-outline-light">
               View Our Work
-            </a>
+            </Link>
           </motion.div>
 
           <p className="text-white/75 text-[11px] tracking-[0.2em] uppercase">

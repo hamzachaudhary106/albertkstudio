@@ -1,20 +1,29 @@
 import { useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, Phone, X } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
-import { business, navLinks } from "../data/content";
-import { useActiveSection } from "../hooks/useActiveSection";
+import { business, navLinks, routes } from "../data/content";
 import { useScrollHeader } from "../hooks/useScrollHeader";
 import { useMobileNav } from "../context/MobileNavContext";
 import BrandLogo from "./BrandLogo";
 
-const sectionIds = ["#home", ...navLinks.map((l) => l.href)];
-
 export default function SiteHeader() {
+  const { pathname } = useLocation();
   const scrolled = useScrollHeader();
-  const activeSection = useActiveSection(sectionIds);
   const { menuOpen, setMenuOpen } = useMobileNav();
   const shellRef = useRef<HTMLDivElement>(null);
-  const overHero = !scrolled && !menuOpen;
+
+  const isHome = pathname === routes.home;
+  // Only the home page has the dark full-bleed hero behind the header.
+  const overHero = isHome && !scrolled && !menuOpen;
+
+  const isActive = (href: string) =>
+    href === routes.home ? pathname === routes.home : pathname.startsWith(href);
+
+  // Close the mobile drawer whenever the route changes.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname, setMenuOpen]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -43,11 +52,11 @@ export default function SiteHeader() {
   }, [scrolled, menuOpen]);
 
   const linkClass = (href: string) => {
-    const isActive = activeSection === href;
+    const active = isActive(href);
     if (overHero) {
-      return isActive ? "text-curly-accent-light" : "text-white/85 hover:text-white";
+      return active ? "text-curly-accent-light" : "text-white/85 hover:text-white";
     }
-    return isActive ? "text-curly-accent-dark" : "text-curly-body hover:text-curly-black";
+    return active ? "text-curly-accent-dark" : "text-curly-body hover:text-curly-black";
   };
 
   const mobileShellClass = overHero ? "mobile-header-shell-hero" : "mobile-header-shell-scrolled";
@@ -57,7 +66,7 @@ export default function SiteHeader() {
       <header
         ref={shellRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-[calc(0.5rem+var(--safe-top))] pb-1 lg:pt-[var(--safe-top)] lg:pb-0 pl-[var(--safe-left)] pr-[var(--safe-right)] ${
-          scrolled
+          scrolled || !isHome
             ? "lg:bg-premium-pearl/98 lg:backdrop-blur-xl lg:border-b lg:border-curly-border/80 lg:shadow-[0_1px_0_rgba(0,0,0,0.04)]"
             : "lg:bg-transparent lg:border-b lg:border-transparent"
         }`}
@@ -65,9 +74,9 @@ export default function SiteHeader() {
         {/* Mobile header */}
         <div className="page-wrap lg:hidden">
           <div className={`mobile-header-shell ${mobileShellClass}`}>
-            <a href="#home" className="shrink-0 leading-none min-w-0">
+            <Link to={routes.home} className="shrink-0 leading-none min-w-0">
               <BrandLogo variant={overHero ? "hero" : "solid"} />
-            </a>
+            </Link>
 
             <div className="flex items-center gap-2 shrink-0">
               <a href={business.phoneHref} className="mobile-header-cta">
@@ -90,22 +99,22 @@ export default function SiteHeader() {
         {/* Desktop header */}
         <div
           className={`page-wrap hidden lg:flex items-center justify-between gap-4 transition-[padding] duration-300 ${
-            scrolled ? "py-2" : "py-6"
+            scrolled || !isHome ? "py-2" : "py-6"
           }`}
         >
-          <a href="#home" className="shrink-0 leading-none">
+          <Link to={routes.home} className="shrink-0 leading-none">
             <BrandLogo variant={overHero ? "hero" : "solid"} />
-          </a>
+          </Link>
 
           <nav className="flex items-center gap-8" aria-label="Main">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href + link.label}
-                href={link.href}
+                to={link.href}
                 className={`text-[11px] tracking-[0.24em] uppercase transition-colors ${linkClass(link.href)}`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -134,9 +143,9 @@ export default function SiteHeader() {
             >
               <InstagramIcon />
             </a>
-            <a href="#booking" className="curly-btn-gold !min-h-10 !px-5 text-[10px]">
+            <Link to={routes.book} className="curly-btn-gold !min-h-10 !px-5 text-[10px]">
               Book
-            </a>
+            </Link>
           </div>
         </div>
       </header>
@@ -175,18 +184,18 @@ export default function SiteHeader() {
 
           <nav className="drawer-pad py-5 flex flex-col gap-1" aria-label="Mobile">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href + link.label}
-                href={link.href}
+                to={link.href}
                 onClick={() => setMenuOpen(false)}
                 className={`mobile-drawer-nav-link ${
-                  activeSection === link.href
+                  isActive(link.href)
                     ? "text-curly-accent-dark mobile-drawer-nav-link-active"
                     : "text-curly-body hover:text-curly-accent-dark"
                 }`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -211,13 +220,13 @@ export default function SiteHeader() {
               </span>
               {business.instagramHandle}
             </a>
-            <a
-              href="#booking"
+            <Link
+              to={routes.book}
               onClick={() => setMenuOpen(false)}
               className="curly-btn-gold w-full"
             >
               Request Appointment
-            </a>
+            </Link>
           </div>
         </div>
       </div>
