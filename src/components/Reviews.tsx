@@ -60,6 +60,7 @@ export default function Reviews() {
       <div className="absolute inset-0 grain-overlay opacity-[0.1]" aria-hidden />
       <div className="page-wrap relative">
         <SectionHeading
+          kinetic
           label="Reviews"
           title={reviewsSection.heading}
           description={reviewsSection.description}

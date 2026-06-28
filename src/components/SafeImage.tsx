@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { images } from "../data/images";
+import { optimizedImages } from "../data/optimizedImages";
 
 type SafeImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
@@ -8,11 +9,17 @@ export default function SafeImage({
   alt,
   className = "",
   loading = "lazy",
+  style,
   ...props
 }: SafeImageProps) {
   const [imgSrc, setImgSrc] = useState(src ?? images.fallback);
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
+
+  // Only use the optimized <picture> path when the source is unchanged from the
+  // original (no error fallback in play) and we have generated variants for it.
+  const optimized =
+    typeof imgSrc === "string" && imgSrc === src ? optimizedImages[imgSrc] : undefined;
 
   useEffect(() => {
     setImgSrc(src ?? images.fallback);
@@ -29,14 +36,25 @@ export default function SafeImage({
     }
   }, [imgSrc]);
 
-  return (
+  const showBlur = Boolean(optimized) && !loaded;
+  const mergedStyle: CSSProperties | undefined = showBlur
+    ? {
+        backgroundImage: `url(${optimized!.lqip})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        ...style,
+      }
+    : style;
+
+  const img = (
     <img
       {...props}
       ref={imgRef}
       src={imgSrc}
       alt={alt}
-      className={`transition-opacity duration-700 ease-out ${
-        loaded ? "opacity-100" : "opacity-0"
+      style={mergedStyle}
+      className={`${optimized ? "" : "transition-opacity duration-700 ease-out"} ${
+        loaded || optimized ? "opacity-100" : "opacity-0"
       } ${className}`}
       loading={loading}
       decoding="async"
@@ -48,5 +66,17 @@ export default function SafeImage({
         }
       }}
     />
+  );
+
+  if (!optimized) return img;
+
+  // display:contents keeps the <img> as the layout box so every existing
+  // call site (aspect ratios, object-cover, absolute inset-0) behaves the same.
+  return (
+    <picture style={{ display: "contents" }}>
+      <source type="image/avif" srcSet={optimized.avif} />
+      <source type="image/webp" srcSet={optimized.webp} />
+      {img}
+    </picture>
   );
 }

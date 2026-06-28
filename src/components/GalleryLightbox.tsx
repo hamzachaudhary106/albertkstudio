@@ -63,8 +63,11 @@ export default function GalleryLightbox({
   if (!isOpen || !item || activeIndex === null) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[80] flex flex-col bg-black/96"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[80] flex flex-col bg-black/96 backdrop-blur-sm"
       role="dialog"
       aria-modal
       aria-label={`Portfolio: ${item.title}`}
@@ -153,6 +156,6 @@ export default function GalleryLightbox({
           Swipe or use arrows to browse
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }

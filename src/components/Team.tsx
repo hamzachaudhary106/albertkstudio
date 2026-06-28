@@ -32,6 +32,7 @@ export default function Team() {
       />
       <div className="page-wrap relative">
         <SectionHeading
+          kinetic
           label={teamSection.label}
           title={teamSection.title}
           description={teamSection.description}

@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
-export type RevealVariant = "left" | "right" | "up" | "down" | "fade" | "scale";
+export type RevealVariant = "left" | "right" | "up" | "down" | "fade" | "scale" | "blur";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -10,7 +10,7 @@ const VIEWPORT = { once: true, amount: 0.18, margin: "0px 0px -48px 0px" } as co
 function buildVariants(reduced: boolean): Record<RevealVariant, Variants> {
   if (reduced) {
     const fade = { off: { opacity: 0 }, on: { opacity: 1 } };
-    return { left: fade, right: fade, up: fade, down: fade, fade, scale: fade };
+    return { left: fade, right: fade, up: fade, down: fade, fade, scale: fade, blur: fade };
   }
 
   return {
@@ -20,6 +20,7 @@ function buildVariants(reduced: boolean): Record<RevealVariant, Variants> {
     down: { off: { opacity: 0, y: -36 }, on: { opacity: 1, y: 0 } },
     fade: { off: { opacity: 0 }, on: { opacity: 1 } },
     scale: { off: { opacity: 0, scale: 0.92 }, on: { opacity: 1, scale: 1 } },
+    blur: { off: { opacity: 0, y: 28, filter: "blur(10px)" }, on: { opacity: 1, y: 0, filter: "blur(0px)" } },
   };
 }
 

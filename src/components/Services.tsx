@@ -26,6 +26,7 @@ export default function Services({ showAllCta = true }: ServicesProps) {
       />
       <div className="page-wrap relative">
         <SectionHeading
+          kinetic
           label="Services"
           title="What We Do Best"
           description={servicesSection.description}

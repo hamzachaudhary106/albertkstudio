@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
+import KineticText from "./KineticText";
 
 type SectionHeadingProps = {
   label: string;
@@ -8,6 +9,8 @@ type SectionHeadingProps = {
   align?: "center" | "left";
   className?: string;
   animate?: boolean;
+  /** Reveal the title word-by-word with a mask animation. */
+  kinetic?: boolean;
 };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -20,6 +23,7 @@ export default function SectionHeading({
   align = "center",
   className = "",
   animate = true,
+  kinetic = false,
 }: SectionHeadingProps) {
   const reduced = useReducedMotion();
   const centered = align === "center";
@@ -57,11 +61,15 @@ export default function SectionHeading({
       ) : (
         <div className="mb-4">{Eyebrow}</div>
       )}
-      <h2
-        className={`curly-heading-lg ${centered ? "" : ""} ${light ? "text-white" : ""}`}
-      >
-        {title}
-      </h2>
+      {kinetic ? (
+        <KineticText
+          as="h2"
+          text={title}
+          className={`curly-heading-lg ${light ? "text-white" : ""}`}
+        />
+      ) : (
+        <h2 className={`curly-heading-lg ${light ? "text-white" : ""}`}>{title}</h2>
+      )}
       <div
         className={`divider-diamond mt-5 ${centered ? "" : "justify-start [&::before]:hidden"}`}
       >

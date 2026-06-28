@@ -3,6 +3,7 @@ import { ArrowRight, Phone } from "lucide-react";
 import { routes } from "../data/content";
 import { useContent } from "../cms/ContentProvider";
 import ScrollReveal from "./ScrollReveal";
+import MagneticButton from "./MagneticButton";
 
 type CTABandProps = {
   title?: string;
@@ -40,14 +41,16 @@ export default function CTABand({
             {description}
           </p>
           <div className="mobile-btn-stack justify-center sm:inline-flex">
-            <Link to={routes.book} className="curly-btn-gold btn-luxe group gap-2.5">
-              Request Appointment
-              <ArrowRight
-                size={14}
-                strokeWidth={1.5}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
+            <MagneticButton>
+              <Link to={routes.book} className="curly-btn-gold btn-luxe group gap-2.5">
+                Request Appointment
+                <ArrowRight
+                  size={14}
+                  strokeWidth={1.5}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </Link>
+            </MagneticButton>
             <a href={business.phoneHref} className="btn-ghost-gold gap-2.5">
               <Phone size={15} strokeWidth={1.5} />
               {business.phone}

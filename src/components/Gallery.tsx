@@ -36,6 +36,7 @@ function cardMotion(variant: RevealVariant, reduced: boolean) {
     down: { off: { opacity: 0, y: -32 }, on: { opacity: 1, y: 0 } },
     fade: { off: { opacity: 0 }, on: { opacity: 1 } },
     scale: { off: { opacity: 0, scale: 0.94 }, on: { opacity: 1, scale: 1 } },
+    blur: { off: { opacity: 0, y: 24, filter: "blur(10px)" }, on: { opacity: 1, y: 0, filter: "blur(0px)" } },
   };
 
   return map[variant];
@@ -173,6 +174,7 @@ export default function Gallery({ variant = "full" }: GalleryProps) {
       <div className="absolute inset-0 grain-overlay opacity-[0.12]" aria-hidden />
       <div className="page-wrap relative">
         <SectionHeading
+          kinetic
           label="Portfolio"
           title={gallery.heading}
           description={gallery.description}
