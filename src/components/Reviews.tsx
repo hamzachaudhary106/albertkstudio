@@ -6,7 +6,7 @@ import SectionHeading from "./SectionHeading";
 
 function Stars({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex gap-0.5 ${className}`} aria-label="5 out of 5 stars">
+    <span className={`inline-flex gap-0.5 ${className}`} role="img" aria-label="5 out of 5 stars">
       {Array.from({ length: 5 }).map((_, i) => (
         <Star key={i} size={14} strokeWidth={1.5} className="fill-curly-accent-light text-curly-accent-light" />
       ))}

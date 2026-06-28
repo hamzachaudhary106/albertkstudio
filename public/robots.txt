@@ -1,0 +1,11 @@
+# Albert K Studio — STAGING / development
+# The site is live on a server but not production-ready, so block all crawling
+# and indexing for now. Before launch, restore the production robots.txt:
+#
+#   User-agent: *
+#   Allow: /
+#   Disallow: /admin
+#   Sitemap: https://albertkstudio.com/sitemap.xml
+
+User-agent: *
+Disallow: /

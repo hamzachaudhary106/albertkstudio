@@ -143,7 +143,8 @@
   }
 
   .curly-btn-gold {
-    @apply inline-flex items-center justify-center min-h-12 px-8 text-[11px] font-semibold tracking-[0.24em] uppercase bg-curly-accent text-white transition-colors duration-300 hover:bg-curly-accent-dark active:scale-[0.98];
+    /* Deeper antique-gold so white label text meets WCAG AA (4.5:1). */
+    @apply inline-flex items-center justify-center min-h-12 px-8 text-[11px] font-semibold tracking-[0.24em] uppercase bg-[#8c6d3e] text-white transition-colors duration-300 hover:bg-[#785d34] active:scale-[0.98];
   }
 
   .curly-btn-outline-light {
@@ -459,8 +460,8 @@
   .btn-luxe {
     position: relative;
     overflow: hidden;
-    background-image: linear-gradient(135deg, #c4a07a 0%, #b8956e 52%, #a6845d 100%);
-    box-shadow: 0 10px 30px -12px rgba(184, 149, 110, 0.7);
+    background-image: linear-gradient(135deg, #8f7040 0%, #82663a 52%, #735733 100%);
+    box-shadow: 0 10px 30px -12px rgba(140, 109, 62, 0.7);
     transition: box-shadow 0.4s ease, transform 0.2s ease;
     isolation: isolate;
   }

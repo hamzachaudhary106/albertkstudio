@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { supabase, isBookingConfigured } from "../lib/supabase";
 import {
   about as aboutDefault,
   business as businessDefault,
@@ -76,6 +75,8 @@ function mapService(row: Record<string, unknown>): Service {
 }
 
 async function loadContent(): Promise<SiteContent> {
+  // Loaded after first paint — keeps supabase-js out of the initial bundle.
+  const { supabase } = await import("../lib/supabase");
   const [settingsRes, servicesRes, galleryRes, teamRes, reviewsRes, faqsRes] = await Promise.all([
     supabase.from("site_settings").select("key,value"),
     supabase.from("services").select("*").eq("active", true).order("sort"),
@@ -131,7 +132,10 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<SiteContent>(defaults);
 
   useEffect(() => {
-    if (!isBookingConfigured) return;
+    const configured = Boolean(
+      import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY,
+    );
+    if (!configured) return;
     let active = true;
     loadContent()
       .then((c) => {

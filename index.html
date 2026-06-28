@@ -20,7 +20,9 @@
       content="hair salon Aventura, luxury hair salon Aventura FL, balayage Aventura, keratin treatment Aventura, hair color Aventura, hair extensions Aventura, best hair salon Aventura, Town Center Aventura salon"
     />
     <meta name="author" content="Albert K Studio" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <!-- STAGING: site hidden from search engines until production launch.
+         Restore "index, follow, max-image-preview:large" before going live. -->
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href="https://albertkstudio.com/" />
 
     <meta name="geo.region" content="US-FL" />
@@ -51,9 +53,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <!-- Preload the LCP hero image (AVIF with PNG fallback) for faster first paint -->
     <link
       rel="preload"

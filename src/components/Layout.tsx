@@ -7,7 +7,6 @@ import SiteHeader from "./SiteHeader";
 import MobileBottomNav from "./MobileBottomNav";
 import ScrollToTop from "./ScrollToTop";
 import Footer from "./Footer";
-import IntroLoader from "./IntroLoader";
 import CustomCursor from "./CustomCursor";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -19,7 +18,6 @@ export default function Layout() {
 
   return (
     <MobileNavProvider>
-      <IntroLoader />
       <CustomCursor />
       <LocalSeo />
       <ScrollToTop />

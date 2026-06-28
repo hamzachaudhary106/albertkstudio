@@ -15,7 +15,9 @@ function FooterColumn({
 }) {
   return (
     <div className="flex h-full flex-col">
-      <h2 className="curly-label text-curly-accent-light mb-4 sm:mb-6 shrink-0">{label}</h2>
+      <h2 className="text-[11px] font-medium tracking-[0.24em] uppercase text-curly-accent-light mb-4 sm:mb-6 shrink-0">
+        {label}
+      </h2>
       <div className="flex md:min-h-[7.5rem] flex-col gap-3 text-sm">{children}</div>
     </div>
   );
@@ -140,7 +142,7 @@ export default function Footer() {
             <Link to={routes.terms} className="hover:text-curly-accent-light transition-colors">
               Terms
             </Link>
-            <span className="text-white/40">
+            <span className="text-white/60">
               {business.googleRating}.0 ★ · {business.reviewCount} Reviews · Aventura, FL
             </span>
           </div>
