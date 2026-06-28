@@ -220,16 +220,8 @@ function Sidebar({
 
   return (
     <div className="flex h-full flex-col bg-[#1d2327] text-neutral-300">
-      <div className={`flex items-center gap-2.5 border-b border-white/[0.06] px-5 ${collapsed ? "justify-center px-0" : ""}`} style={{ height: 64 }}>
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#72aee6] to-[#2271b1] font-serif text-base font-semibold text-[#1d2327]">
-          A
-        </span>
-        {!collapsed && (
-          <div className="min-w-0">
-            <p className="truncate font-serif text-[15px] leading-tight text-white">Albert K Studio</p>
-            <p className="text-[11px] text-white/40">Content Manager</p>
-          </div>
-        )}
+      <div className={`flex items-center border-b border-white/[0.06] px-5 ${collapsed ? "justify-center px-0" : ""}`} style={{ height: 64 }}>
+        {!collapsed && <p className="truncate font-serif text-[15px] leading-tight text-white">Admin Panel</p>}
       </div>
 
       <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-5">
