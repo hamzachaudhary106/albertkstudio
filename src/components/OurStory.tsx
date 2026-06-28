@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
-import { about, business, routes } from "../data/content";
+import { routes } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { images } from "../data/images";
 import ScrollReveal from "./ScrollReveal";
 import SafeImage from "./SafeImage";
 
 export default function OurStory() {
+  const { about, business } = useContent();
   return (
     <section id="about" className="premium-section section-divide bg-premium-pearl">
       <div className="page-wrap">

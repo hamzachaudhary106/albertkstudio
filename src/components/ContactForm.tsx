@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { business, contactCopy } from "../data/content";
+import { contactCopy } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
+import { supabase, isBookingConfigured } from "../lib/supabase";
 
 const inputClass = "field-premium";
 
 export default function ContactForm() {
+  const { business } = useContent();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [topic, setTopic] = useState(contactCopy.inquiryTypes[0]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -27,6 +31,25 @@ export default function ContactForm() {
       return;
     }
 
+    setSubmitting(true);
+
+    // Save the submission so it shows up in the admin panel.
+    if (isBookingConfigured) {
+      const { error: dbError } = await supabase.from("contact_submissions").insert({
+        name: name.trim(),
+        email: email.trim() || null,
+        phone: phone.trim() || null,
+        topic,
+        message: message.trim() || null,
+      });
+      if (!dbError) {
+        setSubmitting(false);
+        setSubmitted(true);
+        return;
+      }
+    }
+
+    // Fallback: open the visitor's email client.
     const subject = `Website inquiry: ${topic}`;
     const body = [
       `Name: ${name.trim()}`,
@@ -36,10 +59,10 @@ export default function ContactForm() {
       "",
       message.trim(),
     ].join("\n");
-
     window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(body)}`;
+    setSubmitting(false);
     setSubmitted(true);
   };
 
@@ -55,8 +78,8 @@ export default function ContactForm() {
         </div>
         <h3 className="font-serif text-2xl mb-3">Thanks for reaching out</h3>
         <p className="prose-body-sm max-w-sm mx-auto mb-6">
-          Your email app should have opened with your message ready to send. We'll get back to you
-          within 24 hours. For anything urgent, please call the studio.
+          We've received your message and will get back to you within 24 hours. For anything urgent,
+          please call the studio.
         </p>
         <a href={business.phoneHref} className="curly-link justify-center w-full">
           Call {business.phone}
@@ -158,8 +181,8 @@ export default function ContactForm() {
         </p>
       )}
 
-      <button type="submit" className="curly-btn-gold w-full mt-6">
-        Send Message
+      <button type="submit" disabled={submitting} className="curly-btn-gold w-full mt-6">
+        {submitting ? "Sending…" : "Send Message"}
       </button>
       <p className="text-[11px] text-curly-muted text-center mt-4 leading-relaxed">
         {contactCopy.formNote}

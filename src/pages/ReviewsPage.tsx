@@ -4,7 +4,8 @@ import PageHero from "../components/PageHero";
 import Reviews from "../components/Reviews";
 import CTABand from "../components/CTABand";
 import ScrollReveal from "../components/ScrollReveal";
-import { business, pageMeta } from "../data/content";
+import { pageMeta } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { images } from "../data/images";
 
 const stats = [
@@ -14,6 +15,7 @@ const stats = [
 ];
 
 export default function ReviewsPage() {
+  const { business } = useContent();
   return (
     <>
       <Seo title={pageMeta.reviews.title} description={pageMeta.reviews.description} />

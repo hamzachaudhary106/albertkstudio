@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { gallery, routes } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import GalleryLightbox from "./GalleryLightbox";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
@@ -59,13 +60,15 @@ function GalleryCardOverlay({
 }
 
 function MobileGallerySlider({
+  items,
   onOpen,
 }: {
+  items: typeof gallery.items;
   onOpen: (index: number) => void;
 }) {
   return (
     <div className="flex md:hidden mobile-snap-row">
-      {gallery.items.map((item, i) => (
+      {items.map((item, i) => (
         <div
           key={item.title}
           className={`mobile-snap-card ${item.featured ? "mobile-snap-card-lg" : "mobile-snap-card-md"}`}
@@ -135,6 +138,7 @@ type GalleryProps = {
 };
 
 export default function Gallery({ variant = "full" }: GalleryProps) {
+  const { galleryItems } = useContent();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const isTeaser = variant === "teaser";
 
@@ -148,10 +152,10 @@ export default function Gallery({ variant = "full" }: GalleryProps) {
           light
         />
 
-        <MobileGallerySlider onOpen={setActiveIndex} />
+        <MobileGallerySlider items={galleryItems} onOpen={setActiveIndex} />
 
         <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {gallery.items.map((item, i) => (
+          {galleryItems.map((item, i) => (
             <GalleryCard
               key={item.title}
               item={item}
@@ -185,7 +189,7 @@ export default function Gallery({ variant = "full" }: GalleryProps) {
       </div>
 
       <GalleryLightbox
-        items={gallery.items}
+        items={galleryItems}
         activeIndex={activeIndex}
         onClose={() => setActiveIndex(null)}
         onChangeIndex={setActiveIndex}

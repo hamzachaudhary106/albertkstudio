@@ -2,7 +2,8 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
-import { business, navLinks, routes, workingHours } from "../data/content";
+import { routes } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import BrandLogo from "./BrandLogo";
 
 function FooterColumn({
@@ -21,6 +22,7 @@ function FooterColumn({
 }
 
 export default function Footer() {
+  const { business, navLinks, workingHours } = useContent();
   return (
     <footer id="contact" className="bg-premium-dark text-white section-divide pb-[var(--bottom-nav-height)] lg:pb-0">
       <div className="page-wrap py-10 sm:py-14 md:py-20">

@@ -2,12 +2,14 @@ import { useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, Phone, X } from "lucide-react";
 import InstagramIcon from "./InstagramIcon";
-import { business, navLinks, routes } from "../data/content";
+import { routes } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { useScrollHeader } from "../hooks/useScrollHeader";
 import { useMobileNav } from "../context/MobileNavContext";
 import BrandLogo from "./BrandLogo";
 
 export default function SiteHeader() {
+  const { business, navLinks } = useContent();
   const { pathname } = useLocation();
   const scrolled = useScrollHeader();
   const { menuOpen, setMenuOpen } = useMobileNav();

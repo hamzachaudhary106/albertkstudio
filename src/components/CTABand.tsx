@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Phone } from "lucide-react";
-import { business, routes } from "../data/content";
+import { routes } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 
 type CTABandProps = {
   title?: string;
@@ -12,6 +13,7 @@ export default function CTABand({
   title = "Ready for hair you're proud to wear?",
   description = "Request your appointment online or call the studio — we'll confirm your visit within 24 hours.",
 }: CTABandProps) {
+  const { business } = useContent();
   return (
     <section className="premium-section section-divide bg-premium-dark text-white">
       <div className="page-wrap text-center">

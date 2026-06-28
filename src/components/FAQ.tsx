@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
-import { faqs } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { StaggerItem, StaggerReveal } from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
 
 export default function FAQ() {
+  const { faqs } = useContent();
   const [open, setOpen] = useState<number | null>(0);
 
   return (

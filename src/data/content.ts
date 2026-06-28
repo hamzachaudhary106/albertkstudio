@@ -16,6 +16,8 @@ export const business = {
   bookingUrl: "/book",
   bookingConfirmNote:
     "This is a request only — not a confirmed appointment. We'll call or text within 24 hours to confirm.",
+  depositNote:
+    "A deposit confirms your appointment and is applied to your final bill. Cancellations within 24 hours may forfeit the deposit.",
   mapsEmbedUrl:
     "https://maps.google.com/maps?q=19020+NE+29th+Ave,+Aventura,+FL+33180&hl=en&z=15&output=embed",
   instagramUrl: "https://www.instagram.com/albertkstudio/",
@@ -443,9 +445,9 @@ export const pageMeta = {
   },
   book: {
     eyebrow: "Appointments",
-    title: "Request Your Visit",
+    title: "Book Your Visit",
     description:
-      "Request an appointment at Albert K Studio in Aventura. Choose your preferred date, time, and service — we'll confirm within 24 hours.",
+      "Book an appointment at Albert K Studio in Aventura. Choose your service, date, and time, then secure your spot with a quick deposit.",
   },
   privacy: {
     eyebrow: "Legal",

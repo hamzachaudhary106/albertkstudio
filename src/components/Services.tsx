@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { routes, serviceDetailPath, services, servicesSection } from "../data/content";
+import { routes, serviceDetailPath, servicesSection } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { setPreferredService } from "../lib/service";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
@@ -12,6 +13,7 @@ type ServicesProps = {
 };
 
 export default function Services({ showAllCta = true }: ServicesProps) {
+  const { services } = useContent();
   return (
     <section id="services" className="premium-section section-divide bg-white">
       <div className="page-wrap">

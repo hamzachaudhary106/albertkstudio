@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { business, hero, routes } from "../data/content";
+import { routes } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { images } from "../data/images";
 import SafeImage from "./SafeImage";
 
 export default function Hero() {
+  const { business, hero } = useContent();
   return (
     <section
       id="home"

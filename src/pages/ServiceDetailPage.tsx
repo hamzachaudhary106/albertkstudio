@@ -6,12 +6,14 @@ import CTABand from "../components/CTABand";
 import SafeImage from "../components/SafeImage";
 import ScrollReveal from "../components/ScrollReveal";
 import NotFoundPage from "./NotFoundPage";
-import { business, routes, serviceDetailPath, services } from "../data/content";
+import { routes, serviceDetailPath } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { siteUrl } from "../data/seo";
 import { setPreferredService } from "../lib/service";
 
 export default function ServiceDetailPage() {
   const { serviceId } = useParams<{ serviceId: string }>();
+  const { business, services } = useContent();
   const service = services.find((s) => s.id === serviceId);
 
   if (!service) {

@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
-import { routes, stylists, teamSection } from "../data/content";
+import { routes, teamSection } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import { setPreferredStylist } from "../lib/stylist";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
 import SafeImage from "./SafeImage";
 
 export default function Team() {
+  const { stylists } = useContent();
   const albert = stylists[0];
+  if (!albert) return null;
 
   return (
     <section id="team" className="premium-section section-divide bg-white">

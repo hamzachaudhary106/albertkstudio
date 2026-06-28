@@ -1,8 +1,9 @@
-import { business, featuredReview, reviews, reviewsSection } from "../data/content";
+import { reviewsSection } from "../data/content";
+import { useContent, type SiteContent } from "../cms/ContentProvider";
 import ScrollReveal, { StaggerItem, StaggerReveal } from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
 
-function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
+function ReviewCard({ review }: { review: SiteContent["reviews"][number] }) {
   return (
     <blockquote className="flex h-full flex-col rounded-2xl border border-white/12 bg-white/[0.03] p-5 sm:p-6 md:rounded-none md:p-8">
       <p className="text-curly-accent-light text-[10px] tracking-[0.28em] mb-4 shrink-0">
@@ -22,6 +23,7 @@ function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
 }
 
 export default function Reviews() {
+  const { business, featuredReview, reviews } = useContent();
   return (
     <section id="reviews" className="premium-section section-divide bg-premium-dark text-white">
       <div className="page-wrap">

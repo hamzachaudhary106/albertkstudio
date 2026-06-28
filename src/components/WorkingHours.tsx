@@ -1,9 +1,10 @@
-import { business, workingHours } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 import BookingCalendar from "./BookingCalendar";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
 
 export default function WorkingHours() {
+  const { business, workingHours } = useContent();
   return (
     <section id="booking" className="premium-section section-divide bg-premium-pearl">
       <div className="page-wrap">
@@ -12,8 +13,8 @@ export default function WorkingHours() {
             <div>
               <SectionHeading
                 label="Appointments"
-                title="Request Your Visit"
-                description={`Open daily, 10AM to 6PM. Share your preferred date and time. ${business.bookingConfirmNote}`}
+                title="Book Your Visit"
+                description={`Open daily, 10AM to 6PM. Choose your service, date, and time, then secure your spot with a deposit. ${business.depositNote}`}
                 align="left"
                 className="mb-4 sm:mb-6"
                 animate={false}

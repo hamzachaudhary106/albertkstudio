@@ -1,0 +1,22 @@
+# systemd unit for the standalone booking server (Option B fallback).
+# Install:
+#   sudo cp deploy/albertk-booking.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now albertk-booking
+# Logs: journalctl -u albertk-booking -f
+
+[Unit]
+Description=Albert K Studio booking API
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/albertkstudio/server
+EnvironmentFile=/var/www/albertkstudio/server/.env
+ExecStart=/usr/bin/node index.mjs
+Restart=always
+RestartSec=3
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

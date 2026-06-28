@@ -1,0 +1,15 @@
+{
+  "name": "albertk-booking-server",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Standalone booking API (create-booking + stripe-webhook) for self-hosted deployments.",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "express": "^4.21.2",
+    "stripe": "^14.21.0"
+  }
+}

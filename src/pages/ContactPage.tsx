@@ -6,9 +6,11 @@ import ContactForm from "../components/ContactForm";
 import CTABand from "../components/CTABand";
 import ScrollReveal from "../components/ScrollReveal";
 import InstagramIcon from "../components/InstagramIcon";
-import { business, pageMeta, routes, workingHours } from "../data/content";
+import { pageMeta, routes } from "../data/content";
+import { useContent } from "../cms/ContentProvider";
 
 export default function ContactPage() {
+  const { business, workingHours } = useContent();
   return (
     <>
       <Seo title={pageMeta.contact.title} description={pageMeta.contact.description} />

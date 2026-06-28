@@ -1,0 +1,10 @@
+# Supabase function settings (honored by the CLI and self-hosted edge-runtime).
+# create-booking is called by the browser with the anon JWT → keep verification on.
+# stripe-webhook is called by Stripe with NO JWT (it verifies its own signature)
+# → verification must be OFF or Stripe's requests are rejected.
+
+[functions.create-booking]
+verify_jwt = true
+
+[functions.stripe-webhook]
+verify_jwt = false
