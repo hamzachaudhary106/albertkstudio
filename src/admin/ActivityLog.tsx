@@ -36,7 +36,7 @@ const ACTION_TONE: Record<string, string> = {
   created: "bg-emerald-50 text-emerald-600",
   updated: "bg-blue-50 text-blue-600",
   deleted: "bg-red-50 text-red-600",
-  uploaded: "bg-[#b8956e]/12 text-[#a6845d]",
+  uploaded: "bg-[#2271b1]/12 text-[#135e96]",
   login: "bg-neutral-100 text-neutral-500",
 };
 

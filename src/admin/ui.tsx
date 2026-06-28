@@ -16,11 +16,11 @@ import { Loader2, Search, X } from "lucide-react";
 export const cls = {
   card: "rounded-xl border border-neutral-200/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)]",
   input:
-    "w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-[#b8956e] focus:ring-2 focus:ring-[#b8956e]/20 disabled:bg-neutral-50 disabled:text-neutral-400",
+    "w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-[#2271b1] focus:ring-2 focus:ring-[#2271b1]/20 disabled:bg-neutral-50 disabled:text-neutral-400",
   label: "block text-[13px] font-medium text-neutral-700 mb-1.5",
   // legacy aliases kept for compatibility
   primary:
-    "inline-flex items-center justify-center gap-2 rounded-lg bg-[#b8956e] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#a6845d] disabled:opacity-50",
+    "inline-flex items-center justify-center gap-2 rounded-lg bg-[#2271b1] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#135e96] disabled:opacity-50",
   ghost:
     "inline-flex items-center justify-center gap-2 rounded-lg border border-neutral-300 bg-white px-3.5 py-2 text-sm text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50",
   danger:
@@ -35,12 +35,11 @@ type Variant = "primary" | "secondary" | "ghost" | "danger" | "subtle";
 type Size = "sm" | "md";
 
 const VARIANTS: Record<Variant, string> = {
-  primary:
-    "bg-gradient-to-b from-[#c4a07a] to-[#b8956e] text-white shadow-sm shadow-[#b8956e]/30 hover:from-[#b8956e] hover:to-[#a6845d]",
-  secondary: "border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50",
+  primary: "bg-[#2271b1] text-white shadow-sm hover:bg-[#135e96]",
+  secondary: "border border-[#2271b1] bg-white text-[#2271b1] hover:bg-[#2271b1]/[0.06]",
   ghost: "text-neutral-600 hover:bg-neutral-100",
-  danger: "border border-red-200 bg-white text-red-600 hover:bg-red-50",
-  subtle: "bg-[#b8956e]/10 text-[#a6845d] hover:bg-[#b8956e]/15",
+  danger: "border border-red-200 bg-white text-[#d63638] hover:bg-red-50",
+  subtle: "bg-[#2271b1]/10 text-[#135e96] hover:bg-[#2271b1]/15",
 };
 
 const SIZES: Record<Size, string> = {
@@ -151,7 +150,7 @@ export function Toggle({
     >
       <span
         className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
-          checked ? "bg-[#b8956e]" : "bg-neutral-300"
+          checked ? "bg-[#2271b1]" : "bg-neutral-300"
         }`}
       >
         <span
@@ -245,7 +244,7 @@ export function SectionTitle({ children, action }: { children: ReactNode; action
 /* ------------------------------------------------------------------ */
 
 const TONES: Record<string, string> = {
-  gold: "bg-[#b8956e]/12 text-[#a6845d]",
+  gold: "bg-[#2271b1]/12 text-[#135e96]",
   green: "bg-emerald-100 text-emerald-700",
   amber: "bg-amber-100 text-amber-700",
   red: "bg-red-100 text-red-600",
@@ -285,7 +284,7 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-neutral-300 bg-neutral-50/60 px-6 py-14 text-center">
       {icon && (
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#b8956e]/10 text-[#a6845d]">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#2271b1]/10 text-[#135e96]">
           {icon}
         </div>
       )}
@@ -339,7 +338,7 @@ export function StatCard({
   );
   const base = `${cls.card} block p-5 transition`;
   return to ? (
-    <Link to={to} className={`${base} hover:-translate-y-0.5 hover:border-[#b8956e]/50 hover:shadow-md`}>
+    <Link to={to} className={`${base} hover:-translate-y-0.5 hover:border-[#2271b1]/50 hover:shadow-md`}>
       {inner}
     </Link>
   ) : (

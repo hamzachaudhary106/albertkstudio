@@ -71,7 +71,7 @@ export default function Users() {
         {ROLES.map((r) => (
           <Card key={r} className="p-4">
             <div className="flex items-center gap-2">
-              <ShieldCheck size={16} className="text-[#a6845d]" />
+              <ShieldCheck size={16} className="text-[#135e96]" />
               <p className="font-medium text-neutral-900">{ROLE_LABEL[r]}</p>
             </div>
             <p className="mt-1 text-xs leading-relaxed text-neutral-500">{ROLE_DESC[r]}</p>
@@ -112,7 +112,7 @@ export default function Users() {
                   <tr key={u.id} className="hover:bg-neutral-50/60">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#b8956e]/12 text-xs font-semibold text-[#a6845d]">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#2271b1]/12 text-xs font-semibold text-[#135e96]">
                           {initials(u.full_name || u.email || "?")}
                         </span>
                         <div>

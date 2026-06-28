@@ -76,7 +76,7 @@ function MediaGrid({
         <div
           key={item.path}
           className={`group relative overflow-hidden rounded-xl border bg-white transition ${
-            selectedUrl === item.url ? "border-[#b8956e] ring-2 ring-[#b8956e]/30" : "border-neutral-200"
+            selectedUrl === item.url ? "border-[#2271b1] ring-2 ring-[#2271b1]/30" : "border-neutral-200"
           }`}
         >
           <button
@@ -87,7 +87,7 @@ function MediaGrid({
             <img src={item.url} alt={item.name} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-105" />
           </button>
           {selectedUrl === item.url && (
-            <span className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#b8956e] text-white">
+            <span className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#2271b1] text-white">
               <Check size={14} />
             </span>
           )}

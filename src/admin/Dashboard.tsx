@@ -167,7 +167,7 @@ export default function Dashboard() {
                   {w.label}
                   <span
                     className={`flex h-4 w-4 items-center justify-center rounded border ${
-                      has(w.key) ? "border-[#b8956e] bg-[#b8956e] text-white" : "border-neutral-300"
+                      has(w.key) ? "border-[#2271b1] bg-[#2271b1] text-white" : "border-neutral-300"
                     }`}
                   >
                     {has(w.key) && <Check size={12} />}
@@ -196,13 +196,13 @@ export default function Dashboard() {
               <Link
                 key={a.label}
                 to={a.to}
-                className="group flex items-center gap-3 rounded-xl border border-neutral-200/80 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#b8956e]/50 hover:shadow-md"
+                className="group flex items-center gap-3 rounded-xl border border-neutral-200/80 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#2271b1]/50 hover:shadow-md"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#b8956e]/10 text-[#a6845d]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2271b1]/10 text-[#135e96]">
                   <a.icon size={18} />
                 </span>
                 <span className="text-sm font-medium text-neutral-800">{a.label}</span>
-                <Plus size={15} className="ml-auto text-neutral-300 transition group-hover:text-[#b8956e]" />
+                <Plus size={15} className="ml-auto text-neutral-300 transition group-hover:text-[#2271b1]" />
               </Link>
             ))}
           </div>
@@ -213,7 +213,7 @@ export default function Dashboard() {
         {/* Upcoming */}
         {has("upcoming") && (
           <Card className="p-5">
-            <SectionTitle action={<Link to="/admin/bookings" className="text-xs font-medium text-[#a6845d] hover:underline">View all</Link>}>
+            <SectionTitle action={<Link to="/admin/bookings" className="text-xs font-medium text-[#135e96] hover:underline">View all</Link>}>
               Upcoming appointments
             </SectionTitle>
             {loading ? (
@@ -244,7 +244,7 @@ export default function Dashboard() {
         {/* Messages */}
         {has("messages") && (
           <Card className="p-5">
-            <SectionTitle action={<Link to="/admin/contact" className="text-xs font-medium text-[#a6845d] hover:underline">View all</Link>}>
+            <SectionTitle action={<Link to="/admin/contact" className="text-xs font-medium text-[#135e96] hover:underline">View all</Link>}>
               Recent messages
             </SectionTitle>
             {loading ? (
@@ -273,7 +273,7 @@ export default function Dashboard() {
         {/* Activity */}
         {has("activity") && (
           <Card className="p-5">
-            <SectionTitle action={can("activity") ? <Link to="/admin/activity" className="text-xs font-medium text-[#a6845d] hover:underline">View all</Link> : undefined}>
+            <SectionTitle action={can("activity") ? <Link to="/admin/activity" className="text-xs font-medium text-[#135e96] hover:underline">View all</Link> : undefined}>
               Recent activity
             </SectionTitle>
             {activity.length === 0 ? (
@@ -282,7 +282,7 @@ export default function Dashboard() {
               <ul className="space-y-3">
                 {activity.map((a) => (
                   <li key={String(a.id)} className="flex items-start gap-3">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#b8956e]" />
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#2271b1]" />
                     <p className="text-sm text-neutral-600">
                       <span className="font-medium text-neutral-800">{String(a.actor_email ?? "Someone")}</span>{" "}
                       {String(a.action)} {String(a.entity)}
@@ -305,16 +305,16 @@ export default function Dashboard() {
                 <Link
                   key={c.label}
                   to={c.to}
-                  className="group flex items-center gap-3 rounded-lg border border-neutral-200/70 p-3 transition hover:border-[#b8956e]/50 hover:bg-neutral-50"
+                  className="group flex items-center gap-3 rounded-lg border border-neutral-200/70 p-3 transition hover:border-[#2271b1]/50 hover:bg-neutral-50"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-100 text-neutral-500 group-hover:bg-[#b8956e]/10 group-hover:text-[#a6845d]">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-100 text-neutral-500 group-hover:bg-[#2271b1]/10 group-hover:text-[#135e96]">
                     <c.icon size={16} />
                   </span>
                   <div>
                     <p className="text-lg font-semibold leading-none text-neutral-900">{c.value}</p>
                     <p className="text-xs text-neutral-400">{c.label}</p>
                   </div>
-                  <ArrowRight size={15} className="ml-auto text-neutral-300 transition group-hover:text-[#b8956e]" />
+                  <ArrowRight size={15} className="ml-auto text-neutral-300 transition group-hover:text-[#2271b1]" />
                 </Link>
               ))}
             </div>

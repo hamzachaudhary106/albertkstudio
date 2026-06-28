@@ -77,7 +77,7 @@ function ObjectEditor({
   return (
     <Card className="p-5">
       <div className="mb-5 flex items-center gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#b8956e]/10 text-[#a6845d]">
+        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2271b1]/10 text-[#135e96]">
           <Icon size={18} />
         </span>
         <div>
@@ -165,7 +165,7 @@ function ListEditor({
   return (
     <Card className="p-5">
       <div className="mb-5 flex items-center gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#b8956e]/10 text-[#a6845d]">
+        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2271b1]/10 text-[#135e96]">
           <Icon size={18} />
         </span>
         <div>
@@ -235,7 +235,7 @@ export default function Settings() {
             key={t.id}
             onClick={() => setTab(t.id)}
             className={`rounded-md px-4 py-1.5 text-[13px] font-medium transition ${
-              tab === t.id ? "bg-[#b8956e] text-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
+              tab === t.id ? "bg-[#2271b1] text-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
             }`}
           >
             {t.label}

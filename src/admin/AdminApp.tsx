@@ -159,14 +159,14 @@ function Login() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0b0b0c] px-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#1d2327] px-4">
       <div
         className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[40rem] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(184,149,110,0.4), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(34,113,177,0.4), transparent 70%)" }}
       />
       <form onSubmit={submit} className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl">
         <div className="mb-7 text-center">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#d4bc8e]">Albert K Studio</p>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#72aee6]">Albert K Studio</p>
           <h1 className="font-serif text-2xl text-white">Welcome back</h1>
           <p className="mt-1 text-sm text-white/50">Sign in to manage your studio</p>
         </div>
@@ -179,7 +179,7 @@ function Login() {
               required
               autoComplete="username"
               placeholder="Email"
-              className="border-white/15 bg-white/5 text-white placeholder:text-white/40 focus:border-[#d4bc8e] focus:ring-[#d4bc8e]/20"
+              className="border-white/15 bg-white/5 text-white placeholder:text-white/40 focus:border-[#72aee6] focus:ring-[#72aee6]/20"
             />
           </Field>
           <Field label="">
@@ -190,7 +190,7 @@ function Login() {
               required
               autoComplete="current-password"
               placeholder="Password"
-              className="border-white/15 bg-white/5 text-white placeholder:text-white/40 focus:border-[#d4bc8e] focus:ring-[#d4bc8e]/20"
+              className="border-white/15 bg-white/5 text-white placeholder:text-white/40 focus:border-[#72aee6] focus:ring-[#72aee6]/20"
             />
           </Field>
         </div>
@@ -219,9 +219,9 @@ function Sidebar({
   const { can } = useAdmin();
 
   return (
-    <div className="flex h-full flex-col bg-[#0b0b0c] text-neutral-300">
+    <div className="flex h-full flex-col bg-[#1d2327] text-neutral-300">
       <div className={`flex items-center gap-2.5 border-b border-white/[0.06] px-5 ${collapsed ? "justify-center px-0" : ""}`} style={{ height: 64 }}>
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#d4bc8e] to-[#b8956e] font-serif text-base font-semibold text-[#0b0b0c]">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#72aee6] to-[#2271b1] font-serif text-base font-semibold text-[#1d2327]">
           A
         </span>
         {!collapsed && (
@@ -258,23 +258,24 @@ function Sidebar({
                           collapsed ? "justify-center" : ""
                         } ${
                           isActive
-                            ? "bg-[#b8956e]/15 text-[#e7d4b3]"
-                            : "text-white/60 hover:bg-white/[0.04] hover:text-white"
+                            ? "bg-[#2271b1] text-white"
+                            : "text-[#a7aaad] hover:bg-[#2c3338] hover:text-[#72aee6]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
-                          {isActive && (
-                            <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r bg-[#d4bc8e]" />
-                          )}
                           <item.icon size={18} strokeWidth={1.8} className="shrink-0" />
                           {!collapsed && <span className="flex-1 truncate">{item.label}</span>}
                           {count > 0 &&
                             (collapsed ? (
-                              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#d4bc8e]" />
+                              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#72aee6]" />
                             ) : (
-                              <span className="ml-auto rounded-full bg-[#b8956e]/25 px-2 py-0.5 text-[11px] font-medium text-[#e7d4b3]">
+                              <span
+                                className={`ml-auto rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                                  isActive ? "bg-white/20 text-white" : "bg-[#2271b1] text-white"
+                                }`}
+                              >
                                 {count}
                               </span>
                             ))}
@@ -295,7 +296,7 @@ function Sidebar({
           target="_blank"
           rel="noreferrer"
           title={collapsed ? "View site" : undefined}
-          className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/60 transition hover:bg-white/[0.04] hover:text-white ${
+          className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[#a7aaad] transition hover:bg-[#2c3338] hover:text-[#72aee6] ${
             collapsed ? "justify-center" : ""
           }`}
         >
@@ -351,7 +352,7 @@ function GlobalSearch() {
         }}
         onFocus={() => setOpen(true)}
         placeholder="Jump to…"
-        className="h-9 w-full rounded-lg border border-neutral-200 bg-neutral-50 pl-9 pr-3 text-sm outline-none transition focus:border-[#b8956e] focus:bg-white focus:ring-2 focus:ring-[#b8956e]/15"
+        className="h-9 w-full rounded-lg border border-neutral-200 bg-neutral-50 pl-9 pr-3 text-sm outline-none transition focus:border-[#2271b1] focus:bg-white focus:ring-2 focus:ring-[#2271b1]/15"
       />
       {open && results.length > 0 && (
         <div className="absolute z-30 mt-1.5 w-full overflow-hidden rounded-xl border border-neutral-200 bg-white py-1.5 shadow-xl">
@@ -394,7 +395,7 @@ function NotificationsBell({ notif }: { notif: ReturnType<typeof useNotification
       <IconButton label="Notifications" onClick={() => setOpen((o) => !o)} className="relative">
         <Bell size={19} />
         {total > 0 && (
-          <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#b8956e] px-1 text-[10px] font-semibold text-white">
+          <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#2271b1] px-1 text-[10px] font-semibold text-white">
             {total > 9 ? "9+" : total}
           </span>
         )}
@@ -420,7 +421,7 @@ function NotificationsBell({ notif }: { notif: ReturnType<typeof useNotification
                 >
                   <span
                     className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                      n.kind === "booking" ? "bg-emerald-50 text-emerald-600" : "bg-[#b8956e]/12 text-[#a6845d]"
+                      n.kind === "booking" ? "bg-emerald-50 text-emerald-600" : "bg-[#2271b1]/12 text-[#135e96]"
                     }`}
                   >
                     {n.kind === "booking" ? <CalendarDays size={15} /> : <Mail size={15} />}
@@ -466,7 +467,7 @@ function UserMenu() {
         onClick={() => setOpen((o) => !o)}
         className="flex items-center gap-2 rounded-lg py-1 pl-1 pr-2 transition hover:bg-neutral-100"
       >
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#c4a07a] to-[#b8956e] text-xs font-semibold text-white">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#2271b1] to-[#2271b1] text-xs font-semibold text-white">
           {initials(profile.fullName)}
         </span>
         <span className="hidden text-left sm:block">
@@ -530,7 +531,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
   const mainPad = collapsed ? "lg:pl-[68px]" : "lg:pl-64";
 
   return (
-    <div className="min-h-screen bg-neutral-100 text-neutral-900">
+    <div className="min-h-screen bg-[#f0f0f1] text-neutral-900">
       {/* Desktop sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-30 hidden transition-[width] duration-200 lg:block ${sidebarW}`}>
         <Sidebar collapsed={collapsed} badges={badges} />
@@ -612,14 +613,14 @@ export default function AdminApp() {
 
   if (!isBookingConfigured) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-neutral-100 px-6 text-center text-neutral-600">
+      <div className="flex min-h-screen items-center justify-center bg-[#f0f0f1] px-6 text-center text-neutral-600">
         Admin is unavailable — the backend isn't configured.
       </div>
     );
   }
 
   if (session === undefined) {
-    return <div className="flex min-h-screen items-center justify-center bg-neutral-100 text-neutral-400">Loading…</div>;
+    return <div className="flex min-h-screen items-center justify-center bg-[#f0f0f1] text-neutral-400">Loading…</div>;
   }
 
   if (!session) return <Login />;

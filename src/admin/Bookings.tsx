@@ -84,7 +84,7 @@ export default function Bookings() {
               key={f}
               onClick={() => setFilter(f)}
               className={`rounded-md px-3 py-1.5 text-[13px] font-medium capitalize transition ${
-                filter === f ? "bg-[#b8956e] text-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
+                filter === f ? "bg-[#2271b1] text-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
               }`}
             >
               {f}
@@ -121,14 +121,14 @@ export default function Bookings() {
                     <td className="whitespace-nowrap px-4 py-3 text-neutral-700">{fmtDateTime(a.starts_at)}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#b8956e]/12 text-xs font-semibold text-[#a6845d]">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2271b1]/12 text-xs font-semibold text-[#135e96]">
                           {initials(a.customer_name)}
                         </span>
                         <div className="min-w-0">
                           <div className="font-medium text-neutral-900">{a.customer_name}</div>
                           <div className="flex items-center gap-1 text-xs text-neutral-400">
                             <Phone size={11} />
-                            <a href={`tel:${a.customer_phone}`} className="hover:text-[#a6845d]">
+                            <a href={`tel:${a.customer_phone}`} className="hover:text-[#135e96]">
                               {a.customer_phone}
                             </a>
                           </div>

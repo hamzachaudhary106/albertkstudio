@@ -84,7 +84,7 @@ export default function ContactSubmissions() {
               key={f}
               onClick={() => setFilter(f)}
               className={`rounded-md px-3 py-1.5 text-[13px] font-medium capitalize transition ${
-                filter === f ? "bg-[#b8956e] text-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
+                filter === f ? "bg-[#2271b1] text-white shadow-sm" : "text-neutral-600 hover:text-neutral-900"
               }`}
             >
               {f}
@@ -102,10 +102,10 @@ export default function ContactSubmissions() {
       ) : (
         <div className="space-y-3">
           {filtered.map((m) => (
-            <Card key={m.id} className={`overflow-hidden p-5 ${m.status === "new" ? "border-l-[3px] border-l-[#b8956e]" : ""}`}>
+            <Card key={m.id} className={`overflow-hidden p-5 ${m.status === "new" ? "border-l-[3px] border-l-[#2271b1]" : ""}`}>
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="flex items-start gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#b8956e]/12 text-sm font-semibold text-[#a6845d]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#2271b1]/12 text-sm font-semibold text-[#135e96]">
                     {initials(m.name)}
                   </span>
                   <div>
@@ -116,12 +116,12 @@ export default function ContactSubmissions() {
                     </div>
                     <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-neutral-400">
                       {m.email && (
-                        <a href={`mailto:${m.email}`} className="inline-flex items-center gap-1 hover:text-[#a6845d]">
+                        <a href={`mailto:${m.email}`} className="inline-flex items-center gap-1 hover:text-[#135e96]">
                           <Mail size={11} /> {m.email}
                         </a>
                       )}
                       {m.phone && (
-                        <a href={`tel:${m.phone}`} className="inline-flex items-center gap-1 hover:text-[#a6845d]">
+                        <a href={`tel:${m.phone}`} className="inline-flex items-center gap-1 hover:text-[#135e96]">
                           <Phone size={11} /> {m.phone}
                         </a>
                       )}
